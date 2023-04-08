@@ -1,0 +1,3 @@
+application_name = "<%= projectName %>"
+ENVIRONMENT = "local"
+region = "us-east-1"

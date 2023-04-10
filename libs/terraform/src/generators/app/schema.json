@@ -24,8 +24,10 @@
       "description": "A directory where the project is placed"
     },
     "awsaccount": {
-      "type": "string",
-      "description": "12 digit AWS account number"
+      "type": "integer",
+      "description": "12 digit AWS account number",
+      "minimum": 100000000000,
+      "maximum": 1000000000000
     }
   },
   "required": ["name"]

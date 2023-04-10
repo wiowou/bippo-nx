@@ -65,13 +65,13 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
+    sourceRoot: `${normalizedOptions.projectRoot}/terraform`,
     targets: {
       tfexec: {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/src`,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
           commands: [
             'cp environments/{args.environment}.tfvars terraform.tfvars',
             'cp environments/provider.{args.environment}.tf provider.tf',

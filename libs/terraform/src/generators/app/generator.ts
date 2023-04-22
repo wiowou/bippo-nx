@@ -8,6 +8,7 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
+import * as child_process from 'child_process';
 import { TerraformGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends TerraformGeneratorSchema {
@@ -16,6 +17,9 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
   projectDirectory: string;
   parsedTags: string[];
   rootOffset: string;
+  workspaceName: string;
+  awsprofile: string;
+  awsaccount: string;
 }
 
 function normalizeOptions(
@@ -31,8 +35,19 @@ function normalizeOptions(
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
     : [];
-  const awsaccount = options?.awsaccount || '000000000000';
+  const awsprofile = options?.awsprofile || 'devopslocal';
   const rootOffset = offsetFromRoot(projectRoot);
+  const workspaceName = path.basename(tree.root);
+  let stdout = ' not found';
+  let awsaccount = '000000000000';
+  try {
+    stdout = child_process
+      .execSync(`aws sts get-caller-identity --profile ${awsprofile}`)
+      .toString();
+    awsaccount = JSON.parse(stdout).Account;
+  } catch (error) {
+    console.log('could not determine aws account id');
+  }
 
   return {
     ...options,
@@ -41,7 +56,9 @@ function normalizeOptions(
     projectDirectory,
     parsedTags,
     awsaccount,
+    awsprofile,
     rootOffset,
+    workspaceName,
   };
 }
 
@@ -67,7 +84,7 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/terraform`,
     targets: {
-      tfexec: {
+      tfexec0: {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
@@ -76,6 +93,54 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
             'cp environments/{args.environment}.tfvars terraform.tfvars',
             'cp environments/provider.{args.environment}.tf provider.tf',
             'terraform {args.cmd}',
+          ],
+        },
+      },
+      'init-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform init',
+          ],
+        },
+      },
+      'plan-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform plan -out=tfplan',
+          ],
+        },
+      },
+      'apply-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform apply tfplan',
+          ],
+        },
+      },
+      'destroy-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform destroy',
           ],
         },
       },

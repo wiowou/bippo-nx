@@ -1,3 +1,4 @@
+project_name = "<%= workspaceName %>"
 application_name = "<%= projectName %>"
-ENVIRONMENT = "local"
+ENVIRONMENT = "dev"
 region = "us-east-1"

@@ -4,11 +4,16 @@ variable "ENVIRONMENT" {
 }
 
 variable "BUILD_SOURCES_DIR" {
-    type = string
-    description = "root level for the project sources"
-    default = "<%= rootOffset %>../"
+  type = string
+  description = "root level for the project sources"
+  default = "<%= rootOffset %>../"
 }
 # end provided by pipeline
+
+variable "project_name" {
+  type        = string
+  description = "name of the main project/monorepo"
+}
 
 variable "application_name" {
   type = string

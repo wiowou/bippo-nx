@@ -1,5 +1,5 @@
 module "user-pool" {
-  source = "../../../libs/terraform/cognito"
+  source = "<%= rootOffset %>../libs/terraform/cognito"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name

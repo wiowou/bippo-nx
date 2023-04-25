@@ -1,7 +1,6 @@
-export interface TerraformGeneratorSchema {
+export interface Lambda1GeneratorSchema {
   name: string;
   tags?: string;
-  directory?: string;
   awsProfile: string;
   terraformVersion: string;
   terraformAwsVersion: string;

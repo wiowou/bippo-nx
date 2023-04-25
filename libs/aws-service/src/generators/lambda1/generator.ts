@@ -9,9 +9,9 @@ import {
 } from '@nrwl/devkit';
 import * as path from 'path';
 import * as child_process from 'child_process';
-import { TerraformGeneratorSchema } from './schema';
+import { Lambda1GeneratorSchema } from './schema';
 
-interface NormalizedSchema extends TerraformGeneratorSchema {
+interface NormalizedSchema extends Lambda1GeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -23,12 +23,10 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: TerraformGeneratorSchema
+  options: Lambda1GeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
+  const projectDirectory = name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const parsedTags = options.tags
@@ -56,8 +54,6 @@ function normalizeOptions(
     awsAccount,
     rootOffset,
     workspaceName,
-    terraformVersion: '1.4',
-    terraformAwsVersion: '4.63',
   };
 }
 
@@ -76,14 +72,109 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: TerraformGeneratorSchema) {
+export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}/terraform`,
+    sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
-      tfexec0: {
+      build: {
+        executor: '@nrwl/webpack:webpack',
+        outputs: ['{options.outputPath}'],
+        defaultConfiguration: 'prod',
+        options: {
+          target: 'node',
+          compiler: 'tsc',
+          outputPath: `dist/apps/${normalizedOptions.projectName}`,
+          main: `${normalizedOptions.projectRoot}/src/main.ts`,
+          tsConfig: `${normalizedOptions.projectRoot}/tsconfig.app.json`,
+          assets: [`${normalizedOptions.projectRoot}/src/assets`],
+          isolatedConfig: true,
+          webpackConfig: `${normalizedOptions.projectRoot}/webpack.config.js`,
+        },
+        configurations: {
+          local: {
+            fileReplacements: [
+              {
+                replace: `${normalizedOptions.projectRoot}/src/environments/environment.ts`,
+                with: `${normalizedOptions.projectRoot}/src/environments/environment.local.ts`,
+              },
+            ],
+          },
+          dev: {},
+          prod: {
+            optimization: true,
+            extractLicenses: true,
+            inspect: false,
+            externalDependencies: [
+              'cache-manager',
+              '@nestjs/websockets/socket-module',
+              '@nestjs/microservices/microservices-module',
+              '@nestjs/microservices',
+              'fastify-swagger',
+              'class-transformer/storage',
+            ],
+            fileReplacements: [
+              {
+                replace: `${normalizedOptions.projectRoot}/src/environments/environment.ts`,
+                with: `${normalizedOptions.projectRoot}/src/environments/environment.prod.ts`,
+              },
+            ],
+          },
+        },
+      },
+      serve: {
+        executor: '@nrwl/js:node',
+        defaultConfiguration: 'dev',
+        options: {
+          buildTarget: `${normalizedOptions.projectName}:build`,
+        },
+        configurations: {
+          local: {
+            buildTarget: `${normalizedOptions.projectName}:build:local`,
+          },
+          dev: {
+            buildTarget: `${normalizedOptions.projectName}:build:dev`,
+          },
+          prod: {
+            buildTarget: `${normalizedOptions.projectName}:build:prod`,
+          },
+        },
+      },
+      lint: {
+        executor: '@nrwl/linter:eslint',
+        outputs: ['{options.outputFile}'],
+        options: {
+          lintFilePatterns: [`${normalizedOptions.projectRoot}/**/*.ts`],
+        },
+      },
+      test: {
+        executor: '@nrwl/jest:jest',
+        outputs: ['{workspaceRoot}/coverage/{projectRoot}'],
+        options: {
+          jestConfig: `${normalizedOptions.projectRoot}/jest.config.ts`,
+          passWithNoTests: true,
+        },
+        configurations: {
+          ci: {
+            ci: true,
+            codeCoverage: true,
+          },
+        },
+      },
+      'create-ddbs': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: './',
+          commands: [
+            'docker compose up -d',
+            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/ddb-local-table-defs/table-def.yaml --profile devopslocal`,
+          ],
+        },
+      },
+      tfexec: {
         executor: 'nx:run-commands',
         options: {
           parallel: false,

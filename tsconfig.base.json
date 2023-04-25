@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@bippo-nx/aws-service": ["libs/aws-service/src/index.ts"],
       "@bippo-nx/terraform": ["libs/terraform/src/index.ts"]
     }
   },

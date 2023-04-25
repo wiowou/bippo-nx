@@ -1,24 +1,26 @@
 # Require TF version
 terraform {
-  required_version = ">= 1.3.6"
+  required_version = ">= <%= terraformVersion %>"
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      version = ">= 4.52.0"
+      version = ">= <%= terraformAwsVersion %>"
     }
   }
   backend "s3" {
-    bucket         = "<%= awsaccount %>-terraform-state"
+    bucket         = "<%= awsAccount %>-terraform-state"
     key            = "<%= projectName %>/dev/terraform.tfstate"
     region         = "us-east-1"
     # dynamodb_table = "tf-locks"
     encrypt        = true
-    profile = "<%= awsprofile %>"
+    role_arn = "arn:aws:iam::<%= awsAccount %>:role/DevOpsIamRole"
   }
 }
 
 # default provider
 provider "aws" {
   region  = "us-east-1"
-  profile = "<%= awsprofile %>"
+  assume_role {
+    role_arn = "arn:aws:iam::<%= awsAccount %>:role/DevOpsIamRole"
+  }
 }

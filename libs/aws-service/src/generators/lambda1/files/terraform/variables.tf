@@ -20,8 +20,3 @@ variable "application_name" {
   type = string
   default = "<%= projectName %>"
 }
-
-variable "region" {
-  type = string
-  default = "us-east-1"
-}

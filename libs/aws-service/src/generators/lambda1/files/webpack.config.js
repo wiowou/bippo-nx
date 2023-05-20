@@ -11,5 +11,12 @@ module.exports = composePlugins(withNx(), (config) => {
       filename: 'main.zip',
     })
   );
-  return config;
+  return {
+    ...config,
+    // devtool: 'source-map',
+    output: {
+      ...config.output,
+      devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    },
+  };
 });

@@ -170,7 +170,18 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
           cwd: './',
           commands: [
             'docker compose up -d',
-            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/ddb-local-table-defs/table-def.yaml --profile devopslocal`,
+            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/terraform/dynamodb/app-table.yaml --profile devopslocal`,
+          ],
+        },
+      },
+      'delete-ddbs': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: './',
+          commands: [
+            'docker compose up -d',
+            `aws dynamodb delete-table --no-cli-pager --endpoint-url http://localhost:8112 --table-name ${normalizedOptions.projectName} --profile devopslocal`,
           ],
         },
       },

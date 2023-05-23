@@ -36,6 +36,34 @@
         ]
       }
     },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs aws-service --tag {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "npm-major": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/aws-service",
+        "commands": ["npm version major"]
+      }
+    },
+    "npm-minor": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/aws-service",
+        "commands": ["npm version minor"]
+      }
+    },
+    "npm-patch": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/aws-service",
+        "commands": ["npm version patch"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

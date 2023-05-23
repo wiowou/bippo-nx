@@ -11,7 +11,7 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync } from 'fs';
 import chalk from 'chalk';
 
-import devkit from '@nx/devkit';
+import devkit from '@nrwl/devkit';
 const { readCachedProjectGraph } = devkit;
 
 function invariant(condition, message) {
@@ -35,7 +35,10 @@ const [, , name, , tag = 'next'] = process.argv;
 const graph = readCachedProjectGraph();
 const project = graph.nodes[name];
 
-invariant(project, `Could not find project "${name}" in the workspace. Is the project.json configured correctly?`);
+invariant(
+  project,
+  `Could not find project "${name}" in the workspace. Is the project.json configured correctly?`
+);
 
 const outputPath = project.data?.targets?.build?.options?.outputPath;
 invariant(

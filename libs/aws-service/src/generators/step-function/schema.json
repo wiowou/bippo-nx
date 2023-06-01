@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
-  "$id": "Terraform",
+  "$id": "StepFunction",
   "title": "",
   "type": "object",
   "properties": {
@@ -20,23 +19,15 @@
     },
     "awsProfile": {
       "type": "string",
-      "description": "The AWS profile name you plan to use to locally create infra",
-      "default": "devopslocal"
+      "description": "The AWS profile name you plan to use to locally create infra"
     },
     "terraformVersion": {
       "type": "string",
-      "description": "min version of Terraform installer",
-      "default": "1.4"
+      "description": "min version of Terraform installer"
     },
     "terraformAwsVersion": {
       "type": "string",
-      "description": "min version of Terraform AWS provider",
-      "default": "4.63"
-    },
-    "database": {
-      "type": "string",
-      "description": "generate files related to this database",
-      "enum": ["dynamo"]
+      "description": "min version of Terraform AWS provider"
     }
   },
   "required": ["name"]

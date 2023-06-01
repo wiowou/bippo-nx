@@ -1,26 +1,26 @@
 TableName: <%= projectName %>
 BillingMode: PAY_PER_REQUEST
 KeySchema:
-  - AttributeName: pk
+  - AttributeName: PK
     KeyType: HASH
-  - AttributeName: sk
+  - AttributeName: SK
     KeyType: RANGE
 AttributeDefinitions:
-  - AttributeName: pk
+  - AttributeName: PK
     AttributeType: S
-  - AttributeName: sk
+  - AttributeName: SK
     AttributeType: S
-  - AttributeName: gsi1pk
+  - AttributeName: GSI1PK
     AttributeType: S
-  - AttributeName: gsi1sk
+  - AttributeName: GSI1SK
     AttributeType: S
 
 GlobalSecondaryIndexes:
-  - IndexName: gsi1
+  - IndexName: GSI1
     KeySchema:
-      - AttributeName: gsi1pk
+      - AttributeName: GSI1PK
         KeyType: HASH
-      - AttributeName: gsi1sk
+      - AttributeName: GSI1SK
         KeyType: RANGE
     Projection:
       ProjectionType: ALL

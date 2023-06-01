@@ -6,7 +6,7 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import * as path from 'path';
 import * as child_process from 'child_process';
 import { TerraformGeneratorSchema } from './schema';
@@ -15,7 +15,6 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
-  parsedTags: string[];
   rootOffset: string;
   workspaceName: string;
   awsAccount: string;
@@ -29,18 +28,21 @@ function normalizeOptions(
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  // const projectName = name;
+  const projectName = options.directory || name;
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
+  const awsProfile = options.awsProfile || 'devopslocal';
+  const terraformVersion = options.terraformAwsVersion || '1.4';
+  const terraformAwsVersion = options.terraformAwsVersion || '4.63';
+  const appType = options.appType || 'SHARED_INFRA';
   let stdout = ' not found';
   let awsAccount = '000000000000';
   try {
     stdout = child_process
-      .execSync(`aws sts get-caller-identity --profile ${options.awsProfile}`)
+      .execSync(`aws sts get-caller-identity --profile ${awsProfile}`)
       .toString();
     awsAccount = JSON.parse(stdout).Account;
   } catch (error) {
@@ -52,16 +54,17 @@ function normalizeOptions(
     projectName,
     projectRoot,
     projectDirectory,
-    parsedTags,
     awsAccount,
+    awsProfile,
     rootOffset,
     workspaceName,
-    terraformVersion: '1.4',
-    terraformAwsVersion: '4.63',
+    terraformVersion,
+    terraformAwsVersion,
+    appType,
   };
 }
 
-function addFiles(tree: Tree, options: NormalizedSchema) {
+function addFiles(tree: Tree, options: NormalizedSchema, target = 'files') {
   const templateOptions = {
     ...options,
     ...names(options.name),
@@ -70,7 +73,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   };
   generateFiles(
     tree,
-    path.join(__dirname, 'files'),
+    path.join(__dirname, target),
     options.projectRoot,
     templateOptions
   );
@@ -78,16 +81,16 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (tree: Tree, options: TerraformGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  addProjectConfiguration(tree, normalizedOptions.projectName, {
+  addProjectConfiguration(tree, normalizedOptions.projectName + '-tf', {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}/terraform`,
+    sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      tfexec0: {
+      tfexec: {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          cwd: `${normalizedOptions.projectRoot}`,
           commands: [
             'cp environments/{args.environment}.tfvars terraform.tfvars',
             'cp environments/provider.{args.environment}.tf provider.tf',
@@ -99,7 +102,7 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          cwd: `${normalizedOptions.projectRoot}`,
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
@@ -111,7 +114,7 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          cwd: `${normalizedOptions.projectRoot}`,
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
@@ -123,7 +126,7 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          cwd: `${normalizedOptions.projectRoot}`,
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
@@ -135,7 +138,7 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
         executor: 'nx:run-commands',
         options: {
           parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          cwd: `${normalizedOptions.projectRoot}`,
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
@@ -144,8 +147,10 @@ export default async function (tree: Tree, options: TerraformGeneratorSchema) {
         },
       },
     },
-    tags: normalizedOptions.parsedTags,
   });
   addFiles(tree, normalizedOptions);
+  if (options.database === 'dynamo') {
+    addFiles(tree, normalizedOptions, 'dynamo-files');
+  }
   await formatFiles(tree);
 }

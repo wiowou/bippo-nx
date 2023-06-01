@@ -9,7 +9,7 @@ terraform {
   }
   backend "s3" {
     bucket         = "<%= awsAccount %>-terraform-state"
-    key            = "<%= projectName %>/dev/terraform.tfstate"
+    key            = "<%= workspaceName %>/<%= projectName %>/prod/terraform.tfstate"
     region         = "us-east-1"
     # dynamodb_table = "tf-locks"
     encrypt        = true

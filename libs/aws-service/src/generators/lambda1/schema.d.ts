@@ -1,7 +1,6 @@
-export interface Lambda1GeneratorSchema {
+import { TerraformOptions } from '@bippo-nx/terraform';
+
+export interface Lambda1GeneratorSchema extends TerraformOptions {
   name: string;
-  tags?: string;
-  awsProfile: string;
-  terraformVersion: string;
-  terraformAwsVersion: string;
+  database: string;
 }

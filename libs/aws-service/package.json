@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/aws-service",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
@@ -16,5 +16,10 @@
   "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/aws-service/README.md",
   "peerDependencies": {},
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "@nestjs/common": "^9.0.0",
+    "@nestjs/core": "^9.0.0",
+    "@nx/devkit": "^16.0.0",
+    "@nx/webpack": "^16.0.0"
+  }
 }

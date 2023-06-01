@@ -1,0 +1,75 @@
+<% if (appType === "SHARED_INFRA") { %>
+## shared infra
+module "user-pool" {
+  # source = "git@github.com:wiowou/terraform-modules.git//cognito"
+  # source = "<%= rootOffset %>../libs/terraform/cognito"
+
+  environment = var.ENVIRONMENT
+  project_name = var.project_name
+  application_name = var.application_name
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
+
+module "vpc" {
+  # source = "git@github.com:wiowou/terraform-modules.git//vpc"
+  # source = "<%= rootOffset %>../libs/terraform/vpc"
+
+  environment = var.ENVIRONMENT
+  project_name = var.project_name
+  application_name = var.application_name
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
+<% } else if (appType === "STEP_FUNCTION") { %>
+## step function
+module "step-function" {
+  # source = "git@github.com:wiowou/terraform-modules.git//step-function"
+  # source = "<%= rootOffset %>../libs/terraform/step-function"
+
+  environment = var.ENVIRONMENT
+  project_name = var.project_name
+  application_name = var.application_name
+  BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
+<% } else if (appType === "LAMBDA_SERVICE") { %>
+## lambda service
+module "dynamodb" {
+  source = "./dynamodb"
+
+  environment = var.ENVIRONMENT
+  project_name = var.project_name
+  application_name = var.application_name
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
+
+module "lambda-service" {
+  # source = "git@github.com:wiowou/terraform-modules.git//api-gateway-v1-lambda"
+  # source = "<%= rootOffset %>../libs/terraform/api-gateway-v1-lambda"
+
+  environment = var.ENVIRONMENT
+  project_name = var.project_name
+  application_name = var.application_name
+  BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
+  use_auth = true
+
+  environment_settings = {
+    APP_TABLE_NAME = module.dynamodb.app_table_name
+  }
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
+<% } %>

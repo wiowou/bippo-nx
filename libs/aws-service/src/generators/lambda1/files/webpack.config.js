@@ -1,4 +1,4 @@
-const { composePlugins, withNx } = require('@nrwl/webpack');
+const { composePlugins, withNx } = require('@nx/webpack');
 const ZipPlugin = require('zip-webpack-plugin');
 
 // Nx plugins for webpack.

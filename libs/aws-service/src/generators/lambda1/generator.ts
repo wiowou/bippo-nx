@@ -6,16 +6,20 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import * as path from 'path';
 import * as child_process from 'child_process';
 import { Lambda1GeneratorSchema } from './schema';
+
+import {
+  terraformGenerator,
+  TerraformGeneratorSchema,
+} from '@bippo-nx/terraform';
 
 interface NormalizedSchema extends Lambda1GeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
-  parsedTags: string[];
   rootOffset: string;
   workspaceName: string;
   awsAccount: string;
@@ -29,9 +33,6 @@ function normalizeOptions(
   const projectDirectory = name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
   let stdout = ' not found';
@@ -50,7 +51,6 @@ function normalizeOptions(
     projectName,
     projectRoot,
     projectDirectory,
-    parsedTags,
     awsAccount,
     rootOffset,
     workspaceName,
@@ -74,7 +74,15 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  addProjectConfiguration(tree, normalizedOptions.projectName, {
+  const terraformGeneratorOptions: TerraformGeneratorSchema = {
+    ...options,
+    name: 'terraform',
+    directory: options.name,
+    appType: 'LAMBDA_SERVICE',
+    database: options.database,
+  };
+  await terraformGenerator(tree, terraformGeneratorOptions);
+  let projectConfiguration: any = {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
@@ -163,6 +171,11 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
           },
         },
       },
+    },
+  };
+  if (options.database === 'dynamo') {
+    projectConfiguration = {
+      ...projectConfiguration,
       'create-ddbs': {
         executor: 'nx:run-commands',
         options: {
@@ -185,69 +198,13 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
           ],
         },
       },
-      tfexec: {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/{args.environment}.tfvars terraform.tfvars',
-            'cp environments/provider.{args.environment}.tf provider.tf',
-            'terraform {args.cmd}',
-          ],
-        },
-      },
-      'init-local': {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform init',
-          ],
-        },
-      },
-      'plan-local': {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform plan -out=tfplan',
-          ],
-        },
-      },
-      'apply-local': {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform apply tfplan',
-          ],
-        },
-      },
-      'destroy-local': {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform destroy',
-          ],
-        },
-      },
-    },
-    tags: normalizedOptions.parsedTags,
-  });
+    };
+  }
+  addProjectConfiguration(
+    tree,
+    normalizedOptions.projectName,
+    projectConfiguration
+  );
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

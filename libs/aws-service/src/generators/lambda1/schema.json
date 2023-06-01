@@ -14,25 +14,23 @@
       },
       "x-prompt": "What name would you like to use?"
     },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
-    },
     "awsProfile": {
       "type": "string",
-      "description": "The AWS profile name you plan to use to locally create infra",
-      "default": "devopslocal"
+      "description": "The AWS profile name you plan to use to locally create infra"
     },
     "terraformVersion": {
       "type": "string",
-      "description": "min version of Terraform installer",
-      "default": "1.4"
+      "description": "min version of Terraform installer"
     },
     "terraformAwsVersion": {
       "type": "string",
-      "description": "min version of Terraform AWS provider",
-      "default": "4.63"
+      "description": "min version of Terraform AWS provider"
+    },
+    "database": {
+      "type": "string",
+      "description": "generate files related to this database",
+      "enum": ["dynamo"],
+      "default": "dynamo"
     }
   },
   "required": ["name"]

@@ -68,8 +68,9 @@ export async function stepFunctionGenerator(
   const terraformGeneratorOptions: TerraformGeneratorSchema = {
     ...options,
     name: 'terraform',
-    directory: options.name,
+    directory: normalizedOptions.projectDirectory,
     appType: 'STEP_FUNCTION',
+    database: options.database,
   };
   await terraformGenerator(tree, terraformGeneratorOptions);
   // addProjectConfiguration(tree, normalizedOptions.projectName, {

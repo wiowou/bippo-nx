@@ -13,6 +13,10 @@
       },
       "x-prompt": "What name would you like to use?"
     },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed"
+    },
     "awsProfile": {
       "type": "string",
       "description": "The AWS profile name you plan to use to locally create infra"
@@ -28,7 +32,7 @@
     "database": {
       "type": "string",
       "description": "generate files related to this database",
-      "enum": ["dynamo"],
+      "enum": ["none", "dynamo"],
       "default": "dynamo"
     }
   },

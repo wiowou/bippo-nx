@@ -1,7 +1,8 @@
 import { TerraformOptions } from '@bippo-nx/terraform';
 
-export interface LambdaApiGeneratorSchema extends TerraformOptions {
+export interface LambdaGeneratorSchema extends TerraformOptions {
   name: string;
   database: string;
   directory?: string;
+  generateTerraform: boolean;
 }

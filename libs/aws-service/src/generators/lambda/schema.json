@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
-  "$id": "Lambda1",
+  "$id": "Lambda",
   "title": "",
   "type": "object",
   "properties": {
@@ -13,6 +12,10 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed"
     },
     "awsProfile": {
       "type": "string",
@@ -29,8 +32,13 @@
     "database": {
       "type": "string",
       "description": "generate files related to this database",
-      "enum": ["dynamo"],
-      "default": "dynamo"
+      "enum": ["none", "dynamo"],
+      "default": "none"
+    },
+    "generateTerraform": {
+      "type": "boolean",
+      "description": "generate terraform files",
+      "default": false
     }
   },
   "required": ["name"]

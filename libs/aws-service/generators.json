@@ -3,11 +3,6 @@
   "name": "aws-service",
   "version": "0.0.1",
   "generators": {
-    "lambda1": {
-      "factory": "./src/generators/lambda1/generator",
-      "schema": "./src/generators/lambda1/schema.json",
-      "description": "lambda-v1 generator"
-    },
     "step-function": {
       "factory": "./src/generators/step-function/generator",
       "schema": "./src/generators/step-function/schema.json",
@@ -17,6 +12,11 @@
       "factory": "./src/generators/lambda-api/generator",
       "schema": "./src/generators/lambda-api/schema.json",
       "description": "lambda-api generator"
+    },
+    "lambda": {
+      "factory": "./src/generators/lambda/generator",
+      "schema": "./src/generators/lambda/schema.json",
+      "description": "lambda generator"
     }
   }
 }

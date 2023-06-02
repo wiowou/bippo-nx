@@ -28,6 +28,12 @@
     "terraformAwsVersion": {
       "type": "string",
       "description": "min version of Terraform AWS provider"
+    },
+    "database": {
+      "type": "string",
+      "description": "generate files related to this database",
+      "enum": ["none", "dynamo"],
+      "default": "none"
     }
   },
   "required": ["name"]

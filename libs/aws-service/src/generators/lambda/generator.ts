@@ -5,53 +5,43 @@ import {
   getWorkspaceLayout,
   names,
   offsetFromRoot,
+  ProjectConfiguration,
   Tree,
 } from '@nx/devkit';
 import * as path from 'path';
-import * as child_process from 'child_process';
-import { Lambda1GeneratorSchema } from './schema';
+import { LambdaGeneratorSchema } from './schema';
 
 import {
   terraformGenerator,
   TerraformGeneratorSchema,
 } from '@bippo-nx/terraform';
 
-interface NormalizedSchema extends Lambda1GeneratorSchema {
+interface NormalizedSchema extends LambdaGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
   rootOffset: string;
   workspaceName: string;
-  awsAccount: string;
 }
 
 function normalizeOptions(
   tree: Tree,
-  options: Lambda1GeneratorSchema
+  options: LambdaGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
-  const projectDirectory = name;
+  const projectDirectory = options.directory
+    ? `${names(options.directory).fileName}/${name}`
+    : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
-  let stdout = ' not found';
-  let awsAccount = '000000000000';
-  try {
-    stdout = child_process
-      .execSync(`aws sts get-caller-identity --profile ${options.awsProfile}`)
-      .toString();
-    awsAccount = JSON.parse(stdout).Account;
-  } catch (error) {
-    console.log('could not determine aws account id');
-  }
 
   return {
     ...options,
     projectName,
     projectRoot,
     projectDirectory,
-    awsAccount,
     rootOffset,
     workspaceName,
   };
@@ -72,23 +62,27 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
+export default async function (tree: Tree, options: LambdaGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  const terraformGeneratorOptions: TerraformGeneratorSchema = {
-    ...options,
-    name: 'terraform',
-    directory: options.name,
-    appType: 'LAMBDA_SERVICE',
-    database: options.database,
-  };
-  await terraformGenerator(tree, terraformGeneratorOptions);
-  let projectConfiguration: any = {
+
+  if (options.generateTerraform) {
+    const terraformGeneratorOptions: TerraformGeneratorSchema = {
+      ...options,
+      name: 'terraform',
+      directory: normalizedOptions.projectDirectory,
+      appType: 'LAMBDA',
+      database: options.database,
+    };
+    await terraformGenerator(tree, terraformGeneratorOptions);
+  }
+
+  const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nrwl/webpack:webpack',
+        executor: '@nx/webpack:webpack',
         outputs: ['{options.outputPath}'],
         defaultConfiguration: 'prod',
         options: {
@@ -133,7 +127,7 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
         },
       },
       serve: {
-        executor: '@nrwl/js:node',
+        executor: '@nx/js:node',
         defaultConfiguration: 'dev',
         options: {
           buildTarget: `${normalizedOptions.projectName}:build`,
@@ -151,14 +145,14 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
         },
       },
       lint: {
-        executor: '@nrwl/linter:eslint',
+        executor: '@nx/linter:eslint',
         outputs: ['{options.outputFile}'],
         options: {
           lintFilePatterns: [`${normalizedOptions.projectRoot}/**/*.ts`],
         },
       },
       test: {
-        executor: '@nrwl/jest:jest',
+        executor: '@nx/jest:jest',
         outputs: ['{workspaceRoot}/coverage/{projectRoot}'],
         options: {
           jestConfig: `${normalizedOptions.projectRoot}/jest.config.ts`,
@@ -173,9 +167,9 @@ export default async function (tree: Tree, options: Lambda1GeneratorSchema) {
       },
     },
   };
-  if (options.database === 'dynamo') {
-    projectConfiguration = {
-      ...projectConfiguration,
+  if (options.database === 'dynamo' && options.generateTerraform) {
+    projectConfiguration.targets = {
+      ...projectConfiguration.targets,
       'create-ddbs': {
         executor: 'nx:run-commands',
         options: {

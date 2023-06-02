@@ -12,6 +12,11 @@
       "factory": "./src/generators/step-function/generator",
       "schema": "./src/generators/step-function/schema.json",
       "description": "step-function generator"
+    },
+    "lambda-api": {
+      "factory": "./src/generators/lambda-api/generator",
+      "schema": "./src/generators/lambda-api/schema.json",
+      "description": "lambda-api generator"
     }
   }
 }

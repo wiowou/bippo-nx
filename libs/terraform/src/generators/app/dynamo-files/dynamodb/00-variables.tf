@@ -6,7 +6,7 @@ variable "project_name" {
   type = string
 }
 
-variable "application_name" {
+variable "application_dir" {
   type = string
 }
 

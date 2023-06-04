@@ -16,7 +16,7 @@ variable "project_name" {
   default = "<%= workspaceName %>"
 }
 
-variable "application_name" {
+variable "application_dir" {
   type = string
   default = "<%= projectName %>"
 }

@@ -44,7 +44,7 @@ resource "aws_dynamodb_table" "<%= projectName %>" {
 
   tags = {
     project_name     = var.project_name
-    application_name = var.application_name
+    application_name = local.application_name
     environment      = var.environment
   }
 }

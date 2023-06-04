@@ -1,2 +1,2 @@
 project_name = "<%= workspaceName %>"
-application_name = "<%= projectName %>"
+application_dir = "<%= projectName %>"

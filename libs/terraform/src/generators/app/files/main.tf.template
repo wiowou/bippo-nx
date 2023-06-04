@@ -2,7 +2,7 @@
 ## shared infra
 module "user-pool" {
   # source = "git@github.com:wiowou/terraform-modules.git//cognito"
-  # source = "<%= rootOffset %>../libs/terraform/cognito"
+  # source = "<%= rootOffset %>libs/terraform/cognito"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name
@@ -15,7 +15,7 @@ module "user-pool" {
 
 module "vpc" {
   # source = "git@github.com:wiowou/terraform-modules.git//vpc"
-  # source = "<%= rootOffset %>../libs/terraform/vpc"
+  # source = "<%= rootOffset %>libs/terraform/vpc"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name
@@ -29,7 +29,7 @@ module "vpc" {
 ## step function
 module "step-function" {
   # source = "git@github.com:wiowou/terraform-modules.git//step-function"
-  # source = "<%= rootOffset %>../libs/terraform/step-function"
+  # source = "<%= rootOffset %>libs/terraform/step-function"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name
@@ -44,7 +44,7 @@ module "step-function" {
 ## lambda
 module "lambda" {
   # source = "git@github.com:wiowou/terraform-modules.git//lambda"
-  # source = "<%= rootOffset %>../libs/terraform/lambda"
+  # source = "<%= rootOffset %>libs/terraform/lambda"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name
@@ -71,7 +71,7 @@ module "dynamodb" {
 
 module "lambda-service" {
   # source = "git@github.com:wiowou/terraform-modules.git//api-gateway-v1-lambda"
-  # source = "<%= rootOffset %>../libs/terraform/api-gateway-v1-lambda"
+  # source = "<%= rootOffset %>libs/terraform/api-gateway-v1-lambda"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name

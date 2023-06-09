@@ -21,6 +21,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nx/devkit": "^16.0.0",
+    "@nx/node": "^16.0.0",
     "@nx/webpack": "^16.0.0"
   }
 }

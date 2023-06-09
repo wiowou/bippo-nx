@@ -37,7 +37,7 @@
       }
     },
     "publish": {
-      "command": "node tools/scripts/publish.mjs aws-service --tag {args.tag}",
+      "command": "node tools/scripts/publish.mjs workspace --tag {args.tag}",
       "dependsOn": ["build"]
     },
     "npm-major": {

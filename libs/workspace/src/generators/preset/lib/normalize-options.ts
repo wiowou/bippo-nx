@@ -18,6 +18,7 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
 
   return {
     ...options,
+    infraProjectName: options.infraProjectName ?? 'shared-infra',
     strict: options.strict ?? false,
     appProjectRoot,
     linter: options.linter ?? Linter.EsLint,
@@ -29,7 +30,7 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
 export function toTerraformGeneratorOptions(options: NormalizedOptions): TerraformGeneratorSchema {
   return {
     name: 'terraform',
-    directory: options.directory,
+    directory: options.infraProjectName,
     awsProfile: options.awsProfile,
     database: options.database,
     appType: 'SHARED_INFRA',

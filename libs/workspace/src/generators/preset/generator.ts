@@ -1,6 +1,5 @@
 import type { GeneratorCallback, Tree } from '@nx/devkit';
 import { convertNxGenerator, formatFiles, runTasksInSerial } from '@nx/devkit';
-// import { applicationGenerator as nodeApplicationGenerator } from '@nx/node';
 
 import { initGenerator } from '../init/generator';
 import {
@@ -22,10 +21,9 @@ export async function presetGenerator(tree: Tree, rawOptions: PresetGeneratorSch
     unitTestRunner: options.unitTestRunner,
     skipFormat: true,
   });
-  // const nodeApplicationTask = await terraformGenerator(tree, toTerraformGeneratorOptions(options));
   createFiles(tree, options);
   updateTsConfig(tree, options);
-  updateNxJson(tree);
+  updateNxJson(tree, options);
   updatePrettier(tree);
 
   if (!options.skipFormat) {

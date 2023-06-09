@@ -2,6 +2,7 @@ import { UnitTestRunner } from '../utils';
 
 export interface PresetGeneratorSchema {
   name: string;
+  infraProjectName?: string;
   directory?: string;
   linter?: 'eslint' | 'none';
   skipFormat?: boolean;

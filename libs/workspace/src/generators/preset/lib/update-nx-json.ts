@@ -1,7 +1,9 @@
 import type { Tree } from '@nx/devkit';
 import { joinPathFragments, updateJson } from '@nx/devkit';
 
-export function updateNxJson(tree: Tree): void {
+import type { NormalizedOptions } from '../schema';
+
+export function updateNxJson(tree: Tree, options: NormalizedOptions): void {
   updateJson(tree, joinPathFragments('', 'nx.json'), (json) => {
     json.targetDefaults = {
       build: {
@@ -20,7 +22,7 @@ export function updateNxJson(tree: Tree): void {
       tfexec: {
         dependsOn: [
           {
-            projects: ['shared-infra'],
+            projects: [options.infraProjectName],
             target: 'tfexec',
             params: 'forward',
           },

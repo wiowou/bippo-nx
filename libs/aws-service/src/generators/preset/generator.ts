@@ -3,7 +3,7 @@ import { convertNxGenerator, formatFiles, runTasksInSerial } from '@nx/devkit';
 // import { applicationGenerator as nodeApplicationGenerator } from '@nx/node';
 
 import { initGenerator } from '../init/generator';
-import { createFiles, normalizeOptions, updateNxJson, updateTsConfig } from './lib';
+import { createFiles, normalizeOptions, updateNxJson, updatePrettier, updateTsConfig } from './lib';
 import { PresetGeneratorSchema } from './schema';
 
 export async function presetGenerator(tree: Tree, rawOptions: PresetGeneratorSchema): Promise<GeneratorCallback> {
@@ -17,6 +17,7 @@ export async function presetGenerator(tree: Tree, rawOptions: PresetGeneratorSch
   createFiles(tree, options);
   updateTsConfig(tree, options);
   updateNxJson(tree);
+  updatePrettier(tree);
 
   if (!options.skipFormat) {
     await formatFiles(tree);

@@ -51,16 +51,6 @@
       "description": "Add tags to the application (used for linting).",
       "type": "string"
     },
-    "frontendProject": {
-      "description": "Frontend project that needs to access this application. This sets up proxy configuration.",
-      "type": "string",
-      "x-priority": "important"
-    },
-    "setParserOptionsProject": {
-      "type": "boolean",
-      "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
-      "default": false
-    },
     "strict": {
       "type": "boolean",
       "description": "Adds strictNullChecks, noImplicitAny, strictBindCallApply, forceConsistentCasingInFileNames and noFallthroughCasesInSwitch to tsconfig.",

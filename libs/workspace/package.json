@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/workspace",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "commonjs",
   "generators": "./generators.json",
   "license": "MIT",
@@ -16,7 +16,7 @@
   "peerDependencies": {},
   "devDependencies": {},
   "dependencies": {
-    "@bippo-nx/terraform": "^0.0.1",
+    "@bippo-nx/terraform": "^0.1.6",
     "@nx/devkit": "^16.0.0",
     "@nx/node": "^16.0.0",
     "@nx/webpack": "^16.0.0"

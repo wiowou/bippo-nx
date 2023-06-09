@@ -44,7 +44,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/aws-service",
+        "cwd": "./libs/workspace",
         "commands": ["npm version major"]
       }
     },
@@ -52,7 +52,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/aws-service",
+        "cwd": "./libs/workspace",
         "commands": ["npm version minor"]
       }
     },
@@ -60,7 +60,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/aws-service",
+        "cwd": "./libs/workspace",
         "commands": ["npm version patch"]
       }
     },

@@ -8,5 +8,5 @@ export interface TerraformOptions {
   terraformVersion?: string;
   terraformAwsVersion?: string;
   database?: string;
-  appType?: string;
+  appType?: 'SHARED_INFRA' | 'STEP_FUNCTION' | 'LAMBDA' | 'LAMBDA_SERVICE';
 }

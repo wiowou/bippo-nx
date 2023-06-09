@@ -4,7 +4,19 @@ import { joinPathFragments, updateJson } from '@nx/devkit';
 export function updateNxJson(tree: Tree): void {
   updateJson(tree, joinPathFragments('', 'nx.json'), (json) => {
     json.targetDefaults = {
-      ...json.targetDefaults,
+      build: {
+        dependsOn: ['^build'],
+        inputs: ['prod', '^prod'],
+      },
+      test: {
+        inputs: ['default', '^prod', '{workspaceRoot}/jest.preset.js'],
+      },
+      lint: {
+        inputs: ['default', '{workspaceRoot}/.eslintrc.json', '{workspaceRoot}/.eslintignore'],
+      },
+      e2e: {
+        inputs: ['default', '^prod'],
+      },
       tfexec: {
         dependsOn: [
           {
@@ -14,6 +26,17 @@ export function updateNxJson(tree: Tree): void {
           },
         ],
       },
+    };
+    json.namedInputs = {
+      default: ['{projectRoot}/**/*', 'sharedGlobals'],
+      prod: [
+        'default',
+        '!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)',
+        '!{projectRoot}/tsconfig.spec.json',
+        '!{projectRoot}/jest.config.[jt]s',
+        '!{projectRoot}/.eslintrc.json',
+      ],
+      sharedGlobals: ['{workspaceRoot}/babel.config.json'],
     };
     return json;
   });

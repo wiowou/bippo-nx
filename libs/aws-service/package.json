@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/aws-service",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
@@ -21,7 +21,6 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nx/devkit": "^16.0.0",
-    "@nx/node": "^16.0.0",
     "@nx/webpack": "^16.0.0"
   }
 }

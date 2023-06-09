@@ -11,6 +11,8 @@ export interface PresetGeneratorSchema {
   e2eTestRunner?: 'jest' | 'none';
   rootProject?: boolean;
   strict?: boolean;
+  awsProfile?: string;
+  database: string;
 }
 
 interface NormalizedOptions extends PresetGeneratorSchema {

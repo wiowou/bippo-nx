@@ -13,7 +13,7 @@ import {
 } from './lib';
 import { PresetGeneratorSchema } from './schema';
 
-import { terraformGenerator } from '@bippo-nx/terraform';
+import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
 
 export async function presetGenerator(tree: Tree, rawOptions: PresetGeneratorSchema): Promise<GeneratorCallback> {
   const options = normalizeOptions(tree, rawOptions);
@@ -31,8 +31,8 @@ export async function presetGenerator(tree: Tree, rawOptions: PresetGeneratorSch
   if (!options.skipFormat) {
     await formatFiles(tree);
   }
-
-  await terraformGenerator(tree, toTerraformGeneratorOptions(options));
+  const terraformGeneratorOptions: TerraformGeneratorSchema = toTerraformGeneratorOptions(options);
+  await terraformGenerator(tree, terraformGeneratorOptions);
   return runTasksInSerial(initTask);
 }
 

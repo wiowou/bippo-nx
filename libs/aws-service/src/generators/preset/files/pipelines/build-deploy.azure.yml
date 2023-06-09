@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+  - name: node_version
+    value: '18.12.1'
+  - name: terraform_version
+    value: '1.4.5'
+
+stages:
+  - template: templates/build.yml
+    parameters:
+      nx_run_cmd: run-many
+
+  - template: templates/deploy-stage.yml
+    parameters:
+      application_environment: dev
+      nx_run_cmd: run-many

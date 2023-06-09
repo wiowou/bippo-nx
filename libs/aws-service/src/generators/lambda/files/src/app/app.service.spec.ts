@@ -1,23 +1,12 @@
-import { Test } from '@nestjs/testing';
-
-import { AppService } from './app.service';
+import * as AppService from './app.service';
 
 describe('AppService', () => {
-  let service: AppService;
-
-  beforeAll(async () => {
-    const app = await Test.createTestingModule({
-      providers: [AppService],
-    }).compile();
-
-    service = app.get<AppService>(AppService);
-  });
+  // beforeAll(async () => {
+  // });
 
   describe('getData', () => {
     it('should return "Welcome to <%= projectName %>!"', () => {
-      expect(service.getData()).toEqual({
-        message: 'Welcome to <%= projectName %>!',
-      });
+      expect(AppService.getData()).resolves.toEqual({ message: 'Welcome to <%= projectName %>!' });
     });
   });
 });

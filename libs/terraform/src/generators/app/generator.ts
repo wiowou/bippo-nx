@@ -10,6 +10,7 @@ import {
 import * as path from 'path';
 import * as child_process from 'child_process';
 import { TerraformGeneratorSchema } from './schema';
+import * as versions from '../../utils/versions';
 
 interface NormalizedSchema extends TerraformGeneratorSchema {
   projectName: string;
@@ -35,8 +36,10 @@ function normalizeOptions(
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
   const awsProfile = options.awsProfile || 'devopslocal';
-  const terraformVersion = options.terraformAwsVersion || '1.4';
-  const terraformAwsVersion = options.terraformAwsVersion || '4.63';
+  const terraformVersion =
+    options.terraformAwsVersion || versions.terraformVersion;
+  const terraformAwsVersion =
+    options.terraformAwsVersion || versions.terraformAwsVersion;
   const appType = options.appType || 'SHARED_INFRA';
   let stdout = ' not found';
   let awsAccount = '000000000000';

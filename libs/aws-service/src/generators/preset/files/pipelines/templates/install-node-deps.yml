@@ -1,0 +1,9 @@
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSource: spec
+      versionSpec: $(node_version)
+    displayName: install nodejs, npm
+
+  - bash: npm ci
+    displayName: install npm dependencies

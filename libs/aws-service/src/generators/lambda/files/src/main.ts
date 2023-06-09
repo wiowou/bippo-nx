@@ -1,27 +1,12 @@
-import { NestFactory } from '@nestjs/core';
+import { Context, Handler } from 'aws-lambda';
+import * as AppService from './app/app.service';
 
-import { AppModule } from './app/app.module';
-import { AppService } from './app/app.service';
+export const handler: Handler = async (event, context: Context) => {
+  console.log(event, context.functionName);
 
-let _app;
-
-async function bootstrap() {
-  if (!_app) {
-    _app = await NestFactory.createApplicationContext(AppModule);
-  }
-  return _app;
-}
-
-export const handler = async (event) => {
-  console.log(event);
-  const app = await bootstrap();
-  const service = app.get(AppService);
-
-  const message = await service.getData();
+  const message = await AppService.getData();
 
   return {
-    body: JSON.stringify({
-      message,
-    }),
+    body: JSON.stringify(message),
   };
 };

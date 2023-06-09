@@ -1,0 +1,15 @@
+version: '3.7'
+# This docker-compose file sets up the dynamodb-local container to listen for requests
+# from you application. To make use of this, your application needs to be configured
+# for a local environment to send data requests to http://dynamodb:8000 when executing
+# from within the sam-service-accelerator-network in docker
+#
+# From you laptop, wit hthe AWS CLI you can use the endpoint-url parameter:
+#   aws dynamodb list-tables --endpoint-url http://localhost:8112
+services:
+  dynamodb-api:
+    command: '-jar DynamoDBLocal.jar -sharedDb'
+    image: 'amazon/dynamodb-local:latest'
+    container_name: 'dynamodb-api-v1'
+    ports:
+      - '8112:8000'

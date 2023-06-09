@@ -1,25 +1,21 @@
 {
-  "name": "@bippo-nx/aws-service",
-  "version": "0.1.6",
-  "main": "src/index.js",
+  "name": "@bippo-nx/workspace",
+  "version": "0.0.1",
+  "type": "commonjs",
   "generators": "./generators.json",
-  "executors": "./executors.json",
   "license": "MIT",
   "keywords": [
     "nx",
-    "nx-plugin",
-    "aws"
+    "nx-plugin"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wiowou/bippo-nx.git"
   },
-  "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/aws-service/README.md",
+  "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/workspace/README.md",
   "peerDependencies": {},
   "devDependencies": {},
   "dependencies": {
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/core": "^9.0.0",
     "@nx/devkit": "^16.0.0",
     "@nx/node": "^16.0.0",
     "@nx/webpack": "^16.0.0"

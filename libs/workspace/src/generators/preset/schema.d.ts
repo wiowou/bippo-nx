@@ -13,7 +13,7 @@ export interface PresetGeneratorSchema {
   rootProject?: boolean;
   strict?: boolean;
   awsProfile?: string;
-  database: string;
+  database: 'none' | 'dynamo';
 }
 
 interface NormalizedOptions extends PresetGeneratorSchema {

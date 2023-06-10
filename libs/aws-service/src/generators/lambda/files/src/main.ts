@@ -1,4 +1,5 @@
 import { Context, Handler } from 'aws-lambda';
+
 import * as AppService from './app/app.service';
 
 export const handler: Handler = async (event, context: Context) => {

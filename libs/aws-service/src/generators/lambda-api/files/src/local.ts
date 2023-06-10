@@ -1,8 +1,3 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -19,18 +14,13 @@ async function bootstrap() {
     allowedHeaders: '*',
   });
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('<%= projectName %>')
-    .setVersion('Local')
-    .build();
+  const swaggerConfig = new DocumentBuilder().setTitle('<%= projectName %>').setVersion('Local').build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
 
   await app.listen(port);
   Logger.log(`Documentation is at: http://localhost:${port}/docs`);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
 }
 
 bootstrap();

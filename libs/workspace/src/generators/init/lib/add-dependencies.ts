@@ -8,10 +8,12 @@ import {
   classTransformerVersion,
   classValidatorVersion,
   dynamodbVersion,
+  eslintVersion,
   nestJsConfigVersion,
   nestJsSchematicsVersion,
   nestSwaggerVersion,
   nestJsVersion,
+  nxVersion,
   reflectMetadataVersion,
   rxjsVersion,
   tsLibVersion,
@@ -42,7 +44,10 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/swagger': nestSwaggerVersion,
       '@nestjs/testing': nestJsVersion,
+      '@nx/eslint-plugin': nxVersion,
+      '@nx/webpack': nxVersion,
       '@types/aws-lambda': awsLambdaTypesVersion,
+      eslint: eslintVersion,
       'zip-webpack-plugin': zipWebpackVersion,
     }
   );

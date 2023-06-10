@@ -1,4 +1,4 @@
-import { UnitTestRunner } from '../utils';
+import { Database, UnitTestRunner } from '@bippo-nx/types';
 
 export interface PresetGeneratorSchema {
   name: string;
@@ -13,7 +13,7 @@ export interface PresetGeneratorSchema {
   rootProject?: boolean;
   strict?: boolean;
   awsProfile?: string;
-  database: 'none' | 'dynamo';
+  database: Database;
 }
 
 interface NormalizedOptions extends PresetGeneratorSchema {

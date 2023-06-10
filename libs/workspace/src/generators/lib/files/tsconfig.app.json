@@ -6,6 +6,7 @@
     "module": "Node16",
     "types": ["node"],
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "es2022"
   },

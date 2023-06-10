@@ -1,18 +1,11 @@
-import {
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nx/devkit';
+import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { StepFunctionGeneratorSchema } from './schema';
 
-import {
-  terraformGenerator,
-  TerraformGeneratorSchema,
-} from '@bippo-nx/terraform';
+import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
+
+import { LambdaGeneratorSchema } from '../lambda/schema';
+import { default as lambdaGenerator } from '../lambda/generator';
 
 interface NormalizedSchema extends StepFunctionGeneratorSchema {
   projectName: string;
@@ -22,14 +15,9 @@ interface NormalizedSchema extends StepFunctionGeneratorSchema {
   workspaceName: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: TerraformGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
+  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
@@ -52,18 +40,10 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
-  generateFiles(
-    tree,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
+  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
 }
 
-export async function stepFunctionGenerator(
-  tree: Tree,
-  options: StepFunctionGeneratorSchema
-) {
+export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   const terraformGeneratorOptions: TerraformGeneratorSchema = {
     ...options,
@@ -73,6 +53,14 @@ export async function stepFunctionGenerator(
     database: options.database,
   };
   await terraformGenerator(tree, terraformGeneratorOptions);
+
+  const lambdaGeneratorOptions: LambdaGeneratorSchema = {
+    name: 'state0',
+    directory: normalizedOptions.projectDirectory,
+    generateTerraform: false,
+    database: 'none',
+  };
+  await lambdaGenerator(tree, lambdaGeneratorOptions);
   // addProjectConfiguration(tree, normalizedOptions.projectName, {
   //   root: normalizedOptions.projectRoot,
   //   projectType: 'library',

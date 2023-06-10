@@ -7,6 +7,6 @@ export interface TerraformOptions {
   awsProfile?: string;
   terraformVersion?: string;
   terraformAwsVersion?: string;
-  database?: string;
+  database?: 'none' | 'dynamo';
   appType?: 'SHARED_INFRA' | 'STEP_FUNCTION' | 'LAMBDA' | 'LAMBDA_SERVICE';
 }

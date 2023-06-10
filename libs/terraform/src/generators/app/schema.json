@@ -36,7 +36,7 @@
     "database": {
       "type": "string",
       "description": "generate files related to this database",
-      "enum": ["dynamo"]
+      "enum": ["dynamo", "none"]
     }
   },
   "required": ["name"]

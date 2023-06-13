@@ -21,14 +21,9 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
   awsAccount: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: TerraformGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
+  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   // const projectName = name;
   const projectName = options.directory || name;
@@ -36,20 +31,16 @@ function normalizeOptions(
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
   const awsProfile = options.awsProfile || 'devopslocal';
-  const terraformVersion =
-    options.terraformAwsVersion || versions.terraformVersion;
-  const terraformAwsVersion =
-    options.terraformAwsVersion || versions.terraformAwsVersion;
+  const terraformVersion = options.terraformAwsVersion || versions.terraformVersion;
+  const terraformAwsVersion = options.terraformAwsVersion || versions.terraformAwsVersion;
   const appType = options.appType || 'SHARED_INFRA';
   let stdout = ' not found';
   let awsAccount = '000000000000';
   try {
-    stdout = child_process
-      .execSync(`aws sts get-caller-identity --profile ${awsProfile}`)
-      .toString();
+    stdout = child_process.execSync(`aws sts get-caller-identity --profile ${awsProfile}`).toString();
     awsAccount = JSON.parse(stdout).Account;
   } catch (error) {
-    console.log('could not determine aws account id');
+    console.log('unable to determine aws account id');
   }
 
   return {
@@ -74,12 +65,7 @@ function addFiles(tree: Tree, options: NormalizedSchema, target = 'files') {
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
-  generateFiles(
-    tree,
-    path.join(__dirname, target),
-    options.projectRoot,
-    templateOptions
-  );
+  generateFiles(tree, path.join(__dirname, target), options.projectRoot, templateOptions);
 }
 
 export default async function (tree: Tree, options: TerraformGeneratorSchema) {

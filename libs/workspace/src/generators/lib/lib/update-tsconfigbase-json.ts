@@ -5,9 +5,7 @@ import type { NormalizedSchema } from '../schema';
 
 export function updateTsConfigBase(tree: Tree, options: NormalizedSchema): void {
   updateJson(tree, joinPathFragments('', 'tsconfig.base.json'), (json) => {
-    json.compilerOptions.paths[`@${options.workspaceName}/${options.projectDirectory}`] = [
-      `${options.projectRoot}/src/index.ts`,
-    ];
+    json.compilerOptions.paths[`@${options.projectRoot}`] = [`${options.projectRoot}/src/index.ts`];
     return json;
   });
 }

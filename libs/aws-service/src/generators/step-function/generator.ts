@@ -61,12 +61,6 @@ export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGen
     database: 'none',
   };
   await lambdaGenerator(tree, lambdaGeneratorOptions);
-  // addProjectConfiguration(tree, normalizedOptions.projectName, {
-  //   root: normalizedOptions.projectRoot,
-  //   projectType: 'library',
-  //   sourceRoot: `${normalizedOptions.projectRoot}/src`,
-  //   targets: {},
-  // });
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

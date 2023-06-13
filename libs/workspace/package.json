@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/workspace",
-  "version": "0.0.16",
+  "version": "0.1.17",
   "type": "commonjs",
   "generators": "./generators.json",
   "license": "MIT",
@@ -13,10 +13,12 @@
     "url": "git+https://github.com/wiowou/bippo-nx.git"
   },
   "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/workspace/README.md",
-  "peerDependencies": {},
+  "peerDependencies": {
+    "tslib": "^2.0.0"
+  },
   "devDependencies": {},
   "dependencies": {
-    "@bippo-nx/terraform": "^0.1.6",
+    "@bippo-nx/terraform": "^0.1.8",
     "@nx/devkit": "^16.0.0",
     "@nx/node": "^16.0.0",
     "@nx/webpack": "^16.0.0"

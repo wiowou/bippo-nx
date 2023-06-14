@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/workspace",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "type": "commonjs",
   "generators": "./generators.json",
   "license": "MIT",

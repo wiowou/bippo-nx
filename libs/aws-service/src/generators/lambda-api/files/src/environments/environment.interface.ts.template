@@ -1,4 +1,12 @@
 export interface IEnvironment {
   prod: boolean;
   local: boolean;
+<% if (database === "dynamo") { %>
+
+  dynamodb?: {
+    appTableName: string;
+    endpoint?: string;
+  };
+
+<% } %>
 }

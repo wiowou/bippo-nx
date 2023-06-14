@@ -23,7 +23,6 @@ export async function initGenerator(tree: Tree, rawOptions: InitGeneratorOptions
   if (!options.skipFormat) {
     await formatFiles(tree);
   }
-
   return runTasksInSerial(...tasks);
 }
 

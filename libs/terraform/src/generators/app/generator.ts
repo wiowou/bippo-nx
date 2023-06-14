@@ -26,7 +26,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   // const projectName = name;
-  const projectName = options.directory || name;
+  const projectName = options.directory.replace(new RegExp('/', 'g'), '-') || name;
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);

@@ -17,6 +17,10 @@
       "type": "string",
       "description": "A directory where the project is placed"
     },
+    "lambda": {
+      "type": "string",
+      "description": "The name of the first lambda in the step function"
+    },
     "awsProfile": {
       "type": "string",
       "description": "The AWS profile name you plan to use to locally create infra"

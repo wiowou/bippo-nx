@@ -71,7 +71,7 @@ export default async function (tree: Tree, options: LambdaApiGeneratorSchema) {
         options: {
           target: 'node',
           compiler: 'tsc',
-          outputPath: `dist/apps/${normalizedOptions.projectName}`,
+          outputPath: `dist/${normalizedOptions.projectRoot}`,
           main: `${normalizedOptions.projectRoot}/src/main.ts`,
           tsConfig: `${normalizedOptions.projectRoot}/tsconfig.app.json`,
           assets: [`${normalizedOptions.projectRoot}/src/assets`],

@@ -11,10 +11,7 @@ import {
 import * as path from 'path';
 import { LambdaGeneratorSchema } from './schema';
 
-import {
-  terraformGenerator,
-  TerraformGeneratorSchema,
-} from '@bippo-nx/terraform';
+import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
 
 interface NormalizedSchema extends LambdaGeneratorSchema {
   projectName: string;
@@ -24,14 +21,9 @@ interface NormalizedSchema extends LambdaGeneratorSchema {
   workspaceName: string;
 }
 
-function normalizeOptions(
-  tree: Tree,
-  options: LambdaGeneratorSchema
-): NormalizedSchema {
+function normalizeOptions(tree: Tree, options: LambdaGeneratorSchema): NormalizedSchema {
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
+  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
@@ -54,12 +46,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
-  generateFiles(
-    tree,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
+  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
 }
 
 export default async function (tree: Tree, options: LambdaGeneratorSchema) {
@@ -88,7 +75,7 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
         options: {
           target: 'node',
           compiler: 'tsc',
-          outputPath: `dist/apps/${normalizedOptions.projectName}`,
+          outputPath: `dist/${normalizedOptions.projectRoot}`,
           main: `${normalizedOptions.projectRoot}/src/main.ts`,
           tsConfig: `${normalizedOptions.projectRoot}/tsconfig.app.json`,
           assets: [`${normalizedOptions.projectRoot}/src/assets`],
@@ -194,11 +181,7 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
       },
     };
   }
-  addProjectConfiguration(
-    tree,
-    normalizedOptions.projectName,
-    projectConfiguration
-  );
+  addProjectConfiguration(tree, normalizedOptions.projectName, projectConfiguration);
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

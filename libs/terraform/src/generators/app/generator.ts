@@ -17,6 +17,7 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
   projectRoot: string;
   projectDirectory: string;
   rootOffset: string;
+  localBuildOffset: string;
   workspaceName: string;
   awsAccount: string;
 }
@@ -29,6 +30,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
   const projectName = options.directory.replace(new RegExp('/', 'g'), '-') || name;
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
+  const localBuildOffset = rootOffset.endsWith('/') ? rootOffset.substring(0, rootOffset.length - 1) : rootOffset;
   const workspaceName = path.basename(tree.root);
   const awsProfile = options.awsProfile || 'devopslocal';
   const terraformVersion = options.terraformAwsVersion || versions.terraformVersion;
@@ -50,6 +52,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
     projectDirectory,
     awsAccount,
     awsProfile,
+    localBuildOffset,
     rootOffset,
     workspaceName,
     terraformVersion,

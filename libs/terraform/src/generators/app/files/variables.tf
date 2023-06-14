@@ -6,7 +6,7 @@ variable "ENVIRONMENT" {
 variable "BUILD_SOURCES_DIR" {
   type = string
   description = "root level for the project sources"
-  default = "<%= rootOffset %>.."
+  default = "<%= localBuildOffset %>"
 }
 # end provided by pipeline
 

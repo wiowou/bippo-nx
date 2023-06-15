@@ -22,7 +22,7 @@ export function updateNxJson(tree: Tree, options: NormalizedOptions): void {
       tfexec: {
         dependsOn: [
           {
-            projects: [options.infraProjectName],
+            projects: [options.infraProjectName + '-tf'],
             target: 'tfexec',
             params: 'forward',
           },

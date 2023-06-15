@@ -22,7 +22,7 @@ function normalizeOptions(tree: Tree, options: StepFunctionGeneratorSchema): Nor
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
-  const lambda = options.lambda || 'state00';
+  const lambda = options.lambda || 'state0';
 
   return {
     ...options,

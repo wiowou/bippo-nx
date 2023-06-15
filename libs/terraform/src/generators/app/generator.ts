@@ -45,7 +45,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
     stdout = child_process.execSync(`aws sts get-caller-identity --profile ${awsProfile}`).toString();
     awsAccount = JSON.parse(stdout).Account;
   } catch (error) {
-    console.log('unable to determine aws account id');
+    console.log('unable to determine aws account id.');
   }
 
   return {

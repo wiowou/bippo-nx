@@ -5,7 +5,6 @@ import {
   awsLambdaVersion,
   bippoAwsServiceVersion,
   bippoTerraformVersion,
-  bippoWorkspaceVersion,
   classTransformerVersion,
   classValidatorVersion,
   dynamodbVersion,
@@ -42,7 +41,6 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@bippo-nx/aws-service': bippoAwsServiceVersion,
       '@bippo-nx/terraform': bippoTerraformVersion,
-      '@bippo-nx/workspace': bippoWorkspaceVersion,
       '@nestjs/schematics': nestJsSchematicsVersion,
       '@nestjs/swagger': nestSwaggerVersion,
       '@nestjs/testing': nestJsVersion,

@@ -20,6 +20,7 @@ interface NormalizedSchema extends TerraformGeneratorSchema {
   localBuildOffset: string;
   workspaceName: string;
   awsAccount: string;
+  applicationDirectory: string;
 }
 
 function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): NormalizedSchema {
@@ -27,7 +28,8 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   // const projectName = name;
-  const projectName = options.directory.replace(new RegExp('/', 'g'), '-') || name;
+  const applicationDirectory = options.directory ? names(options.directory).fileName : name;
+  const projectName = applicationDirectory.replace(new RegExp('/', 'g'), '-') + '-tf';
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const localBuildOffset = rootOffset.endsWith('/') ? rootOffset.substring(0, rootOffset.length - 1) : rootOffset;
@@ -36,6 +38,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
   const terraformVersion = options.terraformAwsVersion || versions.terraformVersion;
   const terraformAwsVersion = options.terraformAwsVersion || versions.terraformAwsVersion;
   const appType = options.appType || 'SHARED_INFRA';
+  const database = options.database || 'none';
   let stdout = ' not found';
   let awsAccount = '000000000000';
   try {
@@ -47,6 +50,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
 
   return {
     ...options,
+    applicationDirectory,
     projectName,
     projectRoot,
     projectDirectory,
@@ -58,6 +62,7 @@ function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): Normal
     terraformVersion,
     terraformAwsVersion,
     appType,
+    database,
   };
 }
 
@@ -73,7 +78,7 @@ function addFiles(tree: Tree, options: NormalizedSchema, target = 'files') {
 
 export default async function (tree: Tree, options: TerraformGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  addProjectConfiguration(tree, normalizedOptions.projectName + '-tf', {
+  addProjectConfiguration(tree, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}`,

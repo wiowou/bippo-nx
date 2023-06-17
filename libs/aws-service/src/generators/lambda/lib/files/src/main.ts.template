@@ -1,6 +1,6 @@
 import { Context, Handler } from 'aws-lambda';
 
-import * as AppService from './app/app.service';
+import * as AppService from './services/app.service';
 
 export const handler: Handler = async (event, context: Context) => {
   console.log(event, context.functionName);

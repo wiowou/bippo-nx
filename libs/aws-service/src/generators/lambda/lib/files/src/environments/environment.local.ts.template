@@ -1,0 +1,14 @@
+import { IEnvironment } from './environment.interface';
+
+export const environment: IEnvironment = {
+  prod: false,
+  local: true,
+<% if (database === "dynamo") { %>
+
+  dynamodb: {
+    appTableName: '<%= projectName %>', //should match tablename in terraform/dynamodb/app-table.yaml,
+    endpoint: 'http://localhost:8112'
+  },
+
+<% } %>
+};

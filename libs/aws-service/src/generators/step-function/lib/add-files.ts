@@ -1,9 +1,8 @@
 import { generateFiles, names, offsetFromRoot, Tree } from '@nx/devkit';
 import * as path from 'path';
+import { NormalizedStepFunctionGeneratorSchema } from '../schema';
 
-import { NormalizedSchema } from '../schema';
-
-export function addFiles(tree: Tree, options: NormalizedSchema) {
+export function addFiles(tree: Tree, options: NormalizedStepFunctionGeneratorSchema) {
   const templateOptions = {
     ...options,
     ...names(options.name),

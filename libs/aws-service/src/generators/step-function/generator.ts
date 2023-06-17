@@ -1,49 +1,10 @@
-import { formatFiles, generateFiles, getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nx/devkit';
-import * as path from 'path';
-import { StepFunctionGeneratorSchema } from './schema';
-
+import { addProjectConfiguration, formatFiles, Tree } from '@nx/devkit';
 import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
 
+import { addFiles, createProjectConfiguration, normalizeOptions } from './lib';
 import { LambdaGeneratorSchema } from '../lambda/schema';
+import { StepFunctionGeneratorSchema } from './schema';
 import { default as lambdaGenerator } from '../lambda/generator';
-
-interface NormalizedSchema extends StepFunctionGeneratorSchema {
-  projectName: string;
-  projectRoot: string;
-  projectDirectory: string;
-  rootOffset: string;
-  workspaceName: string;
-}
-
-function normalizeOptions(tree: Tree, options: StepFunctionGeneratorSchema): NormalizedSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
-  const rootOffset = offsetFromRoot(projectRoot);
-  const workspaceName = path.basename(tree.root);
-  const lambda = options.lambda || 'state0';
-
-  return {
-    ...options,
-    lambda,
-    projectName,
-    projectRoot,
-    projectDirectory,
-    rootOffset,
-    workspaceName,
-  };
-}
-
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.name),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
-  };
-  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
-}
 
 export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
@@ -56,6 +17,9 @@ export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGen
   };
   await terraformGenerator(tree, terraformGeneratorOptions);
 
+  addProjectConfiguration(tree, normalizedOptions.projectName, createProjectConfiguration(normalizedOptions));
+  addFiles(tree, normalizedOptions);
+
   const lambdaGeneratorOptions: LambdaGeneratorSchema = {
     name: normalizedOptions.lambda,
     directory: normalizedOptions.projectDirectory,
@@ -63,7 +27,6 @@ export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGen
     database: 'none',
   };
   await lambdaGenerator(tree, lambdaGeneratorOptions);
-  addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }
 

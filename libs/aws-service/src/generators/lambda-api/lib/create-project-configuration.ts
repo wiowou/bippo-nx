@@ -1,8 +1,10 @@
 import { ProjectConfiguration } from '@nx/devkit';
-import { NormalizedLambdaGeneratorSchema } from '../schema';
+import { NormalizedLambdaApiGeneratorSchema } from '../schema';
 
-export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGeneratorSchema): ProjectConfiguration {
-  return {
+export function createProjectConfiguration(
+  normalizedOptions: NormalizedLambdaApiGeneratorSchema
+): ProjectConfiguration {
+  const projectConfiguration: ProjectConfiguration = {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
@@ -53,6 +55,24 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           },
         },
       },
+      serve: {
+        executor: '@nx/js:node',
+        defaultConfiguration: 'dev',
+        options: {
+          buildTarget: `${normalizedOptions.projectName}:build`,
+        },
+        configurations: {
+          local: {
+            buildTarget: `${normalizedOptions.projectName}:build:local`,
+          },
+          dev: {
+            buildTarget: `${normalizedOptions.projectName}:build:dev`,
+          },
+          prod: {
+            buildTarget: `${normalizedOptions.projectName}:build:prod`,
+          },
+        },
+      },
       lint: {
         executor: '@nx/linter:eslint',
         outputs: ['{options.outputFile}'],
@@ -74,6 +94,44 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           },
         },
       },
+      tfexec: {
+        command: 'echo run tfexec',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfexec',
+            params: 'forward',
+          },
+        ],
+      },
     },
   };
+  if (normalizedOptions.database === 'dynamo') {
+    projectConfiguration.targets = {
+      ...projectConfiguration.targets,
+      'create-ddbs': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: './',
+          commands: [
+            'docker compose up -d',
+            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/terraform/dynamodb/app-table.yaml --profile devopslocal`,
+          ],
+        },
+      },
+      'delete-ddbs': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: './',
+          commands: [
+            'docker compose up -d',
+            `aws dynamodb delete-table --no-cli-pager --endpoint-url http://localhost:8112 --table-name ${normalizedOptions.projectName} --profile devopslocal`,
+          ],
+        },
+      },
+    };
+  }
+  return projectConfiguration;
 }

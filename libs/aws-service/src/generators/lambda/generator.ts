@@ -3,7 +3,7 @@ import { LambdaGeneratorSchema } from './schema';
 
 import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
 
-import { addFiles, createProjectConfiguration, normalizeOptions, updateProjectJson } from './lib';
+import { addFiles, createProjectConfiguration, normalizeOptions, updateIndex, updateProjectJson } from './lib';
 
 export default async function (tree: Tree, options: LambdaGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
@@ -23,5 +23,6 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
 
   addFiles(tree, normalizedOptions);
   updateProjectJson(tree, normalizedOptions);
+  updateIndex(tree, normalizedOptions);
   await formatFiles(tree);
 }

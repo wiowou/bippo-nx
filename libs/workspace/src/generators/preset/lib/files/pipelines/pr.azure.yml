@@ -14,7 +14,7 @@ jobs:
 
       - template: templates/install-node-deps.yml
 
-      - bash: npx nx -- affected:build --parallel=3 --base=remotes/origin/master --configuration=production
+      - bash: npx nx -- affected:build --parallel=3 --base=remotes/origin/master --configuration=prod
         displayName: build affected projects
 
   - job: lint

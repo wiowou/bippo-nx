@@ -1,9 +1,8 @@
 parameters:
   - name: application_environment
     type: string
-  - name: nx_run_cmd
-    type: string
-    default: affected
+  - name: run_all
+    type: boolean
 
 stages:
   - stage: deploy${{ parameters.application_environment }}
@@ -16,9 +15,16 @@ stages:
         value: $(Build.SourcesDirectory)
       - name: affected_apps
         value: $[ stageDependencies.build.buildjob.outputs['affected_apps.affected_apps'] ]
+      - name: nx_run_cmd
+        ${{ if eq(parameters.run_all, true) }}:
+          value: run-many
+        ${{ else }}:
+          value: run-many -p
+
     displayName: deploy ${{ variables.TF_VAR_environment }}
     jobs:
       - deployment: deploy_dev
+        condition: or(ne(stageDependencies.build.buildjob.outputs['affected_apps.affected_apps'], ''), eq('${{ parameters.run_all }}', true))
         displayName: deploy apps / services
         pool: bippo
         environment: ${{ variables.TF_VAR_environment }}
@@ -27,7 +33,7 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                  fetchDepth: 2
+                  fetchDepth: 0
 
                 - task: DownloadPipelineArtifact@2
                   displayName: download all artifacts from this pipeline
@@ -63,21 +69,21 @@ stages:
                     configUser: git
                   displayName: Add github ssh key
 
-                - bash: npm i nx; npx nx ${{ parameters.nx_run_cmd }} --parallel=4 --target=tfexec --cmd=init --environment=${{ parameters.application_environment }} --base=HEAD~1 --head=HEAD
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd=init --environment=${{ parameters.application_environment }}
                   displayName: terraform init
                   workingDirectory: $(Build.SourcesDirectory)
                   env:
                     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
-                - bash: npm i nx; npx nx ${{ parameters.nx_run_cmd }} --parallel=4 --target=tfexec --cmd='plan -out=tfplan' --environment=${{ parameters.application_environment }} --base=HEAD~1 --head=HEAD
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='plan -out=tfplan' --environment=${{ parameters.application_environment }}
                   displayName: terraform plan
                   workingDirectory: $(Build.SourcesDirectory)
                   env:
                     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
-                - bash: npm i nx; npx nx ${{ parameters.nx_run_cmd }} --parallel=4 --target=tfexec --cmd='apply tfplan' --environment=${{ parameters.application_environment }} --base=HEAD~1 --head=HEAD
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='apply tfplan' --environment=${{ parameters.application_environment }}
                   displayName: terraform apply
                   workingDirectory: $(Build.SourcesDirectory)
                   env:

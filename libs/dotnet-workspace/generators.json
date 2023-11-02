@@ -1,0 +1,20 @@
+{
+  "generators": {
+    "preset": {
+      "factory": "./src/generators/preset/generator",
+      "schema": "./src/generators/preset/schema.json",
+      "description": "preset generator",
+      "x-use-standalone-layout": true
+    },
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "init generator"
+    },
+    "lib": {
+      "factory": "./src/generators/lib/generator",
+      "schema": "./src/generators/lib/schema.json",
+      "description": "lib generator"
+    }
+  }
+}

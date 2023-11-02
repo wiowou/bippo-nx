@@ -1,0 +1,54 @@
+trigger: none
+
+variables:
+  - name: node_version
+    value: '18.12.1'
+
+pool: bippo
+
+jobs:
+  - job: build
+    steps:
+      - checkout: self
+        fetchDepth: 0
+
+      - template: templates/install-node-deps.yml
+
+      - bash: npx nx -- affected:build --parallel=3 --base=remotes/origin/master --configuration=prod
+        displayName: build affected projects
+
+  - job: lint
+    steps:
+      - checkout: self
+        fetchDepth: 0
+
+      - template: templates/install-node-deps.yml
+
+      - bash: npx nx -- workspace-lint
+        displayName: lint workspace
+
+      - bash: npx nx -- affected:lint --base=remotes/origin/master
+        displayName: lint affected projects
+
+      - bash: npx nx -- format:check --base=remotes/origin/master
+        displayName: check prettier formatting
+
+  - job: test
+    steps:
+      - checkout: self
+        fetchDepth: 0
+
+      - template: templates/install-node-deps.yml
+
+      - bash: npx nx -- affected:test --parallel=3 --base=remotes/origin/master
+        displayName: test affected projects
+
+      - task: PublishTestResults@2
+        displayName: publish all test results
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: '**/test-report.xml'
+          testRunTitle: jest unit tests
+          mergeTestResults: true
+          failTaskOnFailedTests: true

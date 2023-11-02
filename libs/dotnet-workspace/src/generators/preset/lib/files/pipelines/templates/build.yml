@@ -1,0 +1,48 @@
+parameters:
+  - name: run_all
+    type: boolean
+
+stages:
+  - stage: build
+    displayName: build apps / services
+    variables:
+      ${{ if eq(parameters.run_all, true) }}:
+        nx_run_cmd: run-many
+      ${{ else }}:
+        nx_run_cmd: affected
+    pool: bippo
+    jobs:
+      - job: buildjob
+        displayName: build & archive
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - template: set-base-sha.yml
+
+          - template: install-node-deps.yml
+
+          - bash: mkdir dist
+            displayName: create the dist folder
+
+          - bash: npx nx ${{ variables.nx_run_cmd }} --parallel=4 --target=build --configuration=prod --base=$(shabase.base_sha)
+            displayName: build apps / services
+
+          - bash: |
+              affectedApps=`npx nx print-affected --type=app --select=projects --base=$(shabase.base_sha)`
+              echo affected apps - $affectedApps
+              echo "##vso[task.setvariable variable=affected_apps;isOutput=true]$affectedApps"
+            displayName: print affected_apps
+            name: affected_apps
+
+          - task: ArchiveFiles@2
+            displayName: archive dist folder
+            inputs:
+              rootFolderOrFile: dist
+              includeRootFolder: true
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.SourceVersion).zip
+
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.SourceVersion).zip
+            displayName: publish the dist folder
+            artifact: $(Build.SourceVersion)

@@ -1,0 +1,25 @@
+{
+  "name": "@bippo-nx/dotnet-workspace",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "generators": "./generators.json",
+  "license": "MIT",
+  "keywords": [
+    "nx",
+    "nx-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiowou/bippo-nx.git"
+  },
+  "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/dotnet-workspace/README.md",
+  "peerDependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@bippo-nx/terraform": "^0.1.15",
+    "@nx/devkit": "^16.0.0",
+    "@nx/node": "^16.0.0"
+  }
+}

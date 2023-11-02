@@ -1,0 +1,91 @@
+parameters:
+  - name: application_environment
+    type: string
+  - name: run_all
+    type: boolean
+
+stages:
+  - stage: deploy${{ parameters.application_environment }}
+    dependsOn: build
+    variables:
+      - group: aws
+      - name: TF_VAR_environment
+        value: ${{ parameters.application_environment }}
+      - name: TF_VAR_build_sources_dir
+        value: $(Build.SourcesDirectory)
+      - name: affected_apps
+        value: $[ stageDependencies.build.buildjob.outputs['affected_apps.affected_apps'] ]
+      - name: nx_run_cmd
+        ${{ if eq(parameters.run_all, true) }}:
+          value: run-many
+        ${{ else }}:
+          value: run-many -p
+
+    displayName: deploy ${{ variables.TF_VAR_environment }}
+    jobs:
+      - deployment: deploy_dev
+        condition: or(ne(stageDependencies.build.buildjob.outputs['affected_apps.affected_apps'], ''), eq('${{ parameters.run_all }}', true))
+        displayName: deploy apps / services
+        pool: bippo
+        environment: ${{ variables.TF_VAR_environment }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                  fetchDepth: 0
+
+                - task: DownloadPipelineArtifact@2
+                  displayName: download all artifacts from this pipeline
+                  inputs:
+                    source: current
+                    artifact: $(Build.SourceVersion)
+                    targetPath: $(Build.SourcesDirectory)
+
+                - task: ExtractFiles@1
+                  displayName: extract downloaded artifacts
+                  inputs:
+                    archiveFilePatterns: $(Build.SourcesDirectory)/$(Build.SourceVersion).zip
+                    destinationFolder: $(Build.SourcesDirectory)
+                    cleanDestinationFolder: false
+
+                - task: NodeTool@0
+                  inputs:
+                    versionSource: spec
+                    versionSpec: $(node_version)
+                  displayName: install nodejs, npm
+
+                - task: TerraformInstaller@1
+                  inputs:
+                    terraformVersion: $(terraform_version)
+
+                - task: InstallSSHKey@0
+                  inputs:
+                    knownHostsEntry: 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl'
+                    sshKeySecureFile: id_ed25519
+                    addEntryToConfig: true
+                    configHostAlias: '*'
+                    configHostName: github.com
+                    configUser: git
+                  displayName: Add github ssh key
+
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd=init --environment=${{ parameters.application_environment }}
+                  displayName: terraform init
+                  workingDirectory: $(Build.SourcesDirectory)
+                  env:
+                    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='plan -out=tfplan' --environment=${{ parameters.application_environment }}
+                  displayName: terraform plan
+                  workingDirectory: $(Build.SourcesDirectory)
+                  env:
+                    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='apply tfplan' --environment=${{ parameters.application_environment }}
+                  displayName: terraform apply
+                  workingDirectory: $(Build.SourcesDirectory)
+                  env:
+                    AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                    AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)

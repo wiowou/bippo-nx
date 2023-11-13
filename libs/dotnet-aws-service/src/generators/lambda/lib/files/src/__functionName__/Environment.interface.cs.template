@@ -1,0 +1,5 @@
+interface IEnvironment
+{
+  public bool prod {get;}
+  public bool local {get;}
+}

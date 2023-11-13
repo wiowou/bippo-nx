@@ -1,0 +1,11 @@
+class Environment : IEnvironment
+{
+  public bool prod 
+  {
+    get { return true; }
+  }
+  public bool local
+  {
+    get { return false; }
+  } 
+}

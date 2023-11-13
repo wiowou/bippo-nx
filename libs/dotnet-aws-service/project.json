@@ -1,0 +1,62 @@
+{
+  "name": "dotnet-aws-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/dotnet-aws-service/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/dotnet-aws-service",
+        "main": "libs/dotnet-aws-service/src/index.ts",
+        "tsConfig": "libs/dotnet-aws-service/tsconfig.lib.json",
+        "assets": [
+          "libs/dotnet-aws-service/*.md",
+          {
+            "input": "./libs/dotnet-aws-service/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/dotnet-aws-service/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/dotnet-aws-service",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/dotnet-aws-service",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/dotnet-aws-service/**/*.ts", "libs/dotnet-aws-service/package.json"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/dotnet-aws-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

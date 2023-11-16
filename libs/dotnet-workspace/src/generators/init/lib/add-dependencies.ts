@@ -1,6 +1,6 @@
 import type { GeneratorCallback, Tree } from '@nx/devkit';
 import { addDependenciesToPackageJson } from '@nx/devkit';
-import { bippoDotnetAwsServiceVersion, bippoTerraformVersion, tsLibVersion } from '../../utils';
+import { bippoDotnetVersion, bippoDotnetAwsServiceVersion, bippoTerraformVersion, tsLibVersion } from '../../utils';
 
 export function addDependencies(tree: Tree): GeneratorCallback {
   return addDependenciesToPackageJson(
@@ -9,6 +9,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
       tslib: tsLibVersion,
     },
     {
+      '@bippo-nx/dotnet': bippoDotnetVersion,
       '@bippo-nx/dotnet-aws-service': bippoDotnetAwsServiceVersion,
       '@bippo-nx/terraform': bippoTerraformVersion,
     }

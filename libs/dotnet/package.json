@@ -1,0 +1,17 @@
+{
+  "name": "@bippo-nx/dotnet",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "executors": "./executors.json",
+  "license": "MIT",
+  "keywords": [
+    "nx",
+    "nx-plugin",
+    "dotnet"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiowou/bippo-nx.git"
+  },
+  "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/dotnet/README.md"
+}

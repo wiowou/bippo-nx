@@ -5,14 +5,35 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}`,
+    sourceRoot: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}`,
     targets: {
-      dotnetexec: {
-        executor: 'nx:run-commands',
+      build: {
+        executor: '@bippo-nx/dotnet:lambda-package',
         options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}`,
-          commands: ['cp environments/{args.environment}.cs environments/environment.cs', 'dotnet {args.cmd}'],
+          outputPath: `dist/${normalizedOptions.projectRoot}`,
+          dotnetRootPath: '',
+          dotnetToolsPath: '',
+        },
+        configurations: {
+          local: {
+            dotnetRootPath: '',
+            dotnetToolsPath: '',
+            fileReplacements: [
+              {
+                replace: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}/Environment.cs`,
+                with: `${normalizedOptions.projectRoot}/src/environments/Environment.local.cs`,
+              },
+            ],
+          },
+          dev: {},
+          prod: {
+            fileReplacements: [
+              {
+                replace: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}/Environment.cs`,
+                with: `${normalizedOptions.projectRoot}/src/environments/Environment.prod.cs`,
+              },
+            ],
+          },
         },
       },
     },

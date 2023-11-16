@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "LambdaPackage executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "dotnetRootPath": {
+      "type": "string",
+      "description": "The root directory where the dotnet command is intalled",
+      "x-completion-type": "directory",
+      "x-priority": "important"
+    },
+    "dotnetToolsPath": {
+      "type": "string",
+      "description": "The directory where dotnet tools are intalled",
+      "x-completion-type": "directory",
+      "x-priority": "important"
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "The output path of the generated files.",
+      "x-completion-type": "directory",
+      "x-priority": "important"
+    },
+    "projectLocationPath": {
+      "type": "string",
+      "description": "The directory where the csproj file is located, relative to the sourceRoot in the project.json file"
+    },
+    "packageType": {
+      "type": "string",
+      "description": "The deployment package type for Lambda function",
+      "enum": ["image", "zip"],
+      "default": "zip"
+    },
+    "configurationType": {
+      "type": "string",
+      "description": "Configuration type to build with",
+      "enum": ["Release", "Debug"],
+      "default": "Release"
+    },
+    "functionArchitecture": {
+      "type": "string",
+      "description": "The architecture of the lambda function",
+      "enum": ["x86_64", "arm64"],
+      "default": "x86_64"
+    },
+    "fileReplacements": {
+      "description": "Replace files with other files in the build.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "replace": {
+            "type": "string",
+            "description": "The file to be replaced.",
+            "x-completion-type": "file"
+          },
+          "with": {
+            "type": "string",
+            "description": "The file to replace with.",
+            "x-completion-type": "file"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["replace", "with"]
+      },
+      "default": []
+    }
+  },
+  "required": ["dotnetRootPath", "dotnetToolsPath"]
+}

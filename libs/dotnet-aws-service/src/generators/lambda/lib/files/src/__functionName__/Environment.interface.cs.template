@@ -1,3 +1,5 @@
+namespace <%= functionNameSnakeCase %>;
+
 interface IEnvironment
 {
   public bool prod {get;}

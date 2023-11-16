@@ -1,3 +1,5 @@
+namespace <%= functionNameSnakeCase %>;
+
 class Environment : IEnvironment
 {
   public bool prod 
@@ -6,6 +8,6 @@ class Environment : IEnvironment
   }
   public bool local
   {
-    get { return false; }
+    get { return true; }
   } 
 }

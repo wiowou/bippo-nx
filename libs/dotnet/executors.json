@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "lambda-package": {
+      "implementation": "./src/executors/lambda-package/executor",
+      "schema": "./src/executors/lambda-package/schema.json",
+      "description": "lambda-package executor"
+    }
+  }
+}

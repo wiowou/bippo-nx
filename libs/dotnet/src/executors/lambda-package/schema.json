@@ -68,5 +68,5 @@
       "default": []
     }
   },
-  "required": ["dotnetRootPath", "dotnetToolsPath"]
+  "required": []
 }

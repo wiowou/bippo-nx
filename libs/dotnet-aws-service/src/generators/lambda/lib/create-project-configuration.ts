@@ -11,13 +11,9 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
         executor: '@bippo-nx/dotnet:lambda-package',
         options: {
           outputPath: `dist/${normalizedOptions.projectRoot}`,
-          dotnetRootPath: '',
-          dotnetToolsPath: '',
         },
         configurations: {
           local: {
-            dotnetRootPath: '',
-            dotnetToolsPath: '',
             fileReplacements: [
               {
                 replace: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}/Environment.cs`,

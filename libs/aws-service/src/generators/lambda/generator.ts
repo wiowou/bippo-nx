@@ -7,7 +7,6 @@ import { addFiles, createProjectConfiguration, normalizeOptions, updateIndex, up
 
 export default async function (tree: Tree, options: LambdaGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-
   if (options.generateTerraform) {
     const terraformGeneratorOptions: TerraformGeneratorSchema = {
       ...options,

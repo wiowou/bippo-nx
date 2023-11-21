@@ -10,7 +10,8 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
   // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   // const projectName = name;
   const applicationDirectory = options.directory ? names(options.directory).fileName : name;
-  const projectName = applicationDirectory.replace(new RegExp('/', 'g'), '-') + '-tf';
+  const parentProjectName = applicationDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = parentProjectName + '-tf';
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const localBuildOffset = rootOffset.endsWith('/') ? rootOffset.substring(0, rootOffset.length - 1) : rootOffset;
@@ -33,6 +34,7 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
     ...options,
     applicationDirectory,
     projectName,
+    parentProjectName,
     projectRoot,
     projectDirectory,
     awsAccount,

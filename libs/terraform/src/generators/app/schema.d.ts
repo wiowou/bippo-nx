@@ -2,6 +2,7 @@ import { Database } from '@bippo-nx/types';
 
 interface NormalizedTerraformGeneratorSchema extends TerraformGeneratorSchema {
   projectName: string;
+  parentProjectName: string;
   projectRoot: string;
   projectDirectory: string;
   rootOffset: string;

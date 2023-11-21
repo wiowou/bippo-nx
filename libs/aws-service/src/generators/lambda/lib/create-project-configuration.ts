@@ -74,6 +74,66 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           },
         },
       },
+      tfexec: {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/{args.environment}.tfvars terraform.tfvars',
+            'cp environments/provider.{args.environment}.tf provider.tf',
+            'terraform {args.cmd}',
+          ],
+        },
+      },
+      'init-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform init',
+          ],
+        },
+      },
+      'plan-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform plan -out=tfplan -input=false',
+          ],
+        },
+      },
+      'apply-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform apply -auto-approve tfplan',
+          ],
+        },
+      },
+      'destroy-local': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/terraform`,
+          commands: [
+            'cp environments/local.tfvars terraform.tfvars',
+            'cp environments/provider.local.tf provider.tf',
+            'terraform destroy -auto-approve',
+          ],
+        },
+      },
     },
   };
 }

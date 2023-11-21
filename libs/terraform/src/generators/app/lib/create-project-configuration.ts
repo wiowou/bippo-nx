@@ -41,7 +41,7 @@ export function createProjectConfiguration(
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
-            'terraform plan -out=tfplan',
+            'terraform plan -out=tfplan -input=false',
           ],
         },
       },
@@ -53,7 +53,7 @@ export function createProjectConfiguration(
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
-            'terraform apply tfplan',
+            'terraform apply -auto-approve tfplan',
           ],
         },
       },
@@ -65,7 +65,7 @@ export function createProjectConfiguration(
           commands: [
             'cp environments/local.tfvars terraform.tfvars',
             'cp environments/provider.local.tf provider.tf',
-            'terraform destroy',
+            'terraform destroy -auto-approve',
           ],
         },
       },

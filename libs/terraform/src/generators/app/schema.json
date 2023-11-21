@@ -26,12 +26,12 @@
     "terraformVersion": {
       "type": "string",
       "description": "min version of Terraform installer",
-      "default": "1.4"
+      "default": "1.6.4"
     },
     "terraformAwsVersion": {
       "type": "string",
       "description": "min version of Terraform AWS provider",
-      "default": "4.63"
+      "default": "5.26"
     },
     "database": {
       "type": "string",

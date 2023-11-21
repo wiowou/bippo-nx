@@ -76,14 +76,14 @@ stages:
                     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
-                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='plan -out=tfplan' --environment=${{ parameters.application_environment }}
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='plan -out=tfplan -input=false' --environment=${{ parameters.application_environment }}
                   displayName: terraform plan
                   workingDirectory: $(Build.SourcesDirectory)
                   env:
                     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
-                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='apply tfplan' --environment=${{ parameters.application_environment }}
+                - bash: npm i nx; npx nx ${{ variables.nx_run_cmd }} $(affected_apps) --parallel=4 --target=tfexec --cmd='apply -auto-approve tfplan' --environment=${{ parameters.application_environment }}
                   displayName: terraform apply
                   workingDirectory: $(Build.SourcesDirectory)
                   env:

@@ -8,12 +8,20 @@ export function updateProjectJson(tree: Tree, options: NormalizedLambdaGenerator
     return;
   }
   const parentDirectory = `${getWorkspaceLayout(tree).appsDir}/${options.directory}`;
+  function findProjectName(el) {
+    return el === options.projectName;
+  }
   try {
     updateJson(tree, joinPathFragments(parentDirectory, 'project.json'), (json) => {
-      if (!json?.targets?.build?.dependsOn?.[0].projects) {
-        return json;
+      if (json?.targets?.build?.dependsOn?.[0].projects?.findIndex(findProjectName) === -1) {
+        json.targets.build.dependsOn[0].projects.push(options.projectName);
       }
-      json.targets.build.dependsOn[0].projects.push(options.projectName);
+      if (json?.targets?.tfexec?.dependsOn?.[0].projects?.findIndex(findProjectName) === -1) {
+        json.targets.tfexec.dependsOn[0].projects.push(options.projectName);
+      }
+      if (json?.targets?.tfexec?.dependsOn?.[1].projects?.findIndex(findProjectName) === -1) {
+        json.targets.tfexec.dependsOn[1].projects.push(options.projectName);
+      }
       return json;
     });
   } catch (error) {

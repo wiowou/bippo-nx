@@ -17,6 +17,11 @@ export function createProjectConfiguration(
             target: 'tfexec',
             params: 'forward',
           },
+          {
+            projects: [],
+            target: 'build',
+            params: 'ignore',
+          },
         ],
       },
       build: {

@@ -38,7 +38,7 @@
     "generateTerraform": {
       "type": "boolean",
       "description": "generate terraform files",
-      "default": false
+      "default": true
     }
   },
   "required": ["name"]

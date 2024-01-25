@@ -11,8 +11,16 @@ export default async function runExecutor(options: LambdaPackageExecutorSchema, 
   const command = buildCommand(normalizedOptions);
   console.log(command);
   try {
-    execSync('dotnet restore');
-    execSync('dotnet tool restore');
+    execSync('dotnet restore', {
+      cwd: normalizedOptions.sourceRoot,
+      stdio: [0, 1, 2],
+      env: buildEnv(normalizedOptions),
+    });
+    execSync('dotnet tool restore', {
+      cwd: normalizedOptions.sourceRoot,
+      stdio: [0, 1, 2],
+      env: buildEnv(normalizedOptions),
+    });
     execSync(command, {
       cwd: normalizedOptions.sourceRoot,
       stdio: [0, 1, 2],

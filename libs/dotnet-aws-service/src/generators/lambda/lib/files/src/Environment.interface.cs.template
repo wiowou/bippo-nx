@@ -1,4 +1,4 @@
-namespace <%= functionNameSnakeCase %>;
+namespace Handler;
 
 interface IEnvironment
 {

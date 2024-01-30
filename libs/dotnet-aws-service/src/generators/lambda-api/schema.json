@@ -33,7 +33,7 @@
       "type": "string",
       "description": "generate files related to this database",
       "enum": ["none", "dynamo"],
-      "default": "dynamo"
+      "default": "none"
     }
   },
   "required": ["name"]

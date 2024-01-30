@@ -63,8 +63,8 @@ module "lambda" {
 ## lambda service
 
 module "lambda-service" {
-  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v1-lambda"
-  # source = "<%= rootOffset %>libs/terraform/api-gateway-v1-lambda"
+  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v2-lambda"
+  # source = "<%= rootOffset %>libs/terraform/api-gateway-v2-lambda"
 
   environment = var.ENVIRONMENT
   project_name = var.project_name

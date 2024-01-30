@@ -2,7 +2,7 @@ using Xunit;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.TestUtilities;
 
-namespace <%= functionNameSnakeCase %>.Tests;
+namespace Handler.Tests;
 
 public class FunctionTest
 {

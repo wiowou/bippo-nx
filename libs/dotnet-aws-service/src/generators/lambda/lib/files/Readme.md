@@ -42,13 +42,6 @@ If already installed check if new version is available.
 Execute unit tests
 
 ```
-    cd "<%= functionName %>/test/<%= functionName %>.Tests"
+    cd "<%= functionName %>/test/main.Tests"
     dotnet test
-```
-
-Deploy function to AWS Lambda
-
-```
-    cd "<%= functionName %>/src/<%= functionName %>"
-    dotnet lambda deploy-function
 ```

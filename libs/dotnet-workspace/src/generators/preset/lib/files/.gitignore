@@ -6,6 +6,9 @@ tmp
 /out-tsc
 **.terraform*
 **tfplan
+bin/
+obj/
+.terraform/
 
 # dependencies
 node_modules

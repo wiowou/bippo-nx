@@ -5,7 +5,7 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
-    sourceRoot: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}`,
+    sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
         executor: '@bippo-nx/dotnet:lambda-package',
@@ -16,8 +16,8 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           local: {
             fileReplacements: [
               {
-                replace: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}/Environment.cs`,
-                with: `${normalizedOptions.projectRoot}/src/environments/Environment.local.cs`,
+                replace: `${normalizedOptions.projectRoot}/src/Environment.cs`,
+                with: `${normalizedOptions.projectRoot}/environments/Environment.local.cs`,
               },
             ],
           },
@@ -25,8 +25,8 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           prod: {
             fileReplacements: [
               {
-                replace: `${normalizedOptions.projectRoot}/src/${normalizedOptions.functionName}/Environment.cs`,
-                with: `${normalizedOptions.projectRoot}/src/environments/Environment.prod.cs`,
+                replace: `${normalizedOptions.projectRoot}/src/Environment.cs`,
+                with: `${normalizedOptions.projectRoot}/environments/Environment.prod.cs`,
               },
             ],
           },

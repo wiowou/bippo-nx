@@ -21,6 +21,27 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/my-api/src/Views"
       }
+    },
+    {
+      "name": "Serve blah-my-api",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_blah-my-api",
+      "program": "${workspaceFolder}/apps/blah/my-api/src/bin/Debug/net6.0/main.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/blah/my-api/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/blah/my-api/src/Views"
+      }
     }
   ]
 }

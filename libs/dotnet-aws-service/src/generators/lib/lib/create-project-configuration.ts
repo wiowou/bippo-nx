@@ -5,7 +5,11 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLibGener
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'library',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    targets: {},
+    sourceRoot: `${normalizedOptions.projectRoot}`,
+    targets: {
+      build: {
+        command: 'echo run lib-build',
+      },
+    },
   };
 }

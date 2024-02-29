@@ -1,0 +1,12 @@
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: sdk
+      version: $(dotnet_version)
+    displayName: install dotnet sdk
+
+  - bash: ls $(Agent.ToolsDirectory)
+    displayName: check tools directory
+
+  - bash: dotnet tool restore
+    displayName: install dotnet tools

@@ -22,6 +22,8 @@ stages:
 
           - template: install-node-deps.yml
 
+          - template: install-dotnet-deps.yml
+
           - bash: mkdir dist
             displayName: create the dist folder
 
@@ -29,7 +31,7 @@ stages:
             displayName: build apps / services
 
           - bash: |
-              affectedApps=`npx nx print-affected --type=app --select=projects --base=$(shabase.base_sha)`
+              affectedApps=`npx nx show projects --affected --select=projects --base=$(shabase.base_sha)`
               echo affected apps - $affectedApps
               echo "##vso[task.setvariable variable=affected_apps;isOutput=true]$affectedApps"
             displayName: print affected_apps

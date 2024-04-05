@@ -3,6 +3,7 @@ import { TerraformOptions } from '@bippo-nx/terraform';
 
 interface NormalizedLambdaGeneratorSchema extends LambdaGeneratorSchema {
   projectName: string;
+  projectNamePascal: string;
   projectRoot: string;
   projectDirectory: string;
   rootOffset: string;

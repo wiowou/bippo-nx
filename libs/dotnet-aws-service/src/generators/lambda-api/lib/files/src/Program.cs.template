@@ -1,0 +1,54 @@
+using AWS.Lambda.Powertools.Parameters;
+using AWS.Lambda.Powertools.Parameters.SecretsManager;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System.Text.Json;
+
+using <%= projectNamePascal %>.Database;
+
+var builder = WebApplication.CreateBuilder(args);
+
+string? ssmKName = builder.Configuration.GetConnectionString("AWS_SSM_KNAME");
+string? rdsEndpoint = builder.Configuration.GetConnectionString("AWS_RDS_ENDPOINT");
+string? rdsDatabase = builder.Configuration.GetConnectionString("AWS_RDS_DATABASE");
+ISecretsProvider secretsProvider = ParametersManager.SecretsProvider;
+string? ssmString = await secretsProvider
+  .GetAsync(ssmKName)
+  .ConfigureAwait(false);
+var credentials = JsonSerializer.Deserialize<Dictionary<string, string>>(ssmString);
+string dbConnectionString = new NpgsqlConnectionStringBuilder() {
+  Host = rdsEndpoint,
+  Database = rdsDatabase,
+  Username = credentials["username"],
+  Password = credentials["password"]
+}.ConnectionString;
+builder.Services.AddDbContext<<%= projectNamePascal %>DbContext>(options => {
+  options
+    .UseNpgsql(dbConnectionString)
+    .UseSnakeCaseNamingConvention();
+});
+
+// Add services
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+  app.UseSwagger();
+  app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

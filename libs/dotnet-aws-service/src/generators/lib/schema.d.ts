@@ -1,5 +1,6 @@
 interface NormalizedLibGeneratorSchema extends LibGeneratorSchema {
   projectName: string;
+  projectNamePascal: string;
   projectRoot: string;
   projectDirectory: string;
   rootOffset: string;

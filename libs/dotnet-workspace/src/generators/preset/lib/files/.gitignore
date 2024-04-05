@@ -3,6 +3,7 @@
 # compiled output
 dist
 tmp
+.mono/
 /out-tsc
 **.terraform*
 **tfplan

@@ -3,6 +3,14 @@ trigger:
     include:
       - master
 
+resources:
+  repositories:
+    - repository: github_wiowou
+      type: github
+      name: wiowou/ADOTemplates
+      ref: master
+      endpoint: github.com_wiowou # service connection name
+
 variables:
   - name: node_version
     value: '18.12.1'
@@ -14,11 +22,15 @@ variables:
     value: false
 
 stages:
-  - template: templates/build.yml
+  - template: stages/build.yml@github_wiowou
     parameters:
       run_all: ${{ variables.run_all }}
 
-  - template: templates/deploy-stage.yml
+  - template: stages/migrate.yml@github_wiowou
+    parameters:
+      application_environment: dev
+  
+  - template: stages/deploy.yml@github_wiowou
     parameters:
       application_environment: dev
       run_all: ${{ variables.run_all }}

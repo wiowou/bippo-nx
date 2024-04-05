@@ -1,54 +1,29 @@
 trigger: none
 
+resources:
+  repositories:
+    - repository: github_wiowou
+      type: github
+      name: wiowou/ADOTemplates
+      ref: master
+      endpoint: github.com_wiowou # service connection name
+
 variables:
   - name: node_version
     value: '18.12.1'
+  - name: terraform_version
+    value: '1.4.5'
+  - name: dotnet_version
+    value: '6.0.x'
+  - name: run_all
+    value: false
 
-pool: bippo
+stages:
+  - template: stages/build.yml@github_wiowou
+    parameters:
+      run_all: ${{ variables.run_all }}
 
-jobs:
-  - job: build
-    steps:
-      - checkout: self
-        fetchDepth: 0
-
-      - template: templates/install-node-deps.yml
-
-      - bash: npx nx -- affected:build --parallel=3 --base=remotes/origin/master --configuration=prod
-        displayName: build affected projects
-
-  - job: lint
-    steps:
-      - checkout: self
-        fetchDepth: 0
-
-      - template: templates/install-node-deps.yml
-
-      - bash: npx nx -- workspace-lint
-        displayName: lint workspace
-
-      - bash: npx nx -- affected:lint --base=remotes/origin/master
-        displayName: lint affected projects
-
-      - bash: npx nx -- format:check --base=remotes/origin/master
-        displayName: check prettier formatting
-
-  - job: test
-    steps:
-      - checkout: self
-        fetchDepth: 0
-
-      - template: templates/install-node-deps.yml
-
-      - bash: npx nx -- affected:test --parallel=3 --base=remotes/origin/master
-        displayName: test affected projects
-
-      - task: PublishTestResults@2
-        displayName: publish all test results
-        condition: succeededOrFailed()
-        inputs:
-          testResultsFormat: JUnit
-          testResultsFiles: '**/test-report.xml'
-          testRunTitle: jest unit tests
-          mergeTestResults: true
-          failTaskOnFailedTests: true
+  - template: stages/migrate.yml@github_wiowou
+    parameters:
+      application_environment: dev
+  

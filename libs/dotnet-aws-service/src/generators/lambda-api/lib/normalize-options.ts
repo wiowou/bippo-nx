@@ -1,6 +1,6 @@
 import { getWorkspaceLayout, names, offsetFromRoot, Tree } from '@nx/devkit';
 import * as path from 'path';
-import * as changeCase from 'change-case';
+import * as changeCase from '../../utils/change-case';
 import { NormalizedLambdaApiGeneratorSchema, LambdaApiGeneratorSchema } from '../schema';
 
 export function normalizeOptions(tree: Tree, options: LambdaApiGeneratorSchema): NormalizedLambdaApiGeneratorSchema {

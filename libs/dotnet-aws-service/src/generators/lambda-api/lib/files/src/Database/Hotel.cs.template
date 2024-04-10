@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyApi.Database;
+namespace <%= projectNamePascal %>.Database;
 
 public class Hotel
 {

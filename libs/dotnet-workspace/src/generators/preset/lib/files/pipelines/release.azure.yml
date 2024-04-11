@@ -17,7 +17,7 @@ variables:
   - name: terraform_version
     value: '1.4.5'
   - name: dotnet_version
-    value: '6.0.x'
+    value: '8.0.x'
   - name: run_all
     value: false
 
@@ -29,7 +29,7 @@ stages:
   - template: stages/migrate.yml@github_wiowou
     parameters:
       application_environment: dev
-  
+
   - template: stages/deploy.yml@github_wiowou
     parameters:
       application_environment: dev

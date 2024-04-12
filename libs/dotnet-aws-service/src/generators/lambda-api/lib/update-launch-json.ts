@@ -13,14 +13,14 @@ export function updateLaunchJson(tree: Tree, options: NormalizedLambdaApiGenerat
       type: 'coreclr',
       request: 'launch',
       preLaunchTask: `build_${options.projectName}`,
-      program: `${projFolder}/src/bin/Debug/net6.0/main.dll`,
+      program: `${projFolder}/src/bin/Debug/net8.0/${options.projectNameLower}.dll`,
       args: [],
       cwd: `${projFolder}/src`,
       stopAtEntry: false,
       serverReadyAction: {
         action: 'openExternally',
         pattern: '\\bNow listening on:\\s+(https?://\\S+)',
-        uriFormat: "%s/swagger"
+        uriFormat: '%s/swagger',
       },
       env: {
         ASPNETCORE_ENVIRONMENT: 'Development',

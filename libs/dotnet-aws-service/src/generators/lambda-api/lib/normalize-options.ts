@@ -6,8 +6,9 @@ import { NormalizedLambdaApiGeneratorSchema, LambdaApiGeneratorSchema } from '..
 export function normalizeOptions(tree: Tree, options: LambdaApiGeneratorSchema): NormalizedLambdaApiGeneratorSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = projectDirectory.replace(new RegExp('[_/]', 'g'), '-');
   const projectNamePascal = changeCase.pascalCase(projectName);
+  const projectNameLower = projectNamePascal.toLowerCase();
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
@@ -16,6 +17,7 @@ export function normalizeOptions(tree: Tree, options: LambdaApiGeneratorSchema):
     ...options,
     projectName,
     projectNamePascal,
+    projectNameLower,
     projectRoot,
     projectDirectory,
     rootOffset,

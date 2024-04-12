@@ -6,7 +6,7 @@ import { LambdaGeneratorSchema, NormalizedLambdaGeneratorSchema } from '../schem
 export function normalizeOptions(tree: Tree, options: LambdaGeneratorSchema): NormalizedLambdaGeneratorSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = projectDirectory.replace(new RegExp('[_/]', 'g'), '-');
   const projectNamePascal = changeCase.pascalCase(projectName);
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);

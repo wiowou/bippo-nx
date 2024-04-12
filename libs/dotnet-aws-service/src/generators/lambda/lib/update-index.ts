@@ -1,7 +1,7 @@
 import { getWorkspaceLayout, joinPathFragments, Tree } from '@nx/devkit';
-import { NormalizedLambdaApiGeneratorSchema } from '../../lambda-api/schema';
+import { NormalizedLambdaGeneratorSchema } from '../schema';
 
-export function updateIndex(tree: Tree, options: NormalizedLambdaApiGeneratorSchema): void {
+export function updateIndex(tree: Tree, options: NormalizedLambdaGeneratorSchema): void {
   if (!options.directory) {
     return;
   }

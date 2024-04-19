@@ -1,9 +1,9 @@
-import assert from 'assert';
+import * as assert from 'assert';
 
-import v1 from './v1.js';
-import v3 from './v3.js';
-import v4 from './v4.js';
-import v5 from './v5.js';
+import v1 from './v1';
+import v3 from './v3';
+import v4 from './v4';
+import v5 from './v5';
 
 function usage() {
   console.log('Usage:');
@@ -13,9 +13,7 @@ function usage() {
   console.log('  uuid v4');
   console.log('  uuid v5 <name> <namespace uuid>');
   console.log('  uuid --help');
-  console.log(
-    '\nNote: <namespace uuid> may be "URL" or "DNS" to use the corresponding UUIDs defined by RFC4122'
-  );
+  console.log('\nNote: <namespace uuid> may be "URL" or "DNS" to use the corresponding UUIDs defined by RFC4122');
 }
 
 const args = process.argv.slice(2);

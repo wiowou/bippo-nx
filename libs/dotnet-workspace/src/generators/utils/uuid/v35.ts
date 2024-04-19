@@ -1,5 +1,5 @@
-import { unsafeStringify } from './stringify.js';
-import parse from './parse.js';
+import { unsafeStringify } from './stringify';
+import parse from './parse';
 
 function stringToBytes(str) {
   str = unescape(encodeURIComponent(str)); // UTF8 escape
@@ -16,8 +16,8 @@ function stringToBytes(str) {
 export const DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
 export const URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
 
-export default function v35(name, version, hashfunc) {
-  function generateUUID(value, namespace, buf, offset) {
+export default function v35(name?, version?, hashfunc?) {
+  function generateUUID(value?, namespace?, buf?, offset?) {
     if (typeof value === 'string') {
       value = stringToBytes(value);
     }

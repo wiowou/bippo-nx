@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 const rnds8Pool = new Uint8Array(256); // # of random values to pre-allocate
 let poolPtr = rnds8Pool.length;

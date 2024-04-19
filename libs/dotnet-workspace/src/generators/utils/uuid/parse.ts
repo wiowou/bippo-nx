@@ -1,4 +1,4 @@
-import validate from './validate.js';
+import validate from './validate';
 
 function parse(uuid) {
   if (!validate(uuid)) {

@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 function md5(bytes) {
   if (Array.isArray(bytes)) {

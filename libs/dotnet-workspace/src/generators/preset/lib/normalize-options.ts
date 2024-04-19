@@ -4,6 +4,7 @@ import { Linter } from '@nx/linter';
 
 import type { PresetGeneratorSchema, NormalizedOptions } from '../schema';
 import { TerraformGeneratorSchema } from '@bippo-nx/terraform';
+import { v4 as uuidv4 } from '../../utils/uuid';
 
 export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): NormalizedOptions {
   const { layoutDirectory, projectDirectory } = extractLayoutDirectory(options.directory);
@@ -16,6 +17,8 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
     ? '.'
     : joinPathFragments(layoutDirectory ?? getWorkspaceLayout(tree).appsDir, appDirectory);
 
+  const solutionGuid = uuidv4().toUpperCase();
+
   return {
     ...options,
     infraProjectName: options.infraProjectName ?? 'shared-infra',
@@ -24,6 +27,7 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
     linter: options.linter ?? Linter.EsLint,
     unitTestRunner: options.unitTestRunner ?? 'jest',
     e2eTestRunner: options.e2eTestRunner ?? 'jest',
+    solutionGuid,
   };
 }
 

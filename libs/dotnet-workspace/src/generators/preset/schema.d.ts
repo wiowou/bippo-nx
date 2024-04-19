@@ -18,4 +18,5 @@ export interface PresetGeneratorSchema {
 
 interface NormalizedOptions extends PresetGeneratorSchema {
   appProjectRoot: Path;
+  solutionGuid: string;
 }

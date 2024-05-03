@@ -11,7 +11,7 @@ export function normalizeOptions(tree: Tree, options: LambdaGeneratorSchema): No
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const workspaceName = path.basename(tree.root);
-  const awsProfile = options.awsProfile || 'devopslocal';
+  const awsProfile = options.awsProfile;
   const functionName = name;
   const functionNameSnakeCase = name.replace(new RegExp('-', 'g'), '_');
 

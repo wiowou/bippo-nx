@@ -38,11 +38,7 @@ export function createProjectConfiguration(
         options: {
           parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform plan -out=tfplan -input=false',
-          ],
+          commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
       'apply-local': {
@@ -50,11 +46,7 @@ export function createProjectConfiguration(
         options: {
           parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform apply -auto-approve tfplan',
-          ],
+          commands: ['terraform apply -auto-approve tfplan'],
         },
       },
       'destroy-local': {
@@ -62,11 +54,7 @@ export function createProjectConfiguration(
         options: {
           parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform destroy -auto-approve',
-          ],
+          commands: ['terraform destroy -auto-approve'],
         },
       },
     },

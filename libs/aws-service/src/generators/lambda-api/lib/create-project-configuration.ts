@@ -116,7 +116,7 @@ export function createProjectConfiguration(
           cwd: './',
           commands: [
             'docker compose up -d',
-            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/terraform/dynamodb/app-table.yaml --profile devopslocal`,
+            `aws dynamodb create-table --no-cli-pager --endpoint-url http://localhost:8112 --cli-input-yaml file://${normalizedOptions.projectRoot}/terraform/dynamodb/app-table.yaml --profile ${normalizedOptions.awsProfile}`,
           ],
         },
       },
@@ -127,7 +127,7 @@ export function createProjectConfiguration(
           cwd: './',
           commands: [
             'docker compose up -d',
-            `aws dynamodb delete-table --no-cli-pager --endpoint-url http://localhost:8112 --table-name ${normalizedOptions.projectName} --profile devopslocal`,
+            `aws dynamodb delete-table --no-cli-pager --endpoint-url http://localhost:8112 --table-name ${normalizedOptions.projectName} --profile ${normalizedOptions.awsProfile}`,
           ],
         },
       },

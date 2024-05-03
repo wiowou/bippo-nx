@@ -16,7 +16,7 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
   const rootOffset = offsetFromRoot(projectRoot);
   const localBuildOffset = rootOffset.endsWith('/') ? rootOffset.substring(0, rootOffset.length - 1) : rootOffset;
   const workspaceName = path.basename(tree.root);
-  const awsProfile = options.awsProfile || 'devopslocal';
+  const awsProfile = options.awsProfile;
   const terraformVersion = options.terraformAwsVersion || versions.terraformVersion;
   const terraformAwsVersion = options.terraformAwsVersion || versions.terraformAwsVersion;
   const appType = options.appType || 'SHARED_INFRA';

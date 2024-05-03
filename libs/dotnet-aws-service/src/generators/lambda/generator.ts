@@ -21,8 +21,6 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
 
   addProjectConfiguration(tree, normalizedOptions.projectName, createProjectConfiguration(normalizedOptions));
 
-  //const awsProfile = options.awsProfile || 'devopslocal';
-
   addFiles(tree, normalizedOptions);
   updateProjectJson(tree, normalizedOptions);
   updateIndex(tree, normalizedOptions);

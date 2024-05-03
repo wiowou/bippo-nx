@@ -18,7 +18,7 @@ export interface TerraformGeneratorSchema extends TerraformOptions {
 }
 
 export interface TerraformOptions {
-  awsProfile?: string;
+  awsProfile: string;
   terraformVersion?: string;
   terraformAwsVersion?: string;
   database?: Database;

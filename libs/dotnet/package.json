@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/dotnet",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "commonjs",
   "executors": "./executors.json",
   "license": "MIT",

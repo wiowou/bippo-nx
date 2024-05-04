@@ -24,6 +24,7 @@ node_modules
 *.sublime-workspace
 
 # IDE - VSCode
+.mono/*
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

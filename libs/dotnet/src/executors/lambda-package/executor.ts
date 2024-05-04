@@ -7,7 +7,7 @@ import { normalizeOptions, replaceFiles } from './lib';
 
 export default async function runExecutor(options: LambdaPackageExecutorSchema, context: ExecutorContext) {
   const normalizedOptions = normalizeOptions(context, options);
-  await replaceFiles(normalizedOptions.fileReplacements, normalizedOptions.root);
+  await replaceFiles(normalizedOptions.fileReplacements, normalizedOptions);
   const command = buildCommand(normalizedOptions);
   console.log(command);
   try {

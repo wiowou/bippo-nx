@@ -28,7 +28,10 @@ stages:
 
   - template: stages/migrate.yml@github_wiowou
     parameters:
+      run_all: ${{ variables.run_all }}
       application_environment: dev
+      project_name: '<%= name %>'
+      region: us-east-1
 
   - template: stages/deploy.yml@github_wiowou
     parameters:

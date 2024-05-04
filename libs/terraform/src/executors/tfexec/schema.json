@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "Tfexec executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "terraformRootPath": {
+      "type": "string",
+      "description": "The root directory where the terraform command is intalled"
+    },
+    "cwd": {
+      "type": "string",
+      "description": "The current working directory where the commands should be executed"
+    },
+    "commands": {
+      "description": "Commands to run",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "A single command that can include spaces"
+      },
+      "default": []
+    },
+    "fileReplacements": {
+      "description": "Replace files with other files in the build.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "replace": {
+            "type": "string",
+            "description": "The file to be replaced.",
+            "x-completion-type": "file"
+          },
+          "with": {
+            "type": "string",
+            "description": "The file to replace with.",
+            "x-completion-type": "file"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["replace", "with"]
+      },
+      "default": []
+    }
+  },
+  "required": []
+}

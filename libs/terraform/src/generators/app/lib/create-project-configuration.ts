@@ -10,49 +10,56 @@ export function createProjectConfiguration(
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
       tfexec: {
-        executor: 'nx:run-commands',
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: [
-            'cp environments/{args.environment}.tfvars terraform.tfvars',
-            'cp environments/provider.{args.environment}.tf provider.tf',
-            'terraform {args.cmd}',
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/{args.environment}.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.{args.environment}.tf',
+            },
           ],
+          commands: ['terraform {args.cmd}'],
         },
       },
       'init-local': {
-        executor: 'nx:run-commands',
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform init',
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/local.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.local.tf',
+            },
           ],
+          commands: ['terraform init'],
         },
       },
       'plan-local': {
-        executor: 'nx:run-commands',
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
       'apply-local': {
-        executor: 'nx:run-commands',
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
       'destroy-local': {
-        executor: 'nx:run-commands',
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform destroy -auto-approve'],
         },

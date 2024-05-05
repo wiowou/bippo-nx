@@ -6,10 +6,7 @@ import { normalizeOptions, replaceFiles } from './lib';
 
 export default async function runExecutor(options: TfexecExecutorSchema, context: ExecutorContext) {
   const normalizedOptions = normalizeOptions(context, options);
-  const args = {};
-  if (normalizedOptions.cmd) args['cmd'] = normalizedOptions.cmd;
-  if (normalizedOptions.environment) args['environment'] = normalizedOptions.cmd;
-  await replaceFiles(normalizedOptions.fileReplacements, normalizedOptions, args);
+  await replaceFiles(normalizedOptions.fileReplacements, normalizedOptions);
   const env = buildEnv(normalizedOptions);
   for (const command of normalizedOptions.commands) {
     console.log(command);

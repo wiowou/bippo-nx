@@ -7,7 +7,7 @@
   "properties": {
     "cmd": {
       "type": "string",
-      "description": "The command to run. Can include spaces. Typically a command line argument."
+      "description": "The Terraform command to run. Examples are init, plan, apply. Typically a command line argument."
     },
     "environment": {
       "type": "string",

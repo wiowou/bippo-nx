@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/dotnet-workspace",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "type": "commonjs",
   "generators": "./generators.json",
   "license": "MIT",

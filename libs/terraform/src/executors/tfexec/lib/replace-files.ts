@@ -21,6 +21,6 @@ export async function replaceFiles(
 }
 
 function replaceWithArgs(s: string, argName: string, argValue: string): string {
-  const r = s.replace(new RegExp('${ *arg.' + argName + ' *}', 'g'), argValue);
+  const r = s.replace(new RegExp('{ *args\\.' + argName + ' *}', 'g'), argValue);
   return r;
 }

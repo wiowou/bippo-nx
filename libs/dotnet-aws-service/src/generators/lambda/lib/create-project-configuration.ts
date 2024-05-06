@@ -11,6 +11,12 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
         executor: '@bippo-nx/dotnet:lambda-package',
         options: {
           outputPath: `dist/${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: `${normalizedOptions.projectRoot}/src/Environment.cs`,
+              with: `${normalizedOptions.projectRoot}/environments/Environment.default.cs`,
+            },
+          ],
         },
         configurations: {
           local: {
@@ -21,7 +27,6 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
               },
             ],
           },
-          dev: {},
           prod: {
             fileReplacements: [
               {
@@ -79,16 +84,6 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
@@ -96,16 +91,6 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
@@ -113,16 +98,6 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform destroy -auto-approve tfplan'],
         },
       },

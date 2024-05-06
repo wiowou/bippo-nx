@@ -10,6 +10,7 @@ tmp
 bin/
 obj/
 .terraform/
+*.lock.hcl
 
 # dependencies
 node_modules

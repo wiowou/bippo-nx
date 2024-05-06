@@ -56,16 +56,6 @@ export function createProjectConfiguration(
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
@@ -73,16 +63,6 @@ export function createProjectConfiguration(
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
@@ -90,16 +70,6 @@ export function createProjectConfiguration(
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/dev.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.dev.tf',
-            },
-          ],
           commands: ['terraform destroy -auto-approve tfplan'],
         },
       },

@@ -1,0 +1,24 @@
+namespace <%= projectNameLower %>.Settings;
+
+public class AppSettings
+{
+  public string EnvName { get; set; }
+  public DatabaseSettings Database { get; set; }
+  public AppSettings()
+  {
+    Database = new DatabaseSettings();
+  }
+
+  public static AppSettings Load(IWebHostEnvironment env)
+  {
+    var dom = new ConfigurationBuilder()
+      .SetBasePath(env.ContentRootPath)
+      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+      .AddEnvironmentVariables()
+      .Build();
+
+      var settings = new AppSettings();
+      dom.Bind(settings);
+      return settings;
+  }
+}

@@ -1,4 +1,4 @@
-namespace ApiHandler;
+namespace <%= projectNameLower %>;
 
 public class WeatherForecast
 {

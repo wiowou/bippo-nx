@@ -1,0 +1,80 @@
+using AWS.Lambda.Powertools.Parameters;
+using AWS.Lambda.Powertools.Parameters.SecretsManager;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using System.Text.Json;
+
+namespace <%= projectNameLower %>;
+using <%= projectNameLower %>.Database;
+using <%= projectNameLower %>.Settings;
+
+public class Startup
+{
+  public IConfiguration Configuration { get; }
+  private AppSettings _appSettings;
+
+  public Startup(IConfiguration configuration)
+  {
+    Configuration = configuration;
+    _appSettings = new AppSettings();
+    configuration.Bind(_appSettings);
+  }
+
+  // This method gets called by the runtime. Use it to add services
+  public void ConfigureServices(IServiceCollection services)
+  {
+    services.AddDbContext<<%= projectNameLower %>DbContext>(options => {
+      options
+        .UseNpgsql(DbConnectionString)
+        .UseSnakeCaseNamingConvention();
+    });
+
+    // Add services
+    services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen();
+    services.AddSingleton(_appSettings);
+    services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+  }
+
+  public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+  {
+    // Configure the HTTP request pipeline.
+    if (_appSettings.EnvName != "prod")
+    {
+      app.UseSwagger();
+      app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseRouting();
+    app.UseAuthorization();
+
+    app.UseEndpoints(endpoints => {
+      endpoints.MapControllers();
+    });
+  }
+
+  private string DbConnectionString 
+  {
+    get
+    {
+      string ssmKName = _appSettings.Database.SSMName;
+      string rdsEndpoint = _appSettings.Database.Endpoint;
+      string rdsDatabase = _appSettings.Database.Name;
+      ISecretsProvider secretsProvider = ParametersManager.SecretsProvider;
+      string? ssmString = secretsProvider
+        .Get(ssmKName);
+      var credentials = JsonSerializer.Deserialize<Dictionary<string, string>>(ssmString);
+      string dbConnectionString = new NpgsqlConnectionStringBuilder() {
+        Host = rdsEndpoint,
+        Database = rdsDatabase,
+        Username = credentials["username"],
+        Password = credentials["password"]
+      }.ConnectionString;
+      return dbConnectionString;
+    }
+  }
+
+}

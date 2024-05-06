@@ -1,0 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+
+namespace <%= projectNameLower %>.Database;
+
+public class <%= projectNameLower %>DbContext : DbContext
+{
+  public <%= projectNameLower %>DbContext(DbContextOptions options) : base(options)
+  {
+  }
+  public DbSet<Hotel> Hotels { get; set; }
+}

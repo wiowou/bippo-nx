@@ -1,6 +1,4 @@
 export interface TfexecExecutorSchema {
-  cmd?: string;
-  environment?: string;
   terraformRootPath: string;
   cwd?: string;
   commands: string[];

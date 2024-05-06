@@ -20,12 +20,42 @@ export function createProjectConfiguration(
           prod: {},
         },
       },
-      tfexec: {
-        command: 'echo run tfexec',
+      tfinit: {
+        command: 'echo run tfinit',
         dependsOn: [
           {
             projects: [`${normalizedOptions.projectName}-tf`],
-            target: 'tfexec',
+            target: 'tfinit',
+            params: 'forward',
+          },
+        ],
+      },
+      tfplan: {
+        command: 'echo run tfplan',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfplan',
+            params: 'forward',
+          },
+        ],
+      },
+      tfapply: {
+        command: 'echo run tfapply',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfapply',
+            params: 'forward',
+          },
+        ],
+      },
+      tfdestroy: {
+        command: 'echo run tfdestroy',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfdestroy',
             params: 'forward',
           },
         ],

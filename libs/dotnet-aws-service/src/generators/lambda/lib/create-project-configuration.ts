@@ -32,64 +32,98 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           },
         },
       },
-      tfexec: {
-        executor: 'nx:run-commands',
+      tfinit: {
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
           cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/{args.environment}.tfvars terraform.tfvars',
-            'cp environments/provider.{args.environment}.tf provider.tf',
-            'terraform {args.cmd}',
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/default.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.default.tf',
+            },
           ],
+          commands: ['terraform init'],
+        },
+        configurations: {
+          local: {
+            fileReplacements: [
+              {
+                replace: 'terraform.tfvars',
+                with: 'environments/local.tfvars',
+              },
+              {
+                replace: 'provider.tf',
+                with: 'environments/provider.local.tf',
+              },
+            ],
+          },
+          prod: {
+            fileReplacements: [
+              {
+                replace: 'terraform.tfvars',
+                with: 'environments/prod.tfvars',
+              },
+              {
+                replace: 'provider.tf',
+                with: 'environments/provider.prod.tf',
+              },
+            ],
+          },
         },
       },
-      'init-local': {
-        executor: 'nx:run-commands',
+      tfplan: {
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform init',
+          cwd: `${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
           ],
+          commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
-      'plan-local': {
-        executor: 'nx:run-commands',
+      tfapply: {
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform plan -out=tfplan -input=false',
+          cwd: `${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
           ],
+          commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      'apply-local': {
-        executor: 'nx:run-commands',
+      tfdestroy: {
+        executor: '@bippo-nx/terraform:tfexec',
         options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform apply -auto-approve tfplan',
+          cwd: `${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
           ],
-        },
-      },
-      'destroy-local': {
-        executor: 'nx:run-commands',
-        options: {
-          parallel: false,
-          cwd: `${normalizedOptions.projectRoot}/terraform`,
-          commands: [
-            'cp environments/local.tfvars terraform.tfvars',
-            'cp environments/provider.local.tf provider.tf',
-            'terraform destroy -auto-approve',
-          ],
+          commands: ['terraform destroy -auto-approve tfplan'],
         },
       },
     },

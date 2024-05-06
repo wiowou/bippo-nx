@@ -9,59 +9,98 @@ export function createProjectConfiguration(
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      tfexec: {
+      tfinit: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
           fileReplacements: [
             {
               replace: 'terraform.tfvars',
-              with: 'environments/{args.environment}.tfvars',
+              with: 'environments/default.tfvars',
             },
             {
               replace: 'provider.tf',
-              with: 'environments/provider.{args.environment}.tf',
-            },
-          ],
-          commands: ['terraform {args.cmd}'],
-        },
-      },
-      'init-local': {
-        executor: '@bippo-nx/terraform:tfexec',
-        options: {
-          cwd: `${normalizedOptions.projectRoot}`,
-          fileReplacements: [
-            {
-              replace: 'terraform.tfvars',
-              with: 'environments/local.tfvars',
-            },
-            {
-              replace: 'provider.tf',
-              with: 'environments/provider.local.tf',
+              with: 'environments/provider.default.tf',
             },
           ],
           commands: ['terraform init'],
         },
+        configurations: {
+          local: {
+            fileReplacements: [
+              {
+                replace: 'terraform.tfvars',
+                with: 'environments/local.tfvars',
+              },
+              {
+                replace: 'provider.tf',
+                with: 'environments/provider.local.tf',
+              },
+            ],
+          },
+          prod: {
+            fileReplacements: [
+              {
+                replace: 'terraform.tfvars',
+                with: 'environments/prod.tfvars',
+              },
+              {
+                replace: 'provider.tf',
+                with: 'environments/provider.prod.tf',
+              },
+            ],
+          },
+        },
       },
-      'plan-local': {
+      tfplan: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
+          ],
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
-      'apply-local': {
+      tfapply: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
+          ],
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      'destroy-local': {
+      tfdestroy: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
-          commands: ['terraform destroy -auto-approve'],
+          fileReplacements: [
+            {
+              replace: 'terraform.tfvars',
+              with: 'environments/dev.tfvars',
+            },
+            {
+              replace: 'provider.tf',
+              with: 'environments/provider.dev.tf',
+            },
+          ],
+          commands: ['terraform destroy -auto-approve tfplan'],
         },
       },
     },

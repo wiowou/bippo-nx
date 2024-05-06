@@ -9,12 +9,22 @@ export function createProjectConfiguration(
     projectType: 'application',
     sourceRoot: `${normalizedOptions.projectRoot}`,
     targets: {
-      tfexec: {
-        command: 'echo run tfexec',
+      build: {
+        command: 'echo run build',
+        dependsOn: [
+          {
+            projects: [],
+            target: 'build',
+            params: 'forward',
+          },
+        ],
+      },
+      tfinit: {
+        command: 'echo run tfinit',
         dependsOn: [
           {
             projects: [`${normalizedOptions.projectName}-tf`],
-            target: 'tfexec',
+            target: 'tfinit',
             params: 'forward',
           },
           {
@@ -24,13 +34,48 @@ export function createProjectConfiguration(
           },
         ],
       },
-      build: {
-        command: 'echo run build',
+      tfplan: {
+        command: 'echo run tfplan',
         dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfplan',
+            params: 'forward',
+          },
           {
             projects: [],
             target: 'build',
+            params: 'ignore',
+          },
+        ],
+      },
+      tfapply: {
+        command: 'echo run tfapply',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfapply',
             params: 'forward',
+          },
+          {
+            projects: [],
+            target: 'build',
+            params: 'ignore',
+          },
+        ],
+      },
+      tfdestroy: {
+        command: 'echo run tfdestroy',
+        dependsOn: [
+          {
+            projects: [`${normalizedOptions.projectName}-tf`],
+            target: 'tfdestroy',
+            params: 'forward',
+          },
+          {
+            projects: [],
+            target: 'build',
+            params: 'ignore',
           },
         ],
       },

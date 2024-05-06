@@ -5,7 +5,7 @@ trigger:
 
 resources:
   repositories:
-    - repository: github_wiowou
+    - repository: PipelineTemplates
       type: github
       name: wiowou/ADOTemplates
       ref: master
@@ -22,18 +22,18 @@ variables:
     value: false
 
 stages:
-  - template: stages/build.yml@github_wiowou
+  - template: stages/build.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
 
-  - template: stages/migrate.yml@github_wiowou
+  - template: stages/migrate.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
       application_environment: dev
       project_name: '<%= name %>'
       region: us-east-1
 
-  - template: stages/deploy.yml@github_wiowou
+  - template: stages/deploy.yml@PipelineTemplates
     parameters:
       application_environment: dev
       run_all: ${{ variables.run_all }}

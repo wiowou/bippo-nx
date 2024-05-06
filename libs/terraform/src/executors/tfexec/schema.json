@@ -5,14 +5,6 @@
   "description": "",
   "type": "object",
   "properties": {
-    "cmd": {
-      "type": "string",
-      "description": "The Terraform command to run. Examples are init, plan, apply. Typically a command line argument."
-    },
-    "environment": {
-      "type": "string",
-      "description": "The environment which should be copied over. Typically a command line argument."
-    },
     "terraformRootPath": {
       "type": "string",
       "description": "The root directory where the terraform command is intalled"

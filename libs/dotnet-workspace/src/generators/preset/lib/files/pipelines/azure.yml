@@ -38,13 +38,13 @@ stages:
   - template: stages/migrate.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
-      environment: { { parameters.environment } }
+      environment: ${{ parameters.environment }}
       project_name: '<%= name %>'
       region: us-east-1
       enabled: false
 
   - template: stages/deploy.yml@PipelineTemplates
     parameters:
-      environment: { { parameters.environment } }
+      environment: ${{ parameters.environment }}
       run_all: ${{ variables.run_all }}
       enabled: ${{ ne(parameters.environment, 'none') }}

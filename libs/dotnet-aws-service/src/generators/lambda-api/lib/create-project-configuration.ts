@@ -12,12 +12,32 @@ export function createProjectConfiguration(
       build: {
         executor: '@bippo-nx/dotnet:lambda-package',
         options: {
+          cwd: `${normalizedOptions.projectRoot}`,
           outputPath: `dist/${normalizedOptions.projectRoot}`,
+          fileReplacements: [
+            {
+              replace: 'src/appsettings.json',
+              with: 'environments/appsettings.default.json',
+            },
+          ],
         },
         configurations: {
-          local: {},
-          dev: {},
-          prod: {},
+          local: {
+            fileReplacements: [
+              {
+                replace: 'src/appsettings.json',
+                with: 'environments/appsettings.local.json',
+              },
+            ],
+          },
+          prod: {
+            fileReplacements: [
+              {
+                replace: 'src/appsettings.json',
+                with: 'environments/appsettings.prod.json',
+              },
+            ],
+          },
         },
       },
       tfinit: {

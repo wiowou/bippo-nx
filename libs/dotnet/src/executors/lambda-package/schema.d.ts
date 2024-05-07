@@ -2,10 +2,9 @@ export interface LambdaPackageExecutorSchema {
   dotnetRootPath: string;
   dotnetToolsPath: string;
   outputPath?: string;
-  projectLocationPath?: string;
-  packageType?: 'image' | 'zip';
   configurationType?: 'Release' | 'Debug';
-  functionArchitecture?: 'Release' | 'Debug';
+  functionArchitecture?: 'x86_64' | 'arm64';
+  cwd?: string;
   fileReplacements?: FileReplacement[];
 }
 

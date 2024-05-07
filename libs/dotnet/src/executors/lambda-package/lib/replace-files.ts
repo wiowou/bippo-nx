@@ -10,10 +10,7 @@ export async function replaceFiles(
 ) {
   for (const fileReplacement of fileReplacements) {
     try {
-      await copyFile(
-        path.join(options.sourceRoot, fileReplacement.with),
-        path.join(options.sourceRoot, fileReplacement.replace)
-      );
+      await copyFile(path.join(options.cwd, fileReplacement.with), path.join(options.cwd, fileReplacement.replace));
     } catch (e) {
       console.error(`Could not replace ${fileReplacement.replace} with ${fileReplacement.with}`, e);
     }

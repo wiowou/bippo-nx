@@ -23,16 +23,6 @@
       "x-completion-type": "directory",
       "x-priority": "important"
     },
-    "projectLocationPath": {
-      "type": "string",
-      "description": "The directory where the csproj file is located, relative to the sourceRoot in the project.json file"
-    },
-    "packageType": {
-      "type": "string",
-      "description": "The deployment package type for Lambda function",
-      "enum": ["image", "zip"],
-      "default": "zip"
-    },
     "configurationType": {
       "type": "string",
       "description": "Configuration type to build with",
@@ -44,6 +34,10 @@
       "description": "The architecture of the lambda function",
       "enum": ["x86_64", "arm64"],
       "default": "x86_64"
+    },
+    "cwd": {
+      "type": "string",
+      "description": "The current working directory where the file replacement commands should be executed"
     },
     "fileReplacements": {
       "description": "Replace files with other files in the build.",

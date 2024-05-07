@@ -1,4 +1,4 @@
-namespace Handler;
+namespace <%= projectNamePascal %>;
 
 class Environment : IEnvironment
 {

@@ -20,7 +20,7 @@ export function createProjectConfiguration(
             },
             {
               replace: 'provider.tf',
-              with: 'environments/provider.default.tf',
+              with: `${normalizedOptions.rootOffset}/terraform-providers/provider.default.tf`,
             },
           ],
           commands: ['terraform init'],
@@ -34,7 +34,7 @@ export function createProjectConfiguration(
               },
               {
                 replace: 'provider.tf',
-                with: 'environments/provider.local.tf',
+                with: `${normalizedOptions.rootOffset}/terraform-providers/provider.local.tf`,
               },
             ],
           },
@@ -46,7 +46,7 @@ export function createProjectConfiguration(
               },
               {
                 replace: 'provider.tf',
-                with: 'environments/provider.prod.tf',
+                with: `${normalizedOptions.rootOffset}/terraform-providers/provider.prod.tf`,
               },
             ],
           },

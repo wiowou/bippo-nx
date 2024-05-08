@@ -12,7 +12,10 @@ export interface PresetGeneratorSchema {
   e2eTestRunner?: 'jest' | 'none';
   rootProject?: boolean;
   strict?: boolean;
-  awsProfile?: string;
+  awsProfile: string;
+  awsAccount: string;
+  terraformVersion: string;
+  terraformAwsVersion: string;
   database: Database;
 }
 

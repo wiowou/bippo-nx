@@ -66,6 +66,16 @@
       "description": "The AWS profile name you plan to use to locally create infra",
       "default": "default"
     },
+    "terraformVersion": {
+      "type": "string",
+      "description": "min version of Terraform installer",
+      "default": "1.6.4"
+    },
+    "terraformAwsVersion": {
+      "type": "string",
+      "description": "min version of Terraform AWS provider",
+      "default": "5.26"
+    },
     "database": {
       "type": "string",
       "description": "generate files related to this database",

@@ -70,16 +70,6 @@ export function createProjectConfiguration(
           },
         ],
       },
-      tfdestroy: {
-        command: 'echo run tfdestroy',
-        dependsOn: [
-          {
-            projects: [`${normalizedOptions.projectName}-tf`],
-            target: 'tfdestroy',
-            params: 'forward',
-          },
-        ],
-      },
     },
   };
   if (normalizedOptions.database === 'dynamo') {

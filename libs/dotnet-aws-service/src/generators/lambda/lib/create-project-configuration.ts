@@ -95,13 +95,6 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      tfdestroy: {
-        executor: '@bippo-nx/terraform:tfexec',
-        options: {
-          cwd: `${normalizedOptions.projectRoot}`,
-          commands: ['terraform destroy -auto-approve tfplan'],
-        },
-      },
     },
   };
 }

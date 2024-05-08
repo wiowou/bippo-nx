@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/dotnet-aws-service",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "type": "commonjs",
   "main": "src/index.js",
   "generators": "./generators.json",

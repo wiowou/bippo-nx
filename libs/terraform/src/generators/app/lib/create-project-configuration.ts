@@ -8,7 +8,7 @@ export function createProjectConfiguration(
     executor: '@bippo-nx/terraform:tfexec',
     options: {
       cwd: `${normalizedOptions.projectRoot}`,
-      commands: ['terraform destroy -auto-approve tfplan'],
+      commands: ['terraform destroy -auto-approve'],
     },
   };
   return {

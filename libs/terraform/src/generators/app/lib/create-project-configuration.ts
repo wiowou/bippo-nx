@@ -4,6 +4,13 @@ import { ProjectConfiguration } from '@nx/devkit';
 export function createProjectConfiguration(
   normalizedOptions: NormalizedTerraformGeneratorSchema
 ): ProjectConfiguration {
+  const tfdestroy = {
+    executor: '@bippo-nx/terraform:tfexec',
+    options: {
+      cwd: `${normalizedOptions.projectRoot}`,
+      commands: ['terraform destroy -auto-approve tfplan'],
+    },
+  };
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
@@ -20,7 +27,7 @@ export function createProjectConfiguration(
             },
             {
               replace: 'provider.tf',
-              with: `${normalizedOptions.rootOffset}/terraform-providers/provider.default.tf`,
+              with: `${normalizedOptions.rootOffset}terraform-providers/provider.default.tf`,
             },
           ],
           commands: ['terraform init'],
@@ -34,7 +41,7 @@ export function createProjectConfiguration(
               },
               {
                 replace: 'provider.tf',
-                with: `${normalizedOptions.rootOffset}/terraform-providers/provider.local.tf`,
+                with: `${normalizedOptions.rootOffset}terraform-providers/provider.local.tf`,
               },
             ],
           },
@@ -46,7 +53,7 @@ export function createProjectConfiguration(
               },
               {
                 replace: 'provider.tf',
-                with: `${normalizedOptions.rootOffset}/terraform-providers/provider.prod.tf`,
+                with: `${normalizedOptions.rootOffset}terraform-providers/provider.prod.tf`,
               },
             ],
           },
@@ -66,13 +73,7 @@ export function createProjectConfiguration(
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      tfdestroy: {
-        executor: '@bippo-nx/terraform:tfexec',
-        options: {
-          cwd: `${normalizedOptions.projectRoot}`,
-          commands: ['terraform destroy -auto-approve tfplan'],
-        },
-      },
+      tfdestroy: normalizedOptions.appType === 'SHARED_INFRA' ? tfdestroy : undefined,
     },
   };
 }

@@ -1,19 +1,13 @@
 import { extractLayoutDirectory, Tree } from '@nx/devkit';
 import { getWorkspaceLayout, joinPathFragments, names } from '@nx/devkit';
 import { Linter } from '@nx/linter';
-import * as path from 'path';
 
 import type { PresetGeneratorSchema, NormalizedOptions } from '../schema';
 import { TerraformGeneratorSchema } from '@bippo-nx/terraform';
 import { v4 as uuidv4 } from '../../utils/uuid';
-import * as changeCase from '../../utils/change-case';
 
 export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): NormalizedOptions {
   const { layoutDirectory, projectDirectory } = extractLayoutDirectory(options.directory);
-
-  // const appDirectory = projectDirectory
-  //   ? `${names(projectDirectory).fileName}/${names(options.name).fileName}`
-  //   : names(options.name).fileName;
   const appDirectory = projectDirectory ? `${projectDirectory}/${options.name}` : options.name;
 
   const appProjectRoot = options.rootProject
@@ -21,7 +15,6 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
     : joinPathFragments(layoutDirectory ?? getWorkspaceLayout(tree).appsDir, appDirectory);
 
   const solutionGuid = uuidv4().toUpperCase();
-  //tree.root = path.join(path.dirname(tree.root), options.name);
 
   return {
     ...options,

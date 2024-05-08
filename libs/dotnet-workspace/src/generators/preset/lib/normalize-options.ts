@@ -21,7 +21,7 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
     : joinPathFragments(layoutDirectory ?? getWorkspaceLayout(tree).appsDir, appDirectory);
 
   const solutionGuid = uuidv4().toUpperCase();
-
+  tree.root = options.name;
   return {
     ...options,
     infraProjectName: options.infraProjectName ?? 'shared-infra',
@@ -34,14 +34,13 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
   };
 }
 
-export function toTerraformGeneratorOptions(tree: Tree, options: NormalizedOptions): TerraformGeneratorSchema {
-  const workspaceName = changeCase.pascalCase(path.basename(tree.root));
+export function toTerraformGeneratorOptions(options: NormalizedOptions): TerraformGeneratorSchema {
   return {
     name: 'terraform',
     directory: options.infraProjectName,
     awsProfile: options.awsProfile,
     database: options.database,
     appType: 'SHARED_INFRA',
-    workspaceName,
+    workspaceName: options.name,
   };
 }

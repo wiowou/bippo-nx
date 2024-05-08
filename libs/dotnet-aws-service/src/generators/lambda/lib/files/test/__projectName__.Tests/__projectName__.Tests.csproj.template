@@ -12,6 +12,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\main.csproj" />
+    <ProjectReference Include="..\..\src\<%= projectName %>.csproj" />
   </ItemGroup>
 </Project>

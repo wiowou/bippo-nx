@@ -23,7 +23,7 @@ export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGen
   const lambdaGeneratorOptions: LambdaGeneratorSchema = {
     name: normalizedOptions.lambda,
     directory: normalizedOptions.projectDirectory,
-    generateTerraform: false,
+    generateTerraform: true,
     database: 'none',
     awsProfile: normalizedOptions.awsProfile,
   };

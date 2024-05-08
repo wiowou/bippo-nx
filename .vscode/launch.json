@@ -42,6 +42,27 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/blah/my-api/src/Views"
       }
+    },
+    {
+      "name": "Serve UCPResponseAPI",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_UCPResponseAPI",
+      "program": "${workspaceFolder}/apps/UCPResponseAPI/src/bin/Debug/net8.0/UCPResponseAPI.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/UCPResponseAPI/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/UCPResponseAPI/src/Views"
+      }
     }
   ]
 }

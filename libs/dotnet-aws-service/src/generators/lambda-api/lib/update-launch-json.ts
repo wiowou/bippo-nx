@@ -13,7 +13,7 @@ export function updateLaunchJson(tree: Tree, options: NormalizedLambdaApiGenerat
       type: 'coreclr',
       request: 'launch',
       preLaunchTask: `build_${options.projectName}`,
-      program: `${projFolder}/src/bin/Debug/net8.0/${options.projectNameLower}.dll`,
+      program: `${projFolder}/src/bin/Debug/net8.0/${options.projectName}.dll`,
       args: [],
       cwd: `${projFolder}/src`,
       stopAtEntry: false,

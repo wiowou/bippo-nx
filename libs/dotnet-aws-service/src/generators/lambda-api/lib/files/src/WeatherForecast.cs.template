@@ -1,4 +1,4 @@
-namespace <%= projectNameLower %>;
+namespace <%= projectName %>;
 
 public class WeatherForecast
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace <%= projectNameLower %>.Database;
+namespace <%= projectName %>.Database;
 
 public class Hotel
 {

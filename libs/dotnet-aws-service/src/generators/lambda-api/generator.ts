@@ -12,6 +12,7 @@ export default async function (tree: Tree, options: LambdaApiGeneratorSchema) {
     directory: normalizedOptions.projectDirectory,
     appType: 'LAMBDA_SERVICE',
     database: options.database,
+    handler: `${normalizedOptions.projectName}`,
   };
   await terraformGenerator(tree, terraformGeneratorOptions);
   updateLaunchJson(tree, normalizedOptions);

@@ -14,7 +14,7 @@ export function updateTaskJson(tree: Tree, options: NormalizedLambdaApiGenerator
       type: 'process',
       args: [
         'build',
-        `${projFolder}/src/${options.projectNameLower}.csproj`,
+        `${projFolder}/src/${options.projectName}.csproj`,
         '/property:GenerateFullPaths=true',
         '/consoleloggerparameters:NoSummary;ForceNoAlign',
       ],

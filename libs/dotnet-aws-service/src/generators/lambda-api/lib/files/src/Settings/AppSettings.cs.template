@@ -1,4 +1,4 @@
-namespace <%= projectNameLower %>.Settings;
+namespace <%= projectName %>.Settings;
 
 public class AppSettings
 {

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
-using <%= projectNameLower %>.Database;
+using <%= projectName %>.Database;
 
-namespace <%= projectNameLower %>.Controllers;
+namespace <%= projectName %>.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,9 +15,9 @@ public class WeatherForecastController : ControllerBase
   };
 
   private readonly ILogger<WeatherForecastController> _logger;
-  private readonly <%= projectNameLower %>DbContext _context;
+  private readonly <%= projectName %>DbContext _context;
 
-  public WeatherForecastController(ILogger<WeatherForecastController> logger, <%= projectNameLower %>DbContext context)
+  public WeatherForecastController(ILogger<WeatherForecastController> logger, <%= projectName %>DbContext context)
   {
     _logger = logger;
     _context = context;

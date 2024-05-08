@@ -6,8 +6,10 @@ export function normalizeOptions(
   tree: Tree,
   options: StepFunctionGeneratorSchema
 ): NormalizedStepFunctionGeneratorSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
+  // const name = names(options.name).fileName;
+  // const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
+  const name = options.name;
+  const projectDirectory = options.directory ? `${options.directory}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);

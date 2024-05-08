@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Text.Json;
 
-namespace <%= projectNameLower %>;
-using <%= projectNameLower %>.Database;
-using <%= projectNameLower %>.Settings;
+namespace <%= projectName %>;
+using <%= projectName %>.Database;
+using <%= projectName %>.Settings;
 
 public class Startup
 {
@@ -23,7 +23,7 @@ public class Startup
   // This method gets called by the runtime. Use it to add services
   public void ConfigureServices(IServiceCollection services)
   {
-    services.AddDbContext<<%= projectNameLower %>DbContext>(options => {
+    services.AddDbContext<<%= projectName %>DbContext>(options => {
       options
         .UseNpgsql(DbConnectionString)
         .UseSnakeCaseNamingConvention();

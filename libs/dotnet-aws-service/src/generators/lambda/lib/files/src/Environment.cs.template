@@ -1,4 +1,4 @@
-namespace <%= projectNamePascal %>;
+namespace <%= projectName %>;
 
 class Environment : IEnvironment
 {

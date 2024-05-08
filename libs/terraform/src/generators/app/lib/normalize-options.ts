@@ -5,22 +5,24 @@ import { NormalizedTerraformGeneratorSchema, TerraformGeneratorSchema } from '..
 import * as versions from '../../../utils/versions';
 
 export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema): NormalizedTerraformGeneratorSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
-  // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  // const projectName = name;
-  const applicationDirectory = options.directory ? names(options.directory).fileName : name;
+  // const name = names(options.name).fileName;
+  // const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
+  // const applicationDirectory = options.directory ? names(options.directory).fileName : name;
+  const name = options.name;
+  const projectDirectory = options.directory ? `${options.directory}/${name}` : name;
+  const applicationDirectory = options.directory ? options.directory : name;
   const parentProjectName = applicationDirectory.replace(new RegExp('/', 'g'), '-');
+  const handler = options?.handler || 'main';
   const projectName = parentProjectName + '-tf';
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
   const localBuildOffset = rootOffset.endsWith('/') ? rootOffset.substring(0, rootOffset.length - 1) : rootOffset;
   const workspaceName = path.basename(tree.root);
   const awsProfile = options.awsProfile;
-  const terraformVersion = options.terraformVersion || versions.terraformVersion;
-  const terraformAwsVersion = options.terraformAwsVersion || versions.terraformAwsVersion;
-  const appType = options.appType || 'SHARED_INFRA';
-  const database = options.database || 'none';
+  const terraformVersion = options?.terraformVersion || versions.terraformVersion;
+  const terraformAwsVersion = options?.terraformAwsVersion || versions.terraformAwsVersion;
+  const appType = options?.appType || 'SHARED_INFRA';
+  const database = options?.database || 'none';
   let stdout = ' not found';
   let awsAccount = '000000000000';
   try {
@@ -46,5 +48,6 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
     terraformAwsVersion,
     appType,
     database,
+    handler,
   };
 }

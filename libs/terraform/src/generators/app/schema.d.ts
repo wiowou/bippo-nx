@@ -23,4 +23,5 @@ export interface TerraformOptions {
   terraformAwsVersion?: string;
   database?: Database;
   appType?: 'SHARED_INFRA' | 'STEP_FUNCTION' | 'LAMBDA' | 'LAMBDA_SERVICE';
+  handler?: string;
 }

@@ -1,10 +1,12 @@
 import { extractLayoutDirectory, Tree } from '@nx/devkit';
 import { getWorkspaceLayout, joinPathFragments, names } from '@nx/devkit';
 import { Linter } from '@nx/linter';
+import * as path from 'path';
 
 import type { PresetGeneratorSchema, NormalizedOptions } from '../schema';
 import { TerraformGeneratorSchema } from '@bippo-nx/terraform';
 import { v4 as uuidv4 } from '../../utils/uuid';
+import * as changeCase from '../../utils/change-case';
 
 export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): NormalizedOptions {
   const { layoutDirectory, projectDirectory } = extractLayoutDirectory(options.directory);
@@ -32,12 +34,14 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
   };
 }
 
-export function toTerraformGeneratorOptions(options: NormalizedOptions): TerraformGeneratorSchema {
+export function toTerraformGeneratorOptions(tree: Tree, options: NormalizedOptions): TerraformGeneratorSchema {
+  const workspaceName = changeCase.pascalCase(path.basename(tree.root));
   return {
     name: 'terraform',
     directory: options.infraProjectName,
     awsProfile: options.awsProfile,
     database: options.database,
     appType: 'SHARED_INFRA',
+    workspaceName,
   };
 }

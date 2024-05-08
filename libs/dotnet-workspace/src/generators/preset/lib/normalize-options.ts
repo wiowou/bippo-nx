@@ -21,7 +21,8 @@ export function normalizeOptions(tree: Tree, options: PresetGeneratorSchema): No
     : joinPathFragments(layoutDirectory ?? getWorkspaceLayout(tree).appsDir, appDirectory);
 
   const solutionGuid = uuidv4().toUpperCase();
-  tree.root = options.name;
+  tree.root = path.join(path.dirname(tree.root), options.name);
+
   return {
     ...options,
     infraProjectName: options.infraProjectName ?? 'shared-infra',

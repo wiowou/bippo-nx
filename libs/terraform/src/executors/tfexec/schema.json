@@ -13,6 +13,14 @@
       "type": "string",
       "description": "The current working directory where the commands should be executed"
     },
+    "projectKey": {
+      "type": "string",
+      "description": "This key will create a subdir in S3 backend for this project's tfplan."
+    },
+    "environment": {
+      "type": "string",
+      "description": "This key will create an additional subdir in S3 backend after projectKey for this project's tfplan."
+    },
     "commands": {
       "description": "Commands to run",
       "type": "array",

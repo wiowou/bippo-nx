@@ -19,11 +19,29 @@ export function updateNxJson(tree: Tree, options: NormalizedOptions): void {
       e2e: {
         inputs: ['default', '^prod'],
       },
-      tfexec: {
+      tfinit: {
         dependsOn: [
           {
             projects: [options.infraProjectName + '-tf'],
-            target: 'tfexec',
+            target: 'tfinit',
+            params: 'forward',
+          },
+        ],
+      },
+      tfplan: {
+        dependsOn: [
+          {
+            projects: [options.infraProjectName + '-tf'],
+            target: 'tfplan',
+            params: 'forward',
+          },
+        ],
+      },
+      tfapply: {
+        dependsOn: [
+          {
+            projects: [options.infraProjectName + '-tf'],
+            target: 'tfapply',
             params: 'forward',
           },
         ],

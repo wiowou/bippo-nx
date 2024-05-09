@@ -1,6 +1,8 @@
 export interface TfexecExecutorSchema {
   terraformRootPath: string;
   cwd?: string;
+  projectKey?: string;
+  environment?: string;
   commands: string[];
   fileReplacements: FileReplacement[];
 }

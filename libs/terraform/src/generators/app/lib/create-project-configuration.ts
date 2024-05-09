@@ -4,13 +4,6 @@ import { ProjectConfiguration } from '@nx/devkit';
 export function createProjectConfiguration(
   normalizedOptions: NormalizedTerraformGeneratorSchema
 ): ProjectConfiguration {
-  const tfdestroy = {
-    executor: '@bippo-nx/terraform:tfexec',
-    options: {
-      cwd: `${normalizedOptions.projectRoot}`,
-      commands: ['terraform destroy -auto-approve'],
-    },
-  };
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
@@ -19,6 +12,7 @@ export function createProjectConfiguration(
       tfinit: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
+          projectKey: `${normalizedOptions.parentProjectName}`,
           cwd: `${normalizedOptions.projectRoot}`,
           fileReplacements: [
             {
@@ -73,7 +67,13 @@ export function createProjectConfiguration(
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      tfdestroy: normalizedOptions.appType === 'SHARED_INFRA' ? tfdestroy : undefined,
+      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfdestroyL2' : 'tfdestroy']: {
+        executor: '@bippo-nx/terraform:tfexec',
+        options: {
+          cwd: `${normalizedOptions.projectRoot}`,
+          commands: ['terraform destroy -auto-approve'],
+        },
+      },
     },
   };
 }

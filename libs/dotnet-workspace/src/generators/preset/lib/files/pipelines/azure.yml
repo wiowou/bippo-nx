@@ -11,13 +11,12 @@ resources:
 
 parameters:
   - name: environment
-    displayName: Choose Deployment environment
+    displayName: Choose Eeployment Environment
     type: string
     default: none
     values:
       - none
-      - dev
-      - stage
+      - branch
       - prod
 
 variables:
@@ -29,6 +28,11 @@ variables:
     value: '8.0.x'
   - name: run_all
     value: false
+  - name: environment
+    ${{ if eq(parameters.environment, 'branch') }}:
+      value: ${{ replace(variables['Build.SourceBranchName'], '/', '_') }}
+    ${{ else }}:
+      value: ${{ variables.environment }}
 
 stages:
   - template: stages/build.yml@PipelineTemplates
@@ -38,13 +42,13 @@ stages:
   - template: stages/migrate.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
-      environment: ${{ parameters.environment }}
+      environment: ${{ variables.environment }}
       project_name: '<%= name %>'
       region: us-east-1
       enabled: false
 
   - template: stages/deploy.yml@PipelineTemplates
     parameters:
-      environment: ${{ parameters.environment }}
+      environment: ${{ variables.environment }}
       run_all: ${{ variables.run_all }}
-      enabled: ${{ ne(parameters.environment, 'none') }}
+      enabled: ${{ ne(variables.environment, 'none') }}

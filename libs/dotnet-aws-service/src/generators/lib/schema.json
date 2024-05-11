@@ -15,7 +15,12 @@
     },
     "directory": {
       "type": "string",
-      "description": "A directory where the project is placed"
+      "description": "A directory where the library is placed",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      },
+      "x-prompt": "What directory would you like to target?"
     }
   },
   "required": ["name"]

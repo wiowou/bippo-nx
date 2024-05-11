@@ -1,9 +1,9 @@
 export const awsLambdaTypesVersion = '^8.10.114';
 export const awsLambdaVersion = '^1.0.7';
-export const bippoAwsServiceVersion = '^0.1.36';
-export const bippoDotnetVersion = '^0.0.10';
-export const bippoDotnetAwsServiceVersion = '^0.0.26';
-export const bippoTerraformVersion = '^0.1.29';
+export const bippoAwsServiceVersion = 'latest';
+export const bippoDotnetVersion = 'latest';
+export const bippoDotnetAwsServiceVersion = 'latest';
+export const bippoTerraformVersion = 'latest';
 export const classTransformerVersion = '^0.5.1';
 export const classValidatorVersion = '^0.14.0';
 export const dynamodbVersion = '^3.326.0';

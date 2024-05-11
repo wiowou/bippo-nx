@@ -2,16 +2,46 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "update solution",
+      "label": "Update VS Solution",
       "command": "dotnet",
       "type": "process",
       "args": ["slngen", "-e node_modules", "-o <%= name %>.sln", "./**/*.csproj"]
     },
     {
-      "label": "add api V2",
+      "label": "Add Dotnet AWS API V2",
       "command": "npx",
       "type": "process",
-      "args": ["nx", "g", "@bippo-nx/dotnet-aws-service:lambda-api", "${input:appName}"]
+      "args": ["nx g @bippo-nx/dotnet-aws-service:lambda-api ${input:appName} ${input:appDirectory}"]
+    },
+    {
+      "label": "Add Dotnet AWS Step Function",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx g @bippo-nx/dotnet-aws-service:step-function ${input:appName} ${input:appDirectory}"]
+    },
+    {
+      "label": "Add Dotnet AWS Lambda",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx g @bippo-nx/dotnet-aws-service:step-function ${input:appName} ${input:appDirectory}"]
+    },
+    {
+      "label": "Add Dotnet Library",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx g @bippo-nx/dotnet-aws-service:lib ${input:appName} ${input:appDirectory}"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "appName",
+      "description": "Name",
+      "type": "promptString"
+    },
+    {
+      "id": "appDirectory",
+      "description": "Target Directory",
+      "type": "promptString"
     }
   ]
 }

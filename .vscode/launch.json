@@ -63,6 +63,69 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/UCPResponseAPI/src/Views"
       }
+    },
+    {
+      "name": "Serve FooAPI",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_FooAPI",
+      "program": "${workspaceFolder}/apps/FooAPI/src/bin/Debug/net8.0/FooAPI.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/FooAPI/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/FooAPI/src/Views"
+      }
+    },
+    {
+      "name": "Serve FooAPI2",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_FooAPI2",
+      "program": "${workspaceFolder}/apps/FooAPI2/src/bin/Debug/net8.0/FooAPI2.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/FooAPI2/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/FooAPI2/src/Views"
+      }
+    },
+    {
+      "name": "Serve horse-FooAPI2",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_horse-FooAPI2",
+      "program": "${workspaceFolder}/apps/horse/FooAPI2/src/bin/Debug/net8.0/horse-FooAPI2.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/horse/FooAPI2/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/horse/FooAPI2/src/Views"
+      }
     }
   ]
 }

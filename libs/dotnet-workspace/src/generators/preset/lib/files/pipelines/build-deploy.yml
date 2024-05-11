@@ -38,6 +38,7 @@ stages:
   - template: stages/build.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
+      environment: ${{ variables.environment }}
 
   - template: stages/migrate.aws.serverless.yml@PipelineTemplates
     parameters:

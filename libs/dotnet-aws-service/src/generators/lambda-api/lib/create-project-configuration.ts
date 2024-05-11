@@ -38,6 +38,9 @@ export function createProjectConfiguration(
               },
             ],
           },
+          tfdestroy: {
+            emptyZip: true,
+          },
         },
       },
       tfinit: {

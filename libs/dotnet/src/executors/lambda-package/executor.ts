@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import * as path from 'path';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { ExecutorContext } from '@nx/devkit';
 import { LambdaPackageExecutorSchema, NormalizedLambdaPackageExecutorSchema } from './schema';
 
@@ -10,6 +11,15 @@ export default async function runExecutor(options: LambdaPackageExecutorSchema, 
   await replaceFiles(normalizedOptions.fileReplacements, normalizedOptions);
   const command = buildCommand(normalizedOptions);
   console.log(command);
+  if (normalizedOptions.emptyZip) {
+    const fullPath = path.join(normalizedOptions.root, normalizedOptions.outputPath, 'main.zip');
+    const baseDir = path.dirname(fullPath);
+    await mkdir(baseDir, { recursive: true });
+    await writeFile(fullPath, 'contents');
+    return {
+      success: true,
+    };
+  }
   try {
     execSync('dotnet restore', {
       cwd: normalizedOptions.sourceRoot,
@@ -41,8 +51,9 @@ function buildCommand(options: NormalizedLambdaPackageExecutorSchema): string {
   const { root, outputPath, configurationType, functionArchitecture } = options;
   const command = `dotnet lambda package -o ${path.join(
     root,
-    outputPath
-  )}/main.zip -c ${configurationType} -farch ${functionArchitecture}`;
+    outputPath,
+    'main.zip'
+  )} -c ${configurationType} -farch ${functionArchitecture}`;
   return command;
 }
 

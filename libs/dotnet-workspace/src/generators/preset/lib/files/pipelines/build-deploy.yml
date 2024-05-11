@@ -11,7 +11,7 @@ resources:
 
 parameters:
   - name: environment
-    displayName: Choose Eeployment Environment
+    displayName: Choose Deployment Environment
     type: string
     default: none
     values:
@@ -21,25 +21,25 @@ parameters:
 
 variables:
   - name: node_version
-    value: '18.12.1'
+    value: '18.x'
   - name: terraform_version
-    value: '1.4.5'
+    value: latest
   - name: dotnet_version
     value: '8.0.x'
   - name: run_all
     value: false
   - name: environment
     ${{ if eq(parameters.environment, 'branch') }}:
-      value: ${{ replace(variables['Build.SourceBranchName'], '/', '_') }}
+      value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
     ${{ else }}:
-      value: ${{ variables.environment }}
+      value: ${{ parameters.environment }}
 
 stages:
-  - template: stages/build.yml@PipelineTemplates
+  - template: stages/build.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
 
-  - template: stages/migrate.yml@PipelineTemplates
+  - template: stages/migrate.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
       environment: ${{ variables.environment }}
@@ -47,7 +47,7 @@ stages:
       region: us-east-1
       enabled: false
 
-  - template: stages/deploy.yml@PipelineTemplates
+  - template: stages/deploy.aws.serverless.yml@PipelineTemplates
     parameters:
       environment: ${{ variables.environment }}
       run_all: ${{ variables.run_all }}

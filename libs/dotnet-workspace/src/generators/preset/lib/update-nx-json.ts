@@ -19,33 +19,33 @@ export function updateNxJson(tree: Tree, options: NormalizedOptions): void {
       e2e: {
         inputs: ['default', '^prod'],
       },
-      tfinit: {
-        dependsOn: [
-          {
-            projects: [options.infraProjectName + '-tf'],
-            target: 'tfinit',
-            params: 'forward',
-          },
-        ],
-      },
-      tfplan: {
-        dependsOn: [
-          {
-            projects: [options.infraProjectName + '-tf'],
-            target: 'tfplan',
-            params: 'forward',
-          },
-        ],
-      },
-      tfapply: {
-        dependsOn: [
-          {
-            projects: [options.infraProjectName + '-tf'],
-            target: 'tfapply',
-            params: 'forward',
-          },
-        ],
-      },
+      // tfinit: {
+      //   dependsOn: [
+      //     {
+      //       projects: [options.infraProjectName + '-tf'],
+      //       target: 'tfinit',
+      //       params: 'forward',
+      //     },
+      //   ],
+      // },
+      // tfplan: {
+      //   dependsOn: [
+      //     {
+      //       projects: [options.infraProjectName + '-tf'],
+      //       target: 'tfplan',
+      //       params: 'forward',
+      //     },
+      //   ],
+      // },
+      // tfapply: {
+      //   dependsOn: [
+      //     {
+      //       projects: [options.infraProjectName + '-tf'],
+      //       target: 'tfapply',
+      //       params: 'forward',
+      //     },
+      //   ],
+      // },
     };
     json.namedInputs = {
       default: ['{projectRoot}/**/*', 'sharedGlobals'],

@@ -6,6 +6,12 @@
       "command": "dotnet",
       "type": "process",
       "args": ["slngen", "-e node_modules", "-o <%= name %>.sln", "./**/*.csproj"]
+    },
+    {
+      "label": "add api V2",
+      "command": "npx",
+      "type": "process",
+      "args": ["nx", "g", "@bippo-nx/dotnet-aws-service:lambda-api", "${input:appName}"]
     }
   ]
-} 
+}

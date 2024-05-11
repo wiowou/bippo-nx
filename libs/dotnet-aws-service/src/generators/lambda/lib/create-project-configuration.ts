@@ -36,6 +36,9 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
               },
             ],
           },
+          tfdestroy: {
+            emptyZip: true,
+          },
         },
       },
       tfinit: {

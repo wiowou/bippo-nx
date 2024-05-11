@@ -6,6 +6,7 @@ export interface LambdaPackageExecutorSchema {
   functionArchitecture?: 'x86_64' | 'arm64';
   cwd?: string;
   fileReplacements?: FileReplacement[];
+  emptyZip: boolean;
 }
 
 export interface NormalizedLambdaPackageExecutorSchema extends LambdaPackageExecutorSchema {

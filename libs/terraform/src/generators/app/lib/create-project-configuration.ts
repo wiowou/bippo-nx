@@ -53,21 +53,21 @@ export function createProjectConfiguration(
           },
         },
       },
-      tfplan: {
+      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfplan_1st' : 'tfplan']: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
-      tfapply: {
+      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfapply_1st' : 'tfapply']: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfdestroyL2' : 'tfdestroy']: {
+      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfdestroy_shared' : 'tfdestroy']: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,

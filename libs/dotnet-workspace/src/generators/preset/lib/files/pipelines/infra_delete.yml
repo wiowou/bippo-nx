@@ -1,0 +1,24 @@
+trigger: none
+name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyy)-$(Date:MM)-$(Date:dd)
+
+resources:
+  repositories:
+    - repository: PipelineTemplates
+      type: github
+      name: wiowou/ADOTemplates
+      ref: master
+      endpoint: github.com_wiowou # service connection name
+
+variables:
+  - name: node_version
+    value: '18.x'
+  - name: terraform_version
+    value: latest
+  - name: environment
+    value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+
+stages:
+  - template: stages/deploy.delete.aws.serverless.yml@PipelineTemplates
+    parameters:
+      environment: ${{ variables.environment }}
+      delete_shared_infra: true

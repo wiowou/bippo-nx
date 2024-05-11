@@ -1,4 +1,5 @@
-﻿namespace <%= projectNamePascal %>;
+﻿namespace <%= projectName %>;
+
 public class Class1
 {
   public string foobar = "this is my string";

@@ -9,39 +9,23 @@
     },
     {
       "label": "Add Dotnet AWS API V2",
-      "command": "npx",
-      "type": "process",
-      "args": ["nx g @bippo-nx/dotnet-aws-service:lambda-api ${input:appName} ${input:appDirectory}"]
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lambda-api",
+      "type": "shell"
     },
     {
       "label": "Add Dotnet AWS Step Function",
-      "command": "npx",
-      "type": "process",
-      "args": ["nx g @bippo-nx/dotnet-aws-service:step-function ${input:appName} ${input:appDirectory}"]
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:step-function",
+      "type": "shell"
     },
     {
       "label": "Add Dotnet AWS Lambda",
-      "command": "npx",
-      "type": "process",
-      "args": ["nx g @bippo-nx/dotnet-aws-service:step-function ${input:appName} ${input:appDirectory}"]
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lambda",
+      "type": "shell"
     },
     {
       "label": "Add Dotnet Library",
-      "command": "npx",
-      "type": "process",
-      "args": ["nx g @bippo-nx/dotnet-aws-service:lib ${input:appName} ${input:appDirectory}"]
-    }
-  ],
-  "inputs": [
-    {
-      "id": "appName",
-      "description": "Name",
-      "type": "promptString"
-    },
-    {
-      "id": "appDirectory",
-      "description": "Target Directory",
-      "type": "promptString"
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lib",
+      "type": "shell"
     }
   ]
 }

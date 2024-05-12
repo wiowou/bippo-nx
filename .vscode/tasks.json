@@ -1,12 +1,51 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "appDirectory",
+      "description": "Directory in the project-root apps folder containing the .csproj file",
+      "type": "promptString"
+    },
+    {
+      "id": "libDirectory",
+      "description": "Directory in the project-root libs folder",
+      "type": "promptString"
+    }
+  ],
   "tasks": [
+    {
+      "label": "Add Dotnet AWS API V2",
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lambda-api",
+      "type": "shell"
+    },
+    {
+      "label": "Add Dotnet AWS Step Function",
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:step-function",
+      "type": "shell"
+    },
+    {
+      "label": "Add Dotnet AWS Lambda",
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lambda",
+      "type": "shell"
+    },
+    {
+      "label": "Add Dotnet Library",
+      "command": "npx nx g @bippo-nx/dotnet-aws-service:lib",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Add Dotnet Project Reference",
+      "command": "dotnet",
+      "type": "process",
+      "args": ["add", "${input:appDirectory}", "reference", "${input:libDirectory}"]
+    },
     {
       "label": "build_my-api",
       "command": "dotnet",
       "type": "process",
       "args": [
-        "build",
+        "add",
         "${workspaceFolder}/apps/my-api/src/main.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary;ForceNoAlign"

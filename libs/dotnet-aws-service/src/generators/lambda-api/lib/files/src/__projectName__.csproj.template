@@ -6,6 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Project references -->
+  <!-- <ItemGroup>
+    <ProjectReference Include="$(root)/libs/MyLibA/A.csproj" />
+    <ProjectReference Include="$(root)/libs/MyLibB/B.csproj" />
+  </ItemGroup> -->
+
   <ItemGroup>
     <Content Include="Migrations/**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -61,6 +61,7 @@ function buildEnv(options: NormalizedLambdaPackageExecutorSchema) {
   const env = {
     ...process.env,
   };
+  env.ROOT = options.root;
   env.DOTNET_CLI_TELEMETRY_OPTOUT = '1';
   if (options.dotnetRootPath) {
     env.DOTNET_ROOT = options.dotnetRootPath;

@@ -10,6 +10,13 @@
     <!-- Generate ready to run images during publishing to improve cold start time. -->
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
+
+  <!-- Project references -->
+  <!-- <ItemGroup>
+    <ProjectReference Include="$(root)/libs/MyLibA/A.csproj" />
+    <ProjectReference Include="$(root)/libs/MyLibB/B.csproj" />
+  </ItemGroup> -->
+
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.Core" Version="2.2.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.1" />

@@ -11,7 +11,7 @@
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use?"
+      "x-prompt": "Name of the Lambda folder"
     },
     "directory": {
       "type": "string",
@@ -20,7 +20,7 @@
         "$source": "argv",
         "index": 1
       },
-      "x-prompt": "What directory would you like to target?"
+      "x-prompt": "(Optional) Target directory under root/apps"
     },
     "awsProfile": {
       "type": "string",

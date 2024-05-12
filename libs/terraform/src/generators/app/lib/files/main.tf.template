@@ -2,6 +2,7 @@
 ## shared infra
 module "user-pool" {
   # source = "git@github.com:myuser/terraform-modules.git//cognito"
+  # source = "git::https://github.com/myuser/terraform-modules//cognito"
   # source = "<%= rootOffset %>libs/terraform/cognito"
 
   environment = var.ENVIRONMENT
@@ -29,6 +30,7 @@ module "vpc" {
 ## step function
 module "step-function" {
   # source = "git@github.com:myuser/terraform-modules.git//step-function"
+  # source = "git::https://github.com/myuser/terraform-modules//step-function"
   # source = "<%= rootOffset %>libs/terraform/step-function"
 
   environment = var.ENVIRONMENT
@@ -48,6 +50,7 @@ data "aws_lambda_function" "state0" {
 ## lambda
 module "lambda" {
   # source = "git@github.com:myuser/terraform-modules.git//lambda"
+  # source = "git::https://github.com/myuser/terraform-modules//lambda"
   # source = "<%= rootOffset %>libs/terraform/lambda"
 
   environment = var.ENVIRONMENT
@@ -65,6 +68,7 @@ module "lambda" {
 
 module "lambda-service" {
   # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v2-lambda"
+  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-v2-lambda"
   # source = "<%= rootOffset %>libs/terraform/api-gateway-v2-lambda"
 
   environment = var.ENVIRONMENT

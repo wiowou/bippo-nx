@@ -6,6 +6,7 @@ module "user-pool" {
   # source = "<%= rootOffset %>libs/terraform/cognito"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
 
@@ -19,6 +20,7 @@ module "vpc" {
   # source = "<%= rootOffset %>libs/terraform/vpc"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
 
@@ -34,6 +36,7 @@ module "step-function" {
   # source = "<%= rootOffset %>libs/terraform/step-function"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
   BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
@@ -54,6 +57,7 @@ module "lambda" {
   # source = "<%= rootOffset %>libs/terraform/lambda"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
   BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
@@ -72,6 +76,7 @@ module "lambda-service" {
   # source = "<%= rootOffset %>libs/terraform/api-gateway-v2-lambda"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
   BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
@@ -93,6 +98,7 @@ module "dynamodb" {
   source = "./dynamodb"
 
   environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
   project_name = var.project_name
   application_dir = var.application_dir
 

@@ -1,6 +1,6 @@
 {
   "name": "@bippo-nx/dotnet-workspace",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "type": "commonjs",
   "generators": "./generators.json",
   "license": "MIT",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@bippo-nx/terraform": "^0.1.15",
+    "@bippo-nx/terraform": "^0.1.37",
     "@nx/devkit": "^16.0.0",
     "@nx/node": "^16.0.0"
   }

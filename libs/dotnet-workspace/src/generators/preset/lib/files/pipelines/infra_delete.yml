@@ -9,6 +9,15 @@ resources:
       ref: master
       endpoint: github.com_wiowou # service connection name
 
+parameters:
+  - name: environment_type
+    displayName: Choose Environment Type
+    type: string
+    default: 'non prod'
+    values:
+      - 'non prod'
+      - prod
+
 variables:
   - name: node_version
     value: '18.x'
@@ -16,9 +25,15 @@ variables:
     value: latest
   - name: environment
     value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+  - name: env_type
+    ${{ if eq(parameters.environment_type, 'prod') }}:
+      value: prod
+    ${{ else }}:
+      value: nprd
 
 stages:
   - template: stages/deploy.delete.aws.serverless.yml@PipelineTemplates
     parameters:
       environment: ${{ variables.environment }}
+      env_type: ${{ variables.env_type }}
       delete_shared_infra: true

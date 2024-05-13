@@ -10,16 +10,18 @@ resources:
       endpoint: github.com_wiowou # service connection name
 
 parameters:
-  - name: environment
-    displayName: Choose Deployment Environment
+  - name: environment_type
+    displayName: Choose Environment Type
     type: string
     default: none
     values:
       - none
-      - branch
+      - 'non prod'
       - prod
 
 variables:
+  - name: project_name
+    value: '<%= name %>'
   - name: node_version
     value: '18.x'
   - name: terraform_version
@@ -27,29 +29,33 @@ variables:
   - name: dotnet_version
     value: '8.0.x'
   - name: run_all
-    value: false
+    value: true
   - name: environment
-    ${{ if eq(parameters.environment, 'branch') }}:
-      value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+    value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+  - name: env_type
+    ${{ if eq(parameters.environment_type, 'prod') }}:
+      value: prod
     ${{ else }}:
-      value: ${{ parameters.environment }}
+      value: nprd
 
 stages:
   - template: stages/build.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
-      environment: ${{ variables.environment }}
+      env_type: ${{ variables.env_type }}
 
   - template: stages/migrate.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
       environment: ${{ variables.environment }}
-      project_name: '<%= name %>'
+      env_type: ${{ variables.env_type }}
+      project_name: ${{ variables.project_name }}
       region: us-east-1
       enabled: false
 
   - template: stages/deploy.aws.serverless.yml@PipelineTemplates
     parameters:
       environment: ${{ variables.environment }}
+      env_type: ${{ variables.env_type }}
       run_all: ${{ variables.run_all }}
-      enabled: ${{ ne(variables.environment, 'none') }}
+      enabled: ${{ ne(parameters.environment_type, 'none') }}

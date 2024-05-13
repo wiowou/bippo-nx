@@ -3,6 +3,10 @@ variable "ENVIRONMENT" {
   type = string
 }
 
+variable "ENV_TYPE" {
+  type = string
+}
+
 variable "BUILD_SOURCES_DIR" {
   type = string
   description = "root level for the project sources"

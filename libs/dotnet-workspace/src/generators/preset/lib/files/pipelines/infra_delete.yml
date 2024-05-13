@@ -36,4 +36,4 @@ stages:
     parameters:
       environment: ${{ variables.environment }}
       env_type: ${{ variables.env_type }}
-      delete_shared_infra: true
+      delete_shared_infra: false

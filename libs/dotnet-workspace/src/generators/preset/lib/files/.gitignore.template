@@ -3,7 +3,6 @@
 # compiled output
 dist
 tmp
-.mono/
 /out-tsc
 **.terraform*
 **tfplan
@@ -16,16 +15,19 @@ obj/
 node_modules
 
 # IDEs and editors
+/.vs
+/.nx
 /.idea
 .project
 .classpath
 .c9/
 *.launch
 .settings/
+*.csproj.*
 *.sublime-workspace
 
 # IDE - VSCode
-.mono/*
+.mono/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

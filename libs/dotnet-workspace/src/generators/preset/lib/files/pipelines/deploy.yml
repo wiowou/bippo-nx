@@ -1,0 +1,54 @@
+trigger: none
+name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyy)-$(Date:MM)-$(Date:dd)_Build$(Build.BuildId)_r$(Rev:r)
+
+resources:
+  repositories:
+    - repository: PipelineTemplates
+      type: github
+      name: wiowou/ADOTemplates
+      ref: master
+      endpoint: github.com_wiowou # service connection name
+
+parameters:
+  - name: environment_type
+    displayName: Choose Environment Type
+    type: string
+    default: 'non prod'
+    values:
+      - 'non prod'
+      - prod
+
+variables:
+  - name: project_name
+    value: '<%= name %>'
+  - name: node_version
+    value: '18.x'
+  - name: terraform_version
+    value: latest
+  - name: dotnet_version
+    value: '8.0.x'
+  - name: run_all
+    value: true
+  - name: environment
+    value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+
+stages:
+  - template: stages/build.aws.serverless.yml@PipelineTemplates
+    parameters:
+      run_all: ${{ variables.run_all }}
+      env_type: ${{ parameters.environment_type }}
+
+  - template: stages/migrate.aws.serverless.yml@PipelineTemplates
+    parameters:
+      run_all: ${{ variables.run_all }}
+      environment: ${{ variables.environment }}
+      env_type: ${{ parameters.environment_type }}
+      project_name: ${{ variables.project_name }}
+      region: us-east-1
+      enabled: false
+
+  - template: stages/deploy.aws.serverless.yml@PipelineTemplates
+    parameters:
+      environment: ${{ variables.environment }}
+      env_type: ${{ parameters.environment_type }}
+      run_all: ${{ variables.run_all }}

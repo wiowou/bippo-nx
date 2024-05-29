@@ -6,13 +6,18 @@ import { LambdaApiGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: LambdaApiGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
+  const appType = options.gatewayType === 'rest' ? 'LAMBDA_SERVICE_REST' : 'LAMBDA_SERVICE';
+  const handler =
+    options.gatewayType === 'rest'
+      ? `${normalizedOptions.projectName}::${normalizedOptions.projectName}.LambdaEntryPoint::FunctionHandlerAsync`
+      : `${normalizedOptions.projectName}`;
   const terraformGeneratorOptions: TerraformGeneratorSchema = {
     ...options,
     name: 'terraform',
     directory: normalizedOptions.projectDirectory,
-    appType: 'LAMBDA_SERVICE',
+    appType,
     database: options.database,
-    handler: `${normalizedOptions.projectName}`,
+    handler,
   };
   await terraformGenerator(tree, terraformGeneratorOptions);
   updateLaunchJson(tree, normalizedOptions);

@@ -126,6 +126,27 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/horse/FooAPI2/src/Views"
       }
+    },
+    {
+      "name": "Serve Vee",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_Vee",
+      "program": "${workspaceFolder}/apps/Vee/src/bin/Debug/net8.0/Vee.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/Vee/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/Vee/src/Views"
+      }
     }
   ]
 }

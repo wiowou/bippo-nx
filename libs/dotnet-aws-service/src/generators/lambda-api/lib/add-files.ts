@@ -10,4 +10,8 @@ export function addFiles(tree: Tree, options: NormalizedLambdaApiGeneratorSchema
     template: '',
   };
   generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+
+  if (options.gatewayType === 'rest') {
+    generateFiles(tree, path.join(__dirname, 'files-rest'), options.projectRoot, templateOptions);
+  }
 }

@@ -91,6 +91,31 @@ module "lambda-service" {
   #   aws = aws.us-east-2
   # }
 }
+<% } else if (appType === "LAMBDA_SERVICE_REST") { %>
+## lambda service
+
+module "lambda-service" {
+  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v1-lambda"
+  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-v1-lambda"
+  # source = "<%= rootOffset %>libs/terraform/api-gateway-v1-lambda"
+
+  environment = var.ENVIRONMENT
+  env_type    = var.ENV_TYPE
+  project_name = var.project_name
+  application_dir = var.application_dir
+  BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
+  handler = "<%= handler %>"
+  use_auth = false
+  endpoint_configuration = "PRIVATE"
+
+  # environment_settings = {
+  #   APP_TABLE_NAME = module.dynamodb.app_table_name
+  # }
+
+  # providers = {
+  #   aws = aws.us-east-2
+  # }
+}
 <% } %>
 
 <% if (database === "dynamo") { %>

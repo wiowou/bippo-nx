@@ -71,9 +71,9 @@ module "lambda" {
 ## lambda service
 
 module "lambda-service" {
-  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v2-lambda"
-  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-v2-lambda"
-  # source = "<%= rootOffset %>libs/terraform/api-gateway-v2-lambda"
+  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-http-lambda"
+  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-http-lambda"
+  # source = "<%= rootOffset %>libs/terraform/api-gateway-http-lambda"
 
   environment = var.ENVIRONMENT
   env_type    = var.ENV_TYPE
@@ -95,9 +95,9 @@ module "lambda-service" {
 ## lambda service
 
 module "lambda-service" {
-  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-v1-lambda"
-  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-v1-lambda"
-  # source = "<%= rootOffset %>libs/terraform/api-gateway-v1-lambda"
+  # source = "git@github.com:myuser/terraform-modules.git//api-gateway-rest-lambda"
+  # source = "git::https://github.com/myuser/terraform-modules//api-gateway-rest-lambda"
+  # source = "<%= rootOffset %>libs/terraform/api-gateway-rest-lambda"
 
   environment = var.ENVIRONMENT
   env_type    = var.ENV_TYPE

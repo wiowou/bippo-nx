@@ -147,6 +147,48 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/Vee/src/Views"
       }
+    },
+    {
+      "name": "Serve junk-junk",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_junk-junk",
+      "program": "${workspaceFolder}/apps/junk/junk/src/bin/Debug/net8.0/junk-junk.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/junk/junk/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/junk/junk/src/Views"
+      }
+    },
+    {
+      "name": "Serve junk",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_junk",
+      "program": "${workspaceFolder}/apps/junk/src/bin/Debug/net8.0/junk.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/junk/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/junk/src/Views"
+      }
     }
   ]
 }

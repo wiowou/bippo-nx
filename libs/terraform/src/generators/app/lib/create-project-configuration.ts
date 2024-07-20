@@ -21,7 +21,9 @@ export function createProjectConfiguration(
             },
             {
               replace: 'provider.tf',
-              with: `${normalizedOptions.rootOffset}terraform-providers/provider.default.tf`,
+              with: `${normalizedOptions.rootOffset}terraform-providers/provider.${
+                normalizedOptions.appType === 'SHARED_INFRA' ? 'shared-infra.nprd' : 'default'
+              }.tf`,
             },
           ],
           commands: ['terraform init'],
@@ -47,7 +49,9 @@ export function createProjectConfiguration(
               },
               {
                 replace: 'provider.tf',
-                with: `${normalizedOptions.rootOffset}terraform-providers/provider.prod.tf`,
+                with: `${normalizedOptions.rootOffset}terraform-providers/provider.${
+                  normalizedOptions.appType === 'SHARED_INFRA' ? 'shared-infra.prod' : 'prod'
+                }.tf`,
               },
             ],
           },

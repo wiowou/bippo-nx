@@ -21,6 +21,13 @@
         "index": 1
       },
       "x-prompt": "(Optional) Target directory under root/libs"
+    },
+    "libraryType": {
+      "type": "string",
+      "description": "The type of library to create",
+      "enum": ["generic", "api"],
+      "default": "generic",
+      "x-prompt": "(Optional, default=generic) generic, api library"
     }
   },
   "required": ["name"]

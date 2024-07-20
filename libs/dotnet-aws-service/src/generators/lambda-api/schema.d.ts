@@ -15,5 +15,6 @@ export interface LambdaApiGeneratorSchema extends TerraformOptions {
   name: string;
   database: Database;
   directory?: string;
+  createLibrary: boolean;
   gatewayType: 'rest' | 'http';
 }

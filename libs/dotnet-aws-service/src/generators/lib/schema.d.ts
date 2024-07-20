@@ -12,4 +12,5 @@ interface NormalizedLibGeneratorSchema extends LibGeneratorSchema {
 export interface LibGeneratorSchema {
   name: string;
   directory?: string;
+  libraryType: 'generic' | 'api';
 }

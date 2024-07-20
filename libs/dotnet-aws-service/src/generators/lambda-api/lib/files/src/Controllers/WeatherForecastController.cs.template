@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
-using <%= projectName %>.Database;
+using <%= projectNamePascal %>.Database;
 
-namespace <%= projectName %>.Controllers;
+namespace <%= projectNamePascal %>.Controllers;
 
+/// <summary>
+/// Provides methods related to the weather forecast.
+/// </summary>
+///
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
@@ -15,14 +20,25 @@ public class WeatherForecastController : ControllerBase
   };
 
   private readonly ILogger<WeatherForecastController> _logger;
-  private readonly <%= projectName %>DbContext _context;
+  private readonly <%= projectNamePascal %>DbContext _context;
 
-  public WeatherForecastController(ILogger<WeatherForecastController> logger, <%= projectName %>DbContext context)
+  public WeatherForecastController(ILogger<WeatherForecastController> logger, <%= projectNamePascal %>DbContext context)
   {
     _logger = logger;
     _context = context;
   }
 
+  /// <summary>
+  /// Gets the forecast for the next 5 days
+  /// </summary>
+  ///
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  ///
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
   [HttpGet("forecast")]
   public IEnumerable<WeatherForecast> Get()
   {

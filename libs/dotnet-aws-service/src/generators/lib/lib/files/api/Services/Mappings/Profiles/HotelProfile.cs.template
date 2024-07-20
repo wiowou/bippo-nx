@@ -1,0 +1,24 @@
+using AutoMapper;
+
+namespace <%= projectNamePascal %>.Mapping;
+
+public class HotelProfile : Profile 
+{
+  public HotelProfile()
+  {
+    CreateMap<HotelRequestDto, HotelDto>()
+      .ForPath(
+        dest => dest.UpdatedBy,
+        opt => opt.MapFrom(src => 1)
+      )
+      .ForPath(
+        dest => dest.CreatedOn,
+        opt => opt.MapFrom(src => DateTime.UtcNow)
+      )
+      .ForPath(
+        dest => dest.UpdatedOn,
+        opt => opt.MapFrom(src => DateTime.UtcNow)
+      );
+    CreateMap<Hotel, HotelResponseDto>();
+  }
+}

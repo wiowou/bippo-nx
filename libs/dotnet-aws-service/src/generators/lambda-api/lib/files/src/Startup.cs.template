@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using System.Text.Json;
 
-namespace <%= projectName %>;
-using <%= projectName %>.Database;
-using <%= projectName %>.Settings;
+namespace <%= projectNamePascal %>;
+using <%= projectNamePascal %>.Database;
+using <%= projectNamePascal %>.Settings;
 
 public class Startup
 {
@@ -23,7 +23,7 @@ public class Startup
   // This method gets called by the runtime. Use it to add services
   public void ConfigureServices(IServiceCollection services)
   {
-    services.AddDbContext<<%= projectName %>DbContext>(options => {
+    services.AddDbContext<<%= projectNamePascal %>DbContext>(options => {
       options
         .UseNpgsql(DbConnectionString)
         .UseSnakeCaseNamingConvention();
@@ -35,8 +35,13 @@ public class Startup
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen();
     services.AddSingleton(_appSettings);
+<% if (gatewayType === "rest") { %>
+    services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
+<% } else { %>
     services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+<% } %>
   }
+
 
   public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
   {

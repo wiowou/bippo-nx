@@ -1,4 +1,4 @@
-namespace <%= projectName %>;
+namespace <%= projectNamePascal %>;
 
 public class WeatherForecast
 {

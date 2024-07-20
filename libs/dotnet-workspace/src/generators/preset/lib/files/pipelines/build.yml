@@ -29,9 +29,14 @@ variables:
     value: true
   - name: environment
     value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+  - name: env_type
+    ${{ if eq(parameters.environment_type, 'prod') }}:
+      value: prod
+    ${{ else }}:
+      value: nprd
 
 stages:
   - template: stages/build.aws.serverless.yml@PipelineTemplates
     parameters:
       run_all: ${{ variables.run_all }}
-      env_type: ${{ parameters.environment_type }}
+      env_type: ${{ variables.env_type }}

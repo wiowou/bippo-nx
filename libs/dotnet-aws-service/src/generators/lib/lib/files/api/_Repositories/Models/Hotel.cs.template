@@ -1,0 +1,18 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace <%= projectNamePascal %>.Repository;
+
+public class Hotel
+{
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public string Address { get; set; }
+  public double Rating { get; set; }
+  public decimal Cost { get; set; }
+  public DateOnly Established { get; set; }
+  DateTime NextReportDate { get; set; }
+
+  public DateTime CreatedOn {get; set; }
+  public DateTime UpdatedOn {get; set; }
+  public int UpdatedBy { get; set; }
+}

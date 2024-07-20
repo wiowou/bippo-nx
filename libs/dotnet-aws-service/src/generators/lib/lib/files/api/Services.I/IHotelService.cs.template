@@ -1,0 +1,7 @@
+namespace <%= projectNamePascal %>.Mapping;
+
+public interface IHotelService
+{
+  Task<IHotelResponseDto> CreateHotelAsync(IHotelRequestDto hotelRequestDto);
+  Task<IHotelResponseDto> GetHotelAsync(long hotelId);
+}

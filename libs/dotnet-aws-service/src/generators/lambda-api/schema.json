@@ -29,6 +29,12 @@
       "default": "http",
       "x-prompt": "(Optional, default=http) http, rest gateway"
     },
+    "createLibrary": {
+      "type": "boolean",
+      "description": "(Optional, default=true) Create an associated library under the libs folder?",
+      "default": true,
+      "x-prompt": "(Optional) Create an associated library under the libs folder?"
+    },
     "awsProfile": {
       "type": "string",
       "description": "The AWS profile name you plan to use to locally create infra",

@@ -1,0 +1,11 @@
+namespace <%= projectNamePascal %>.Dto;
+
+Interface IHotelResponseDto
+{
+  string Name { get; set; }
+  string Address { get; set; }
+  double Rating { get; set; }
+  decimal Cost { get; set; }
+  string Established { get; set; }
+  string NextReportDate { get; set; }
+}

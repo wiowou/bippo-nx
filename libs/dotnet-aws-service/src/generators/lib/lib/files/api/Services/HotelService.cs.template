@@ -1,0 +1,25 @@
+namespace <%= projectNamePascal %>.Services;
+
+public class HotelService
+{
+  private <%= projectNamePascal %>DbContext _context;
+
+  public HotelService(<%= projectNamePascal %>DbContext context)
+  {
+    _context = context;
+  }
+
+  Task<IHotelResponseDto> CreateHotelAsync(IHotelRequestDto hotelRequestDto)
+  {
+    var hotel = Mapper.Instance.Map<Hotel>(hotelRequestDto);
+    _context.Hotels.Add(hotel);
+    await _context.SaveChangesAsync();
+    return Mapper.Instance.Map<HotelResponseDto>(hotel);
+  }
+
+  Task<IHotelResponseDto> GetHotelAsync(long hotelId)
+  {
+    var hotel = _context.Hotels.Find(hotelId);
+    return Mapper.Instance.Map<HotelResponseDto>(hotel);
+  }
+}

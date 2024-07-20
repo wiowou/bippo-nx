@@ -1,0 +1,19 @@
+using AutoMapper;
+
+namespace <%= projectNamePascal %>.Mapping;
+
+public class PrimitivesProfile : Profile 
+{
+  public PrimitivesProfile()
+  {
+    CreateMap<DateTime, string>().ConvertUsing(x => x.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+    CreateMap<DateOnly, string>().ConvertUsing(x => x.ToString("yyyy-MM-dd"));
+    CreateMap<decimal, string>().ConvertUsing(x => x.ToString("0.00"));
+    CreateMap<DateTime?, DateTime>().ConvertUsing((src, dest) => src ?? dest);
+    CreateMap<int?, int>().ConvertUsing((src, dest) => src ?? dest);
+    CreateMap<long?, long>().ConvertUsing((src, dest) => src ?? dest);
+    CreateMap<double?, double>().ConvertUsing((src, dest) => src ?? dest);
+    CreateMap<decimal?, decimal>().ConvertUsing((src, dest) => src ?? dest);
+    CreateMap<string, string>().ConvertUsing((src, dest) => src ?? dest);
+  }
+}

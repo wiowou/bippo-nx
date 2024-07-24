@@ -6,7 +6,7 @@ public class HotelProfile : Profile
 {
   public HotelProfile()
   {
-    CreateMap<HotelRequestDto, HotelDto>()
+    CreateMap<HotelRequestDto, Hotel>()
       .ForPath(
         dest => dest.UpdatedBy,
         opt => opt.MapFrom(src => 1)

@@ -1,4 +1,4 @@
-namespace <%= projectNamePascal %>.Services.Exceptions;
+namespace <%= projectNamePascal %>.Service;
 
 [Serializable]
 public class NotFoundException : System.Exception

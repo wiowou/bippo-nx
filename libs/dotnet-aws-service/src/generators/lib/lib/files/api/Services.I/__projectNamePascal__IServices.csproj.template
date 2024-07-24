@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../Dtos.I/<%= projectNamePascal %>IDtos.csproj" />
+  </ItemGroup>
+
 </Project>

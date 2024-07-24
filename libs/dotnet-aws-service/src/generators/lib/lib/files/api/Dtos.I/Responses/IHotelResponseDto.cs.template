@@ -1,6 +1,6 @@
 namespace <%= projectNamePascal %>.Dto;
 
-Interface IHotelResponseDto
+public interface IHotelResponseDto
 {
   string Name { get; set; }
   string Address { get; set; }

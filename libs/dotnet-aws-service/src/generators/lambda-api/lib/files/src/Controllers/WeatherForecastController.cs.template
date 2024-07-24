@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
-using <%= projectNamePascal %>.Database;
+using <%= projectNamePascal %>.Service;
+using <%= projectNamePascal %>.Dto;
 
 namespace <%= projectNamePascal %>.Controllers;
 
@@ -20,12 +21,12 @@ public class WeatherForecastController : ControllerBase
   };
 
   private readonly ILogger<WeatherForecastController> _logger;
-  private readonly <%= projectNamePascal %>DbContext _context;
+  private readonly IHotelService _hotelService;
 
-  public WeatherForecastController(ILogger<WeatherForecastController> logger, <%= projectNamePascal %>DbContext context)
+  public WeatherForecastController(ILogger<WeatherForecastController> logger, IHotelService hotelService)
   {
     _logger = logger;
-    _context = context;
+    _hotelService = hotelService;
   }
 
   /// <summary>
@@ -53,14 +54,26 @@ public class WeatherForecastController : ControllerBase
     .ToArray();
   }
 
-  [HttpGet("hotels")]
-  public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+  /// <summary>
+  /// Gets a hotel
+  /// </summary>
+  /// <param name="hotelId">long</param>
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+  [HttpGet("hotels/{hotelId}")]
+  public async Task<ActionResult<IEnumerable<IHotelResponseDto>>> GetHotel(long hotelId)
   {
-    if (_context.Hotels == null)
+    try 
     {
-      return NotFound();
+      var hotels = await _hotelService.GetHotelAsync(hotelId);
+      return Ok(hotels);
     }
-    var hotels = await _context.Hotels.ToListAsync();
-    return Ok(hotels);
+    catch (NotFoundException ex)
+    {
+      return NotFound(new { Error = ex.Message });
+    }
   }
 }

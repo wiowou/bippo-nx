@@ -1,4 +1,6 @@
-namespace <%= projectNamePascal %>.Mapping;
+namespace <%= projectNamePascal %>.Service;
+
+using Dto;
 
 public interface IHotelService
 {

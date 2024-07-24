@@ -1,8 +1,8 @@
-namespace <%= projectName %>.Settings;
+namespace <%= projectNamePascal %>.Setting;
 
-public class AppSettings
+public class AppSettings : IAppSettings<%= projectNamePascal %>
 {
-  public string EnvName { get; set; }
+  public string EnvType { get; set; }
   public DatabaseSettings Database { get; set; }
   public AppSettings()
   {

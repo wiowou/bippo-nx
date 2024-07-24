@@ -8,10 +8,13 @@
   </PropertyGroup>
 
   <!-- Project references -->
-  <!-- <ItemGroup>
-    <ProjectReference Include="$(root)/libs/MyLibA/A.csproj" />
-    <ProjectReference Include="$(root)/libs/MyLibB/B.csproj" />
-  </ItemGroup> -->
+  <ItemGroup>
+    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Dtos.I/<%= projectNamePascal %>IDtos.csproj" />
+    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Repositories/<%= projectNamePascal %>Repositories.csproj" />
+    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Services/<%= projectNamePascal %>Services.csproj" />
+    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Services.I/<%= projectNamePascal %>IServices.csproj" />
+    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Settings/<%= projectNamePascal %>Settings.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Migrations/**">

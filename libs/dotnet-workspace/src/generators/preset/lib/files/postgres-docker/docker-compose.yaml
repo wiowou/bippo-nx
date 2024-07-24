@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  postgres: #hostname in pgadmin4 via docker
+    container_name: bk-postgres
+    image: postgres:16.1
+    environment:
+      POSTGRES_USER: service
+      POSTGRES_PASSWORD: ex9Cx?qfg8!
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      pgnet:
+        ipv4_address: 172.100.0.2 #hostname in pgadmin4
+    restart: always
+
+  pgadmin:
+    container_name: bk-pgadmin4
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - 5555:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - pgnet
+    restart: always
+
+volumes:
+  pgdata:
+  pgadmin_data:
+networks:
+  pgnet:
+    ipam:
+      config:
+        - subnet: 172.100.0.0/24

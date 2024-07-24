@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../<%= projectNamePascal %>IDtos.csproj" />
-    <ProjectReference Include="../<%= projectNamePascal %>Repositories.csproj" />
-    <ProjectReference Include="../<%= projectNamePascal %>IServices.csproj" />
-    <ProjectReference Include="../<%= projectNamePascal %>Settings.csproj" />
+    <ProjectReference Include="../Repositories/<%= projectNamePascal %>Repositories.csproj" />
+    <ProjectReference Include="../Dtos.I/<%= projectNamePascal %>IDtos.csproj" />
+    <ProjectReference Include="../Services.I/<%= projectNamePascal %>IServices.csproj" />
+    <ProjectReference Include="../Settings/<%= projectNamePascal %>Settings.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
-namespace <%= projectNamePascal %>.Services;
+namespace <%= projectNamePascal %>.Service;
 
-public class HotelService
+using Mapping;
+
+public class HotelService : IHotelService
 {
   private <%= projectNamePascal %>DbContext _context;
 
@@ -9,7 +11,7 @@ public class HotelService
     _context = context;
   }
 
-  Task<IHotelResponseDto> CreateHotelAsync(IHotelRequestDto hotelRequestDto)
+  public async Task<IHotelResponseDto> CreateHotelAsync(IHotelRequestDto hotelRequestDto)
   {
     var hotel = Mapper.Instance.Map<Hotel>(hotelRequestDto);
     _context.Hotels.Add(hotel);
@@ -17,9 +19,9 @@ public class HotelService
     return Mapper.Instance.Map<HotelResponseDto>(hotel);
   }
 
-  Task<IHotelResponseDto> GetHotelAsync(long hotelId)
+  public async Task<IHotelResponseDto> GetHotelAsync(long hotelId)
   {
-    var hotel = _context.Hotels.Find(hotelId);
+    var hotel = await _context.Hotels.FindAsync(hotelId) ?? throw new NotFoundException();
     return Mapper.Instance.Map<HotelResponseDto>(hotel);
   }
 }

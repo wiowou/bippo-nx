@@ -1,0 +1,46 @@
+namespace <%= projectNamePascal %>;
+
+using Microsoft.OpenApi.Models;
+
+public partial class Startup
+{
+  // This method gets called by the runtime. Use it to add services
+  public void ConfigureSwagger(IServiceCollection services)
+  {
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen(c => 
+    {
+      c.SwaggerDoc("v1", new OpenApiInfo 
+      {
+        Version = "v1",
+        Title = "<%= projectNamePascal %>",
+        Description = "",
+        Contact = new OpenApiContact()
+      });
+      // Security logic
+      // var securitySchema = new OpenApiSecurityScheme 
+      // {
+      //   Description = "",
+      //   Name = "Authorization",
+      //   In = ParameterLocation.Header,
+      //   Type = SecuritySchemeType.Http,
+      //   Scheme = "bearer",
+      //   Reference = new OpenApiReference
+      //   {
+      //     Type = ReferenceType.SecurityScheme,
+      //     Id = "Bearer"
+      //   }
+      // };
+      // c.AddSecurityDefinition("Bearer", securitySchema);
+
+      // var securityRequirement = new OpenApiSecurityRequirement();
+      // securityRequirement.Add(securitySchema, new[] { "Bearer" });
+      // c.AddSecurityRequirement(securityRequirement);
+
+      //to display in <summary></summary> tag
+      var xmlCommentsFile = $"<%= projectNamePascal %>.xml";
+      var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
+      c.IncludeXmlComments(xmlCommentsPath);
+    });
+  }
+}

@@ -1,0 +1,7 @@
+namespace <%= projectNamePascal %>.Setting;
+
+public interface IAppSettings<%= projectNamePascal %>
+{
+  string EnvType { get; set; }
+  DatabaseSettings Database { get; set; }
+}

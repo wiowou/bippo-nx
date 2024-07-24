@@ -4,7 +4,7 @@ namespace <%= projectNamePascal %>.Repository;
 
 public class Hotel
 {
-  public int Id { get; set; }
+  public long Id { get; set; }
   public string Name { get; set; }
   public string Address { get; set; }
   public double Rating { get; set; }
@@ -14,5 +14,5 @@ public class Hotel
 
   public DateTime CreatedOn {get; set; }
   public DateTime UpdatedOn {get; set; }
-  public int UpdatedBy { get; set; }
+  public long UpdatedBy { get; set; }
 }

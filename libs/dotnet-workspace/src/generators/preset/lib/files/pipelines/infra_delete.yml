@@ -24,7 +24,7 @@ variables:
   - name: terraform_version
     value: latest
   - name: environment
-    value: ${{ replace(variables['Build.SourceBranchName'], '-', '_') }}
+    value: ${{ replace(replace(variables['Build.SourceBranchName'], '-', '_'), '.', '_') }}
   - name: env_type
     ${{ if eq(parameters.environment_type, 'prod') }}:
       value: prod

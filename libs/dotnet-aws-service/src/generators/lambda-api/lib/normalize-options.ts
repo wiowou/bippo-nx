@@ -10,6 +10,7 @@ export function normalizeOptions(tree: Tree, options: LambdaApiGeneratorSchema):
   const projectDirectory = options.directory ? `${options.directory}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('[_/]', 'g'), '-');
   const projectNamePascal = changeCase.pascalCase(projectName);
+  const projectNameSnake = changeCase.snakeCase(projectNamePascal);
   const projectNameLower = projectNamePascal.toLowerCase();
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const rootOffset = offsetFromRoot(projectRoot);
@@ -19,6 +20,7 @@ export function normalizeOptions(tree: Tree, options: LambdaApiGeneratorSchema):
     ...options,
     projectName,
     projectNamePascal,
+    projectNameSnake,
     projectNameLower,
     projectRoot,
     projectDirectory,

@@ -4,6 +4,7 @@ import { TerraformOptions } from '@bippo-nx/terraform';
 interface NormalizedLambdaApiGeneratorSchema extends LambdaApiGeneratorSchema {
   projectName: string;
   projectNamePascal: string;
+  projectNameSnake: string;
   projectNameLower: string;
   projectRoot: string;
   projectDirectory: string;

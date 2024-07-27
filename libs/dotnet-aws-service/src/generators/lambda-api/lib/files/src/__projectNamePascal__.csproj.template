@@ -5,15 +5,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <!-- Project references -->
   <ItemGroup>
-    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Dtos.I/<%= projectNamePascal %>IDtos.csproj" />
-    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Repositories/<%= projectNamePascal %>Repositories.csproj" />
-    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Services/<%= projectNamePascal %>Services.csproj" />
-    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Services.I/<%= projectNamePascal %>IServices.csproj" />
-    <ProjectReference Include="<%= rootOffset %>/libs/<%= projectNamePascal %>/Settings/<%= projectNamePascal %>Settings.csproj" />
+    <ProjectReference Include="<%= rootOffset %>../libs/<%= projectNamePascal %>/Dtos.I/<%= projectNamePascal %>IDtos.csproj" />
+    <ProjectReference Include="<%= rootOffset %>../libs/<%= projectNamePascal %>/Repositories/<%= projectNamePascal %>Repositories.csproj" />
+    <ProjectReference Include="<%= rootOffset %>../libs/<%= projectNamePascal %>/Services/<%= projectNamePascal %>Services.csproj" />
+    <ProjectReference Include="<%= rootOffset %>../libs/<%= projectNamePascal %>/Services.I/<%= projectNamePascal %>IServices.csproj" />
+    <ProjectReference Include="<%= rootOffset %>../libs/<%= projectNamePascal %>/Settings/<%= projectNamePascal %>Settings.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,13 +23,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Condition="'$(Configuration)'=='Debug'" Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
     <!-- used for ssm parameters, paramstore -->
     <PackageReference Include="AWS.Lambda.Powertools.Parameters" Version="1.3.0" />
     <!-- used to make EFCore capitalization compatible with postgres lowercase -->
     <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
     <!-- only package required for accessing dbContext -->
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

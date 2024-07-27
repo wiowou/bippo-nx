@@ -5,7 +5,11 @@ import { LibGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: LibGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  addProjectConfiguration(tree, normalizedOptions.projectName, createProjectConfiguration(normalizedOptions));
+  addProjectConfiguration(
+    tree,
+    normalizedOptions.projectName + normalizedOptions.libraryType === 'api' ? 'Lib' : '',
+    createProjectConfiguration(normalizedOptions)
+  );
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

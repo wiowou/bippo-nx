@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace <%= projectNamePascal %>;
 
 public partial class Startup

@@ -1,3 +1,4 @@
+using Amazon.SecretsManager;
 using AWS.Lambda.Powertools.Parameters;
 using AWS.Lambda.Powertools.Parameters.SecretsManager;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ public partial class Startup
   {
     services.AddDbContext<<%= projectNamePascal %>DbContext>(options => {
       options
-        .UseNpgsql(DbConnectionString)
+        .UseNpgsql(DbConnectionString, b => b.MigrationsAssembly("<%= projectNamePascal %>"))
         .UseSnakeCaseNamingConvention();
     });
   }

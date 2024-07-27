@@ -83,6 +83,30 @@ export function createProjectConfiguration(
           },
         ],
       },
+      'migration-add': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/src`,
+          commands: ['dotnet ef migrations add Init'],
+        },
+      },
+      'migrate-up': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/src`,
+          commands: ['dotnet ef database update --configuration Debug'],
+        },
+      },
+      'migrate-down': {
+        executor: 'nx:run-commands',
+        options: {
+          parallel: false,
+          cwd: `${normalizedOptions.projectRoot}/src`,
+          commands: ['dotnet ef database update 0 --configuration Debug'],
+        },
+      },
     },
   };
   if (normalizedOptions.database === 'dynamo') {

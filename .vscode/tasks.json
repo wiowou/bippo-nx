@@ -147,6 +147,21 @@
         "/consoleloggerparameters:NoSummary;ForceNoAlign"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Create Nx Plugin",
+      "command": "nx g @nx/plugin:plugin",
+      "type": "shell"
+    },
+    {
+      "label": "Create Nx Generator",
+      "command": "nx g @nx/plugin:generator",
+      "type": "shell"
+    },
+    {
+      "label": "Create Nx Executor",
+      "command": "nx g @nx/plugin:executor",
+      "type": "shell"
     }
   ]
 }

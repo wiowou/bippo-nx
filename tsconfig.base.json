@@ -20,6 +20,7 @@
       "@bippo-nx/dotnet-aws-service": ["libs/dotnet-aws-service/src/index.ts"],
       "@bippo-nx/terraform": ["libs/terraform/src/index.ts"],
       "@bippo-nx/types": ["libs/types/index.ts"],
+      "@bippo-nx/util": ["libs/util/src/index.ts"],
       "@bippo-nx/workspace": ["libs/workspace/src/index.ts"]
     }
   },

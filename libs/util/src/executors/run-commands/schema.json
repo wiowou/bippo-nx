@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "RunCommands executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "cwd": {
+      "type": "string",
+      "description": "The current working directory where the file replacement commands should be executed"
+    },
+    "commands": {
+      "description": "Commands to run",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "os command to run"
+      },
+      "default": []
+    },
+    "fileReplacements": {
+      "description": "Replace files with other files in the build.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "replace": {
+            "type": "string",
+            "description": "The file to be replaced.",
+            "x-completion-type": "file"
+          },
+          "with": {
+            "type": "string",
+            "description": "The file to replace with.",
+            "x-completion-type": "file"
+          }
+        },
+        "additionalProperties": false,
+        "required": ["replace", "with"]
+      },
+      "default": []
+    },
+    "copyInputFromPath": {
+      "type": "string",
+      "description": "The repo-based absolute path for the input",
+      "x-completion-type": "directory",
+      "x-priority": "important"
+    },
+    "copyOutputToPath": {
+      "type": "string",
+      "description": "The repo-based absolute path for the output",
+      "x-completion-type": "directory",
+      "x-priority": "important"
+    }
+  },
+  "required": []
+}

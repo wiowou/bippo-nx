@@ -23,6 +23,11 @@
       "type": "shell"
     },
     {
+      "label": "Add Python AWS Lambda",
+      "command": "npx nx g @bippo-nx/python-aws-service:lambda",
+      "type": "shell"
+    },
+    {
       "label": "Add Dotnet Library",
       "command": "npx nx g @bippo-nx/dotnet-aws-service:lib",
       "type": "shell"

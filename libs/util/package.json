@@ -2,5 +2,25 @@
   "name": "@bippo-nx/util",
   "version": "0.0.1",
   "type": "commonjs",
-  "executors": "./executors.json"
+  "executors": "./executors.json",
+  "main": "src/index.js",
+  "license": "MIT",
+  "keywords": [
+    "nx",
+    "nx-plugin",
+    "aws",
+    "python"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiowou/bippo-nx.git"
+  },
+  "homepage": "https://github.com/wiowou/bippo-nx/blob/master/libs/python-aws-service/README.md",
+  "peerDependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@nx/devkit": "^16.0.0"
+  }
 }

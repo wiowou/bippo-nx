@@ -8,7 +8,7 @@
       "args": ["slngen", "-e node_modules", "-o <%= name %>.sln", "./**/*.csproj"]
     },
     {
-      "label": "Add Dotnet AWS API V2",
+      "label": "Add Dotnet AWS API",
       "command": "npx nx g @bippo-nx/dotnet-aws-service:lambda-api",
       "type": "shell"
     },

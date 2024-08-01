@@ -37,14 +37,14 @@
       }
     },
     "publish": {
-      "command": "node tools/scripts/publish.mjs dotnet-workspace --tag {args.tag}",
+      "command": "node tools/scripts/publish.mjs util --tag {args.tag}",
       "dependsOn": ["build"]
     },
     "npm-major": {
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/dotnet-workspace",
+        "cwd": "./libs/util",
         "commands": ["npm version major"]
       }
     },
@@ -52,7 +52,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/dotnet-workspace",
+        "cwd": "./libs/util",
         "commands": ["npm version minor"]
       }
     },
@@ -60,7 +60,7 @@
       "executor": "nx:run-commands",
       "options": {
         "parallel": false,
-        "cwd": "./libs/dotnet-workspace",
+        "cwd": "./libs/util",
         "commands": ["npm version patch"]
       }
     },

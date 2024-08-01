@@ -7,7 +7,7 @@ export default async function (tree: Tree, options: LibGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(
     tree,
-    normalizedOptions.projectName + normalizedOptions.libraryType === 'api' ? 'Lib' : '',
+    normalizedOptions.projectName + (normalizedOptions.libraryType === 'api' ? 'Lib' : ''),
     createProjectConfiguration(normalizedOptions)
   );
   addFiles(tree, normalizedOptions);

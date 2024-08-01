@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "lambda": {
+      "factory": "./src/generators/lambda/generator",
+      "schema": "./src/generators/lambda/schema.json",
+      "description": "lambda generator"
+    }
+  }
+}

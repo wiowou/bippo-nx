@@ -51,6 +51,16 @@
       "description": "The repo-based absolute path for the output",
       "x-completion-type": "directory",
       "x-priority": "important"
+    },
+    "removeInputPath": {
+      "type": "boolean",
+      "description": "Delete file/directory at input path",
+      "default": false
+    },
+    "emptyZip": {
+      "type": "boolean",
+      "description": "Create an empty placeholder zip file.",
+      "default": false
     }
   },
   "required": []

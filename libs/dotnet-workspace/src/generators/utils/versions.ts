@@ -3,6 +3,7 @@ export const awsLambdaVersion = '^1.0.7';
 export const bippoAwsServiceVersion = 'latest';
 export const bippoDotnetVersion = 'latest';
 export const bippoDotnetAwsServiceVersion = 'latest';
+export const bippoPythonAwsServiceVersion = 'latest';
 export const bippoTerraformVersion = 'latest';
 export const bippoUtilVersion = 'latest';
 export const classTransformerVersion = '^0.5.1';

@@ -4,6 +4,8 @@ export interface RunCommandsExecutorSchema {
   fileReplacements: FileReplacement[];
   copyInputFromPath?: string;
   copyOutputToPath?: string;
+  removeInputPath: boolean;
+  emptyZip: boolean;
 }
 
 export interface FileReplacement {

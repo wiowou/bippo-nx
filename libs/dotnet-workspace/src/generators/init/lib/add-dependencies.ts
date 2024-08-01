@@ -3,6 +3,7 @@ import { addDependenciesToPackageJson } from '@nx/devkit';
 import {
   bippoDotnetVersion,
   bippoDotnetAwsServiceVersion,
+  bippoPythonAwsServiceVersion,
   bippoTerraformVersion,
   tsLibVersion,
   bippoUtilVersion,
@@ -17,6 +18,7 @@ export function addDependencies(tree: Tree): GeneratorCallback {
     {
       '@bippo-nx/dotnet': bippoDotnetVersion,
       '@bippo-nx/dotnet-aws-service': bippoDotnetAwsServiceVersion,
+      '@bippo-nx/python-aws-service': bippoPythonAwsServiceVersion,
       '@bippo-nx/terraform': bippoTerraformVersion,
       '@bippo-nx/util': bippoUtilVersion,
     }

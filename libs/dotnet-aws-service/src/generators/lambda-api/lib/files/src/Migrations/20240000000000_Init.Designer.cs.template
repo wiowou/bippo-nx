@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace <%= projectNamePascal %>.Migrations
 {
-  [DbContext(typeof(MyApiDbContext))]
-  [Migration("20240501012010_Init")]
+  [DbContext(typeof(<%= projectNamePascal %>DbContext))]
+  [Migration("20240000000000_Init")]
   partial class Init
   {
     /// <inheritdoc />

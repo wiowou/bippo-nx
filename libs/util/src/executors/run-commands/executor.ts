@@ -9,7 +9,7 @@ import { normalizeOptions, replaceFiles } from './lib';
 export default async function runExecutor(options: RunCommandsExecutorSchema, context: ExecutorContext) {
   const normalizedOptions = normalizeOptions(context, options);
   if (normalizedOptions.emptyZip) {
-    const fullPath = path.join(normalizedOptions.root, normalizedOptions.copyOutputToPath, 'main.zip');
+    const fullPath = path.join(normalizedOptions.copyOutputToPath, 'main.zip');
     const baseDir = path.dirname(fullPath);
     await mkdir(baseDir, { recursive: true });
     await writeFile(fullPath, 'contents');

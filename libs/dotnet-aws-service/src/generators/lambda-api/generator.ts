@@ -2,12 +2,25 @@ import { addProjectConfiguration, formatFiles, Tree } from '@nx/devkit';
 import { terraformGenerator, TerraformGeneratorSchema } from '@bippo-nx/terraform';
 import { libGenerator, LibGeneratorSchema } from '@bippo-nx/dotnet-aws-service';
 
-import { addFiles, createProjectConfiguration, normalizeOptions, updateLaunchJson, updateTaskJson } from './lib';
+import {
+  addFiles,
+  createDisconnectConfiguration,
+  createConnectConfiguration,
+  createProjectConfiguration,
+  normalizeOptions,
+  updateLaunchJson,
+  updateTaskJson,
+} from './lib';
 import { LambdaApiGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: LambdaApiGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
-  const appType = options.gatewayType === 'rest' ? 'LAMBDA_SERVICE_REST' : 'LAMBDA_SERVICE';
+  const appType =
+    options.gatewayType === 'websocket'
+      ? 'LAMBDA_SERVICE_WEBSOCKET'
+      : options.gatewayType === 'rest'
+      ? 'LAMBDA_SERVICE_REST'
+      : 'LAMBDA_SERVICE';
   const handler =
     options.gatewayType === 'rest'
       ? `${normalizedOptions.projectNamePascal}::${normalizedOptions.projectNamePascal}.LambdaEntryPoint::FunctionHandlerAsync`
@@ -32,6 +45,18 @@ export default async function (tree: Tree, options: LambdaApiGeneratorSchema) {
   updateLaunchJson(tree, normalizedOptions);
   updateTaskJson(tree, normalizedOptions);
   addProjectConfiguration(tree, normalizedOptions.projectName, createProjectConfiguration(normalizedOptions));
+  if (normalizedOptions.gatewayType === 'websocket') {
+    addProjectConfiguration(
+      tree,
+      `${normalizedOptions.projectName}-connect`,
+      createConnectConfiguration(normalizedOptions)
+    );
+    addProjectConfiguration(
+      tree,
+      `${normalizedOptions.projectName}-disconnect`,
+      createDisconnectConfiguration(normalizedOptions)
+    );
+  }
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
 }

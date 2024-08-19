@@ -4,6 +4,7 @@ export interface LambdaGeneratorSchema extends TerraformOptions {
   name: string;
   directory?: string;
   generateTerraform: boolean;
+  runtime: string;
 }
 
 interface NormalizedLambdaGeneratorSchema extends LambdaGeneratorSchema {

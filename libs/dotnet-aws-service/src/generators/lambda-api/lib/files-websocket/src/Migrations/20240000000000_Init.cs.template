@@ -1,0 +1,25 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
+
+namespace <%= projectNamePascal %>.Migrations
+{
+    /// <inheritdoc />
+  public partial class MyMigration : Migration
+  {
+    /// <inheritdoc />
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+      var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations", "init.up.sql");
+      migrationBuilder.Sql(File.ReadAllText(fileName));
+    }
+
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+      var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Migrations", "init.down.sql");
+      migrationBuilder.Sql(File.ReadAllText(fileName));
+    }
+  }
+}

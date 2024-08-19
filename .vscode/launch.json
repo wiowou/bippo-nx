@@ -189,6 +189,48 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/apps/junk/src/Views"
       }
+    },
+    {
+      "name": "Serve hapi",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_hapi",
+      "program": "${workspaceFolder}/apps/hapi/src/bin/Debug/net8.0/hapi.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/hapi/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/hapi/src/Views"
+      }
+    },
+    {
+      "name": "Serve MyWs",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_MyWs",
+      "program": "${workspaceFolder}/apps/MyWs/src/bin/Debug/net8.0/MyWs.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/MyWs/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/MyWs/src/Views"
+      }
     }
   ]
 }

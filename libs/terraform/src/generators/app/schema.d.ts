@@ -22,7 +22,15 @@ export interface TerraformOptions {
   terraformVersion?: string;
   terraformAwsVersion?: string;
   database?: Database;
-  appType?: 'SHARED_INFRA' | 'STEP_FUNCTION' | 'LAMBDA' | 'UTILLAMBDA' | 'LAMBDA_SERVICE' | 'LAMBDA_SERVICE_REST';
+  appType?:
+    | 'SHARED_INFRA'
+    | 'STEP_FUNCTION'
+    | 'LAMBDA'
+    | 'UTILLAMBDA'
+    | 'LAMBDA_SERVICE'
+    | 'LAMBDA_SERVICE_REST'
+    | 'LAMBDA_SERVICE_WEBSOCKET';
   handler?: string;
+  runtime?: string;
   workspaceName?: string;
 }

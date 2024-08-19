@@ -26,6 +26,11 @@
       "type": "boolean",
       "description": "generate terraform files",
       "default": true
+    },
+    "runtime": {
+      "type": "string",
+      "description": "valid aws python runtime",
+      "default": "python3.12"
     }
   },
   "required": ["name"]

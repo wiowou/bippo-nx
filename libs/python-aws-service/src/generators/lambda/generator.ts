@@ -16,6 +16,7 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
       appType: 'UTILLAMBDA',
       database: options.database,
       handler: 'lambda_function.lambda_handler',
+      runtime: options.runtime,
     };
     await terraformGenerator(tree, terraformGeneratorOptions);
   }

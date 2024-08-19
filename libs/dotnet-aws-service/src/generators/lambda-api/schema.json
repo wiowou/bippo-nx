@@ -25,7 +25,7 @@
     "gatewayType": {
       "type": "string",
       "description": "The type of api gateway to create",
-      "enum": ["http", "rest"],
+      "enum": ["http", "rest", "websocket"],
       "default": "http",
       "x-prompt": "(Optional, default=http) http, rest gateway"
     },

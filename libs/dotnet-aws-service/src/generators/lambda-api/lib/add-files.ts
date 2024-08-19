@@ -9,6 +9,11 @@ export function addFiles(tree: Tree, options: NormalizedLambdaApiGeneratorSchema
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
+  if (options.gatewayType === 'websocket') {
+    generateFiles(tree, path.join(__dirname, 'files-websocket'), options.projectRoot, templateOptions);
+    return;
+  }
+
   generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
 
   if (options.gatewayType === 'rest') {

@@ -23,6 +23,7 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
   const terraformAwsVersion = options?.terraformAwsVersion || versions.terraformAwsVersion;
   const appType = options?.appType || 'SHARED_INFRA';
   const database = options?.database || 'none';
+  const runtime = options?.runtime || '';
 
   const awsAccount = '000000000000';
   // provider is global now so this is not required
@@ -53,5 +54,6 @@ export function normalizeOptions(tree: Tree, options: TerraformGeneratorSchema):
     appType,
     database,
     handler,
+    runtime,
   };
 }

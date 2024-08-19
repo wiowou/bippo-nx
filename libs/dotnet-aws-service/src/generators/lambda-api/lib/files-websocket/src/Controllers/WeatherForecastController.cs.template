@@ -1,0 +1,48 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+
+using <%= projectNamePascal %>.Service;
+using <%= projectNamePascal %>.Dto;
+
+namespace <%= projectNamePascal %>.Controllers;
+
+/// <summary>
+/// Provides methods related to the weather forecast.
+/// </summary>
+///
+[ApiController]
+[Route("[controller]")]
+public class HotelController : ControllerBase
+{
+  private readonly ILogger<HotelController> _logger;
+  private readonly IHotelService _hotelService;
+
+  public HotelController(ILogger<HotelController> logger, IHotelService hotelService)
+  {
+    _logger = logger;
+    _hotelService = hotelService;
+  }
+
+  /// <summary>
+  /// Gets a hotel
+  /// </summary>
+  /// <param name="hotelId">long</param>
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+  [HttpGet("hotels/{hotelId}")]
+  public async Task<ActionResult<IEnumerable<IHotelResponseDto>>> GetHotel(long hotelId)
+  {
+    try 
+    {
+      var hotels = await _hotelService.GetHotelAsync(hotelId);
+      return Ok(hotels);
+    }
+    catch (NotFoundException ex)
+    {
+      return NotFound(new { Error = ex.Message });
+    }
+  }
+}

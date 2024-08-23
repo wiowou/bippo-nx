@@ -13,7 +13,7 @@ export function createDisconnectConfiguration(
         executor: '@bippo-nx/util:run-commands',
         options: {
           cwd: `${normalizedOptions.projectRoot}/disconnect`,
-          commands: ['zip -r main.zip .'],
+          commands: ['zip -r main.zip index.mjs'],
           copyInputFromPath: `${normalizedOptions.projectRoot}/disconnect/main.zip`,
           copyOutputToPath: `dist/${normalizedOptions.projectRoot}/disconnect`,
           removeInputPath: true,

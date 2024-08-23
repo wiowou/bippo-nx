@@ -13,7 +13,7 @@ export function createConnectConfiguration(
         executor: '@bippo-nx/util:run-commands',
         options: {
           cwd: `${normalizedOptions.projectRoot}/connect`,
-          commands: ['zip -r main.zip .'],
+          commands: ['zip -r main.zip index.mjs'],
           copyInputFromPath: `${normalizedOptions.projectRoot}/connect/main.zip`,
           copyOutputToPath: `dist/${normalizedOptions.projectRoot}/connect`,
           removeInputPath: true,

@@ -25,10 +25,10 @@ public partial class Startup
     ConfigureDatabase(services);
     services.AddLogging();
     
-<% if (gatewayType === "rest") { %>
-    services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
-<% } else { %>
+<% if (gatewayType === "http") { %>
     services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+<% } else { %>
+    services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 <% } %>
   }
 

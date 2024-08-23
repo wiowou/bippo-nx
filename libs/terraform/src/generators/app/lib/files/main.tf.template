@@ -140,6 +140,25 @@ module "lambda-service" {
   #   aws = aws.us-east-2
   # }
 }
+
+resource "aws_dynamodb_table" "ws" {
+  name           = module.lambda-service.dynamodb_table_name
+  billing_mode   = "PAY_PER_REQUEST" # "PROVISIONED"
+  read_capacity  = null # only specify if using PROVISIONED
+  write_capacity = null # only specify if using PROVISIONED
+  hash_key       = "ConnectionId"
+
+  attribute {
+    name = "ConnectionId" # this key name is used in the connect/disconnect lambdas
+    type = "S"
+  }
+
+#   ttl {
+#     attribute_name = "TimeToExist"
+#     enabled        = true
+#   }
+}
+
 <% } else if (appType === "LAMBDA_SERVICE_REST") { %>
 ## lambda service
 

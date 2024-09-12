@@ -22,6 +22,17 @@
       },
       "x-prompt": "(Optional) Target directory under root/apps"
     },
+    "requestType": {
+      "type": "string",
+      "description": "request event type",
+      "enum": ["Custom", "APIGatewayHttpApiV2Proxy", "APIGatewayProxy"],
+      "default": "Custom",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      },
+      "x-prompt": "(Optional) Lambda request event type"
+    },
     "awsProfile": {
       "type": "string",
       "description": "The AWS profile name you plan to use to locally create infra",

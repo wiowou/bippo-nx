@@ -212,6 +212,27 @@
       }
     },
     {
+      "name": "Serve MyWs2",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build_MyWs2",
+      "program": "${workspaceFolder}/apps/MyWs2/src/bin/Debug/net8.0/MyWs2.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/apps/MyWs2/src",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/apps/MyWs2/src/Views"
+      }
+    },
+    {
       "name": "Serve MyWs",
       "type": "coreclr",
       "request": "launch",

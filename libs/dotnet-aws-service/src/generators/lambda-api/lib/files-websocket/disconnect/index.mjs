@@ -7,7 +7,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 export const handler = async (event, context) => {
   const command = new DeleteCommand({
     TableName: process.env.ddb_table_name,
-    Item: {
+    Key: {
       ConnectionId: event.requestContext.connectionId,
     },
   });

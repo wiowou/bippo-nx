@@ -1,12 +1,37 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-
-using <%= projectName %>;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace Handler;
+namespace <%= projectNamePascal %>;
+
+public class HandlerInput
+{
+  [JsonPropertyName("foo")]
+  public string? Foo { get; set; }
+  public class InnerInput
+  {
+    [JsonPropertyName("zaz")]
+    public int Zaz { get; set; }
+    [JsonPropertyName("vee")]
+    public bool Vee { get; set; }
+    [JsonPropertyName("goo")]
+    public string Goo { get; set; }
+  } 
+  [JsonPropertyName("bar")]
+  public InnerInput Bar { get; set; }
+}
+
+public class HandlerOutput
+{
+  [JsonPropertyName("message")]
+  public string Message { get; set; }
+}
+
+<% if (requestType === "Custom") { %>
 
 public class HandlerInput
 {
@@ -14,7 +39,7 @@ public class HandlerInput
   public string? Comment { get; set; }
 }
 
-public class Function
+public class LambdaEntryPoint
 {
   
   /// <summary>
@@ -23,9 +48,56 @@ public class Function
   /// <param name="input"></param>
   /// <param name="context"></param>
   /// <returns></returns>
-  public HandlerInput FunctionHandler(HandlerInput input, ILambdaContext context)
+  public async Task<HandlerInput> FunctionHandlerAsync(HandlerInput input, ILambdaContext context)
   {
     input.Comment = input.Comment != null ? input.Comment.ToUpper() : input.Comment;
     return input;
   }
 }
+<% } else if (requestType === "APIGatewayProxy") { %>
+public class LambdaEntryPoint
+{
+  
+  /// <summary>
+  /// A simple function handler
+  /// </summary>
+  public async Task<APIGatewayProxyResponse> FunctionHandlerAsync(APIGatewayProxyRequest request, ILambdaContext context)
+  {
+    Console.WriteLine("Handling Request");
+    var response = new APIGatewayProxyResponse
+    {
+        StatusCode = 200,
+        Body = "Success",
+        Headers = new Dictionary<string, string> { { "Content-Type", "text/plain" } }
+    };
+    return response;
+  }
+}
+<% } else if (requestType === "APIGatewayHttpApiV2Proxy") { %>
+public class LambdaEntryPoint
+{
+  /// <summary>
+  /// A simple function handler
+  /// </summary>
+  public async Task<APIGatewayHttpApiV2ProxyResponse> FunctionHandlerAsync(APIGatewayHttpApiV2ProxyRequest request, ILambdaContext context)
+  {
+    var route = request.RequestContext.RouteKey;
+    var body = JsonSerializer.Deserialize<HandlerInput>(request.Body);
+    Console.WriteLine(body.Foo);
+    switch (route)
+    {
+      case "$default":
+        Console.WriteLine("the default route");
+        break;
+    }
+    var bodyOutput = new HandlerOutput() { Message = "Success" };
+    var response = new APIGatewayHttpApiV2ProxyResponse
+    {
+      StatusCode = 200,
+      Body = JsonSerializer.Serialize(bodyOutput),
+      Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+    };
+    return response;
+  }
+}
+<% } %>

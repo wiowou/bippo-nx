@@ -1,0 +1,85 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+
+using <%= projectNamePascal %>.Service;
+using <%= projectNamePascal %>.Dto;
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.Features;
+
+using Amazon.Lambda.AspNetCoreServer;
+using Amazon.Lambda.APIGatewayEvents;
+
+namespace <%= projectNamePascal %>.Controllers;
+
+/// <summary>
+/// Handles Connect, Disconnect and Default
+/// </summary>
+///
+[ApiController]
+//[Route("[controller]")]
+public class ConnectionController : ControllerBase
+{
+  private readonly ILogger<ConnectionController> _logger;
+
+  public ConnectionController(ILogger<ConnectionController> logger)
+  {
+    _logger = logger;
+  }
+
+  /// <summary>
+  /// Connect
+  /// </summary>
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+  [HttpPost("$connect")]
+  public ActionResult<AnyType> Connect()
+  {
+    var itemsFeatures = HttpContext.Features.Get<IItemsFeature>();
+    var lambdaRequest = (APIGatewayProxyRequest)itemsFeatures.Items[AbstractAspNetCoreFunction.LAMBDA_REQUEST_OBJECT];
+
+    var connectionId = HttpContext.Connection.Id;
+    Console.WriteLine($"Connected connection Id: {connectionId}");
+    return Ok(connectionId);
+  }
+
+  /// <summary>
+  /// Disconnect
+  /// </summary>
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+  [HttpPost("$disconnect")]
+  public ActionResult<AnyType> Disconnect()
+  {
+    var itemsFeatures = HttpContext.Features.Get<IItemsFeature>();
+    var lambdaRequest = (APIGatewayProxyRequest)itemsFeatures.Items[AbstractAspNetCoreFunction.LAMBDA_REQUEST_OBJECT];
+    
+    var connectionId = HttpContext.Connection.Id;
+    Console.WriteLine($"Disconnected connection Id: {connectionId}");
+    return Ok(connectionId);
+  }
+
+  /// <summary>
+  /// Default
+  /// </summary>
+  /// <remarks>
+  /// This method is very easy to use
+  /// </remarks>
+  [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+  [HttpPost("$default")]
+  public ActionResult<AnyType> Default()
+  {
+    var itemsFeatures = HttpContext.Features.Get<IItemsFeature>();
+    var lambdaRequest = (APIGatewayProxyRequest)itemsFeatures.Items[AbstractAspNetCoreFunction.LAMBDA_REQUEST_OBJECT];
+    
+    var connectionId = HttpContext.Connection.Id;
+    Console.WriteLine($"Connection Id: {connectionId}");
+    return Ok($"default response");
+  }
+}

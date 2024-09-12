@@ -127,6 +127,7 @@ module "lambda-service" {
   application_dir = var.application_dir
   BUILD_SOURCES_DIR = var.BUILD_SOURCES_DIR
   handler = "<%= handler %>"
+  routes = ["$connect", "$disconnect", "$default"]
   <% if (runtime !== "") { %>
   runtime = "<%= runtime %>"
   <% } %>

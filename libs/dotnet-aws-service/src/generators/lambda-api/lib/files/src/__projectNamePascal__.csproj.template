@@ -27,7 +27,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <% if (gatewayType === "http") { %>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
+    <% } else { %>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="9.0.0" />
+    <% } %>
     <!-- used for ssm parameters, paramstore -->
     <PackageReference Include="AWS.Lambda.Powertools.Parameters" Version="1.3.0" />
     <!-- used to make EFCore capitalization compatible with postgres lowercase -->

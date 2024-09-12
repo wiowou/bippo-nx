@@ -19,4 +19,5 @@ export interface LambdaGeneratorSchema extends TerraformOptions {
   database: Database;
   directory?: string;
   generateTerraform: boolean;
+  requestType: 'Custom' | 'APIGatewayProxy' | 'APIGatewayHttpApiV2Proxy';
 }

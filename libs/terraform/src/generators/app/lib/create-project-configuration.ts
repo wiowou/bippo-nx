@@ -4,6 +4,17 @@ import { ProjectConfiguration } from '@nx/devkit';
 export function createProjectConfiguration(
   normalizedOptions: NormalizedTerraformGeneratorSchema
 ): ProjectConfiguration {
+  let tfplan = 'tfplan';
+  let tfapply = 'tfapply';
+  let tfdestroy = 'tfdestroy';
+  if (normalizedOptions.appType === 'SHARED_INFRA') {
+    tfplan = 'tfplan_1st';
+    tfapply = 'tfapply_1st';
+    tfdestroy = 'tfdestroy_shared';
+  } else if (normalizedOptions.appType === 'LAMBDA') {
+    tfplan = 'tfplan_2nd';
+    tfapply = 'tfapply_2nd';
+  }
   return {
     root: normalizedOptions.projectRoot,
     projectType: 'application',
@@ -57,21 +68,21 @@ export function createProjectConfiguration(
           },
         },
       },
-      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfplan_1st' : 'tfplan']: {
+      [tfplan]: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform plan -out=tfplan -input=false'],
         },
       },
-      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfapply_1st' : 'tfapply']: {
+      [tfapply]: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,
           commands: ['terraform apply -auto-approve tfplan'],
         },
       },
-      [normalizedOptions.appType === 'SHARED_INFRA' ? 'tfdestroy_shared' : 'tfdestroy']: {
+      [tfdestroy]: {
         executor: '@bippo-nx/terraform:tfexec',
         options: {
           cwd: `${normalizedOptions.projectRoot}`,

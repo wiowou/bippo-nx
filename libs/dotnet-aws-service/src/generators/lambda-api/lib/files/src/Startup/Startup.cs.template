@@ -22,7 +22,6 @@ public partial class Startup
     services.AddScoped<IHotelService, HotelService>();
     ConfigureControllers(services);
     ConfigureSwagger(services);
-    ConfigureDatabase(services);
     services.AddLogging();
     
 <% if (gatewayType === "rest") { %>
@@ -48,6 +47,12 @@ public partial class Startup
 
     app.UseEndpoints(endpoints => {
       endpoints.MapControllers();
+<% if (gatewayType === "websocket") { %>
+      endpoints.MapPost("/", async context =>
+      {
+        await context.Response.WriteAsync("default response");
+      });
+<% } %>
     });
   }
 }

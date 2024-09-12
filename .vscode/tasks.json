@@ -176,6 +176,18 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "build_MyWs2",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/apps/MyWs2/src/MyWs2.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "build_MyWs",
       "command": "dotnet",
       "type": "process",

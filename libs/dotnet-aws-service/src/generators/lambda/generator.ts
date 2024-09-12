@@ -15,7 +15,7 @@ export default async function (tree: Tree, options: LambdaGeneratorSchema) {
       directory: normalizedOptions.projectDirectory,
       appType: 'LAMBDA',
       database: options.database,
-      handler: `${normalizedOptions.projectName}::Handler.Function::FunctionHandler`,
+      handler: `${normalizedOptions.projectNamePascal}::${normalizedOptions.projectNamePascal}.Function::FunctionHandlerAsync`,
     };
     await terraformGenerator(tree, terraformGeneratorOptions);
   }

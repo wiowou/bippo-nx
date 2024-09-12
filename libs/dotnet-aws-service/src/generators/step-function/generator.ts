@@ -26,6 +26,7 @@ export async function stepFunctionGenerator(tree: Tree, options: StepFunctionGen
     generateTerraform: true,
     database: 'none',
     awsProfile: normalizedOptions.awsProfile,
+    requestType: 'Custom',
   };
   await lambdaGenerator(tree, lambdaGeneratorOptions);
   await formatFiles(tree);

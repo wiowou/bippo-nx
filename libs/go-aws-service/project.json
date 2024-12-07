@@ -1,0 +1,94 @@
+{
+  "name": "go-aws-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/go-aws-service/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/go-aws-service",
+        "main": "libs/go-aws-service/src/index.ts",
+        "tsConfig": "libs/go-aws-service/tsconfig.lib.json",
+        "assets": [
+          "libs/go-aws-service/*.md",
+          {
+            "input": "./libs/go-aws-service/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/go-aws-service/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/go-aws-service",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/go-aws-service",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs go-aws-service --tag {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "npm-major": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/go-aws-service",
+        "commands": ["npm version major"]
+      }
+    },
+    "npm-minor": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/go-aws-service",
+        "commands": ["npm version minor"]
+      }
+    },
+    "npm-patch": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "./libs/go-aws-service",
+        "commands": ["npm version patch"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/go-aws-service/**/*.ts",
+          "libs/go-aws-service/package.json",
+          "libs/go-aws-service/generators.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/go-aws-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "lambda-auth": {
+      "factory": "./src/generators/lambda-auth/generator",
+      "schema": "./src/generators/lambda-auth/schema.json",
+      "description": "lambda-auth generator"
+    }
+  }
+}

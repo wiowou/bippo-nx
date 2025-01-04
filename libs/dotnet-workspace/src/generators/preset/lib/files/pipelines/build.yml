@@ -25,6 +25,8 @@ variables:
     value: latest
   - name: dotnet_version
     value: '8.0.x'
+  - name: go_version
+    value: '1.23.4'
   - name: run_all
     value: true
   - name: environment

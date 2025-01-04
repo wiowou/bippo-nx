@@ -1,0 +1,8 @@
+module <%= projectName %>
+
+go 1.23.1
+
+require (
+	github.com/aws/aws-lambda-go v1.47.0
+	github.com/wiowou/jwt v0.0.0-20241202214646-57cc1b427aac
+)

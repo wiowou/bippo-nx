@@ -19,7 +19,11 @@ export function createProjectConfiguration(
               with: '../environments/environment.default.go',
             },
           ],
-          commands: ['GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go', 'zip -r main.zip .'],
+          commands: [
+            'go mod tidy',
+            'GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o bootstrap main.go',
+            'zip -r main.zip .',
+          ],
           copyInputFromPath: `${normalizedOptions.projectRoot}/src/main.zip`,
           copyOutputToPath: `dist/${normalizedOptions.projectRoot}`,
           removeInputPath: true,
@@ -28,7 +32,7 @@ export function createProjectConfiguration(
           local: {
             fileReplacements: [
               {
-                replace: 'src/environment.go',
+                replace: 'environment.go',
                 with: '../environments/environment.local.go',
               },
             ],
@@ -36,7 +40,7 @@ export function createProjectConfiguration(
           prod: {
             fileReplacements: [
               {
-                replace: 'src/environment.go',
+                replace: 'environment.go',
                 with: '../environments/environment.prod.go',
               },
             ],

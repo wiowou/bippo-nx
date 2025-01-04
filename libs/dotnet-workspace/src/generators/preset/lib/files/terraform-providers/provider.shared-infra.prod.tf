@@ -13,7 +13,9 @@ terraform {
     region         = "us-east-1"
     # dynamodb_table = "tf-locks"
     encrypt        = true
-    role_arn = "arn:aws:iam::<%= awsAccount %>:role/DevOpsIamRole"
+    assume_role = {
+      role_arn = "arn:aws:iam::<%= awsAccount %>:role/DevOpsIamRole"
+    }
     # can use profile instead of role
     # profile = "my-infra-profile"
   }

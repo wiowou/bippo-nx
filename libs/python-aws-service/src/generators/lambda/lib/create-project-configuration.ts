@@ -26,7 +26,7 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           local: {
             fileReplacements: [
               {
-                replace: 'src/environment.py',
+                replace: 'environment.py',
                 with: '../environments/environment.local.py',
               },
             ],
@@ -34,7 +34,7 @@ export function createProjectConfiguration(normalizedOptions: NormalizedLambdaGe
           prod: {
             fileReplacements: [
               {
-                replace: 'src/environment.py',
+                replace: 'environment.py',
                 with: '../environments/environment.prod.py',
               },
             ],

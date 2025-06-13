@@ -7,6 +7,11 @@
       "factory": "./src/generators/lib/generator",
       "schema": "./src/generators/lib/schema.json",
       "description": "lib generator"
+    },
+    "service": {
+      "factory": "./src/generators/service/generator",
+      "schema": "./src/generators/service/schema.json",
+      "description": "service generator"
     }
   }
 }

@@ -1,0 +1,3 @@
+module <%= workspaceName %>/<%= projectNameSnake %>
+
+go 1.23.1

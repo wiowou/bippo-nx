@@ -19,6 +19,7 @@
       "@bippo-nx/dotnet": ["libs/dotnet/src/index.ts"],
       "@bippo-nx/dotnet-aws-service": ["libs/dotnet-aws-service/src/index.ts"],
       "@bippo-nx/go-aws-service": ["libs/go-aws-service/src/index.ts"],
+      "@bippo-nx/go-service": ["libs/go-service/src/index.ts"],
       "@bippo-nx/python-aws-service": ["libs/python-aws-service/src/index.ts"],
       "@bippo-nx/terraform": ["libs/terraform/src/index.ts"],
       "@bippo-nx/types": ["libs/types/index.ts"],
